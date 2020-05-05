@@ -1,0 +1,3 @@
+$(function () {
+    $("#pantallaDeCarga").fadeOut();
+});

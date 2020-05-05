@@ -1,0 +1,94 @@
+main {
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#login {
+    width: 80%;
+    background-color: var(--color4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 0.5em black;
+    border-radius: 0.5em;
+}
+
+h1 {
+    padding: 0.5em;
+    color: var(--color1);
+}
+
+#login form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input {
+    margin: 0.5em;
+    position: relative;
+    height: 3em;
+    background-color: var(--color6);
+    border-radius: 0.5em;
+    overflow: hidden;
+}
+
+.input input {
+    position: absolute;
+    width: 100%;
+    padding: 0.5em;
+    background-color: var(--color6);
+    bottom: 0;
+    border: none;
+    outline: none;
+}
+
+.input label {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.2em;
+    color: var(--color4);
+    transition: 0.5s;
+    cursor: text;
+}
+
+.input input:focus+label, .input input:valid+label {
+    font-size: 0.7em;
+    height: 1.5em;
+    color: var(--color1);
+}
+
+
+.boton {
+    height: 3em;
+    margin: 0.5em;
+    background-color: var(--color2);
+    border:none;
+    cursor:pointer;
+    color: var(--color6);
+    border-radius: 0.5em;
+    transition:0.5s;
+}
+
+.boton:hover {
+    background-color: var(--color1);
+}
+
+@media (min-width:50em) {
+    #login {
+        width: 50%;
+    }
+}
+
+@media (min-width:80em) {
+    #login {
+        width: 30%;
+    }
+}

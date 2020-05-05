@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+:root {
+    --color1: #262626;
+    --color2: #5E5E5E;
+    --color3: #B5B5B5;
+    --color4: #C4C4C4;
+    --color5: #EEEEEE;
+    --color6: #FFFFFF;
+    --color7: #D26A6A;
+    --color8: #88BA69;
+}
+
+main {
+    background-color: var(--color5);
+    display: flex;
+    flex-wrap: wrap;
+}

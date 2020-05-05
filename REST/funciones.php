@@ -12,7 +12,10 @@ function login($email,$pass){
 
   mysqli_set_charset($con,"utf8");
 
-  $consulta = "SELECT * FROM usuario WHERE email = '$email' AND pass = '$pass'";
+  $emailCodificado = mysqli_real_escape_string($con,$email);
+  $passCodificado = md5($pass);
+
+  $consulta = "SELECT * FROM usuario WHERE email = '$emailCodificado' AND pass = '$passCodificado'";
   $resultado = mysqli_query($con,$consulta);
   mysqli_close($con);
 
@@ -21,7 +24,7 @@ function login($email,$pass){
   }
 
   if($fila = mysqli_fetch_assoc($resultado)){
-    $_SESSION["USUARIO"] = $fila;
+    $_SESSION["USUARIO"] = array("email"=>$email,"pass"=>$pass);
     return array("login" => true);
   } 
     return array("login" => false);

@@ -1,4 +1,8 @@
 <?php
+
+session_name("TPVWEB");
+session_start();
+
 function login($email,$pass){
   include "conexion.php";
 
@@ -17,9 +21,27 @@ function login($email,$pass){
   }
 
   if($fila = mysqli_fetch_assoc($resultado)){
-    return array("usuario" => $fila);
-  }else {
-    return array("mensaje" => "Usuario no se encuentra registrado en la BD.");
-  }
+    $_SESSION["USUARIO"] = $fila;
+    return array("login" => true);
+  } 
+    return array("login" => false);
 }
+
+function compruebaSesion(){
+  if(isset($_SESSION["USUARIO"])){
+
+    $email = $_SESSION["USUARIO"]["email"];
+    $pass = $_SESSION["USUARIO"]["pass"];
+    $login = login($email,$pass);
+
+    if($login["login"])
+      return array("respuesta" =>true);
+  }
+    return array("respuesta" => false);
+}
+
+function cerrarSesion(){
+  session_destroy();
+}
+
 ?>

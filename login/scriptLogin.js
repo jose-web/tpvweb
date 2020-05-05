@@ -19,7 +19,6 @@ $(function() {
                 pass: $('#clave').val()
             },
             success: function (result) {
-                console.log(result)
                 if (result.login) {
                     location.href="../locales";
                 } else {

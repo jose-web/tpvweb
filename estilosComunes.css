@@ -22,3 +22,44 @@ main {
     flex-wrap: wrap;
     min-height: 100vh;
 }
+
+#pantallaDeCarga{
+    position:fixed;
+    width: 100vw;
+    height:100vh;
+    background-color: var(--color5);
+    z-index:99999;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pantallaDeCarga div{
+    width:30vw;
+    height:30vw;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    font-size: 4vw;
+    position:relative;
+}
+#pantallaDeCarga div:after{
+    content:"";
+    display:block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius: 100%;
+    border-top:1vw solid var(--color1);
+    animation: 1s giro linear infinite;
+}
+
+@keyframes giro {
+    0%   {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform:rotate(360deg);
+    }
+  }

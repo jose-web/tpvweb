@@ -4,9 +4,10 @@ $(function () {
         url: "../REST/compruebaSesion",
         method: 'get',
         success: function (result) {
-            if (!result.respuesta) {
+            if (!result.respuesta)
                 location.href = "..";
-            }
+            else
+                $("#pantallaDeCarga").fadeOut();
         }
     });
 
@@ -36,4 +37,14 @@ $(function () {
         }
     });
 
+});
+
+$("#cerrarSesion").on("click", function () {
+    $.ajax({
+        url: "../REST/cerrarSesion",
+        method: 'get',
+        success: function (result) {
+            location.href = "..";
+        }
+    });
 });

@@ -1,3 +1,9 @@
+main{
+    position: relative;
+    z-index: -1;
+    transition: 1s;
+}
+
 #menu {
     background-color: var(--color1);
     color: var(--color6);
@@ -44,16 +50,16 @@
     display: none;
 }
 
-#checkHamburguesa:checked+#menuHamburguesa span:nth-child(1) {
+#checkHamburguesa:checked+ #menu #menuHamburguesa span:nth-child(1) {
     transform: rotate(45deg);
     top: 1em;
 }
 
-#checkHamburguesa:checked+#menuHamburguesa span:nth-child(2) {
+#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(2) {
     width:0;
 }
 
-#checkHamburguesa:checked+#menuHamburguesa span:nth-child(3) {
+#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(3) {
     transform: rotate(-45deg);
     top: 1em;
 }
@@ -112,16 +118,20 @@
     transition: 1s;
 }
 
-#checkHamburguesa:checked+#menuHamburguesa+#menuOpciones{
+#checkHamburguesa:checked+ #menu #menuHamburguesa+#menuOpciones{
     height: 100vh;
 }
 
-#checkHamburguesa:checked+#menuHamburguesa+#menuOpciones #bolaMenuOpciones {
+#checkHamburguesa:checked+ #menu #menuHamburguesa+#menuOpciones #bolaMenuOpciones {
     transform: scale(1);
 }
 
-#checkHamburguesa:checked+#menuHamburguesa+#menuOpciones ul {
+#checkHamburguesa:checked+ #menu #menuHamburguesa+#menuOpciones ul {
     left: 0;
+}
+
+#checkHamburguesa:checked + #menu + main {
+    filter: blur(0.5em);
 }
 
 main section{
@@ -152,4 +162,18 @@ h1{
     text-align:center;
     margin:1em;
     margin-bottom:0.5em;
+}
+
+#fondoMenu{
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    z-index:-1;
+    display:none;
+}
+
+#checkHamburguesa:checked+ #menu #fondoMenu {
+    display: initial;
 }

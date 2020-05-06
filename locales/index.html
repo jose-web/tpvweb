@@ -11,23 +11,24 @@
     <div id="pantallaDeCarga">
         <div>TPVWEB</div>
     </div>
+    <input type="checkbox" id="checkHamburguesa" />
+    <header id="menu">
+        <label id="menuHamburguesa" for="checkHamburguesa">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div id="menuOpciones">
+            <ul>
+                <a href="../administracion"><li>Administración</li></a>
+                <a href="../suscripcion"><li>Suscripción</li></a>
+                <a href="../cerrarSesion"><li>cerrar sesion</li></a>
+            </ul>
+            <div id="bolaMenuOpciones"></div>
+        </div>
+        <label for="checkHamburguesa" id="fondoMenu"></label>
+    </header>
     <main>
-        <header id="menu">
-            <input type="checkbox" id="checkHamburguesa" />
-            <label id="menuHamburguesa" for="checkHamburguesa">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-            <div id="menuOpciones">
-                <ul>
-                    <a href="../administracion"><li>Administración</li></a>
-                    <a href="../suscripcion"><li>Suscripción</li></a>
-                    <a href="../cerrarSesion"><li>cerrar sesion</li></a>
-                </ul>
-                <div id="bolaMenuOpciones"></div>
-            </div>
-        </header>
         <h1>Locales</h1>
         <section id="locales"></section>
     </main>

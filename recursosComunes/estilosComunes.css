@@ -16,11 +16,13 @@
     --color8: #88BA69;
 }
 
-main {
+body{
     background-color: var(--color5);
+}
+
+main {
     display: flex;
     flex-wrap: wrap;
-    min-height: 100vh;
 }
 
 #pantallaDeCarga{

@@ -16,7 +16,7 @@ create table usuario (
     apellido2 varchar(20),
     email varchar(50) not null,
     pass varchar(32) not null,
-    img int not null
+    img varchar(20) not null
 );
 
 
@@ -299,3 +299,16 @@ create table lineaDeFactura (
         on delete no action 
         on update cascade
 );
+
+
+delimiter $$
+
+CREATE PROCEDURE muestraLocales(codigoTrabajador int)
+BEGIN
+	select local.codLocal from local 
+	join trabajador_local 
+		on local.codLocal = trabajador_local.codLocal 
+	where codTrabajador = codigoTrabajador;
+END $$
+
+delimiter ;

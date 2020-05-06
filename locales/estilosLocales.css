@@ -71,6 +71,9 @@
     position: relative;
     left: -100vw;
     transition: 1s;
+    display: flex;
+    flex-direction: column;
+    height:100%;
 }
 
 #menuOpciones li {
@@ -83,6 +86,13 @@
 #menuOpciones a {
     text-decoration: none;
     color: var(--color1);
+}
+
+#menuOpciones a:last-child {
+    margin-top: auto;
+    margin-bottom:4.5em;
+    color: var(--color6);
+    background-color: var(--color7);
 }
 
 #menuOpciones li:hover {
@@ -112,4 +122,34 @@
 
 #checkHamburguesa:checked+#menuHamburguesa+#menuOpciones ul {
     left: 0;
+}
+
+main section{
+    flex:1 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+main section a{
+    background-color: var(--color4);
+    flex:1 40%;
+    margin:1em;
+    padding:1em;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color1);
+    transition: 0.5s;
+}
+
+main section a:hover{
+    background-color: var(--color2);
+    color:var(--color6);
+}
+
+h1{
+    flex:1 100%;
+    text-align:center;
+    margin:1em;
+    margin-bottom:0.5em;
 }

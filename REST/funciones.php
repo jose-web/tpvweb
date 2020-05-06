@@ -24,7 +24,7 @@ function login($email,$pass){
   }
 
   if($fila = mysqli_fetch_assoc($resultado)){
-    $_SESSION["USUARIO"] = array("email"=>$email,"pass"=>$pass);
+    $_SESSION["USUARIO"] = array("email"=>$email,"pass"=>$pass, "codUsuario"=>$fila["codUsuario"]);
     return array("login" => true);
   } 
     return array("login" => false);
@@ -45,6 +45,36 @@ function compruebaSesion(){
 
 function cerrarSesion(){
   session_destroy();
+}
+
+function buscaLocales(){
+  if(compruebaSesion()["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+
+    $consulta = "call muestraLocales($codUsuario)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    
+    $arrayLocales = array();
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $arrayLocales[] = $fila;
+    }
+    return array("locales" => $arrayLocales);
+  }
+  return array("locales" => false);
 }
 
 ?>

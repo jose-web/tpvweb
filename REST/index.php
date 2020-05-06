@@ -21,6 +21,10 @@ $app->get("/cerrarSesion", function(){
   echo json_encode(cerrarSesion(),JSON_FORCE_OBJECT);
 });
 
+$app->get("/buscaLocales", function(){
+  echo json_encode(buscaLocales(),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

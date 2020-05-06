@@ -77,4 +77,34 @@ function buscaLocales(){
   return array("locales" => false);
 }
 
+function muestraFacturasLocal($codFactura){
+  if(compruebaSesion()["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+
+    $consulta = "call muestraFacturasLocal($codUsuario,$codFactura)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    
+    $arrayProductos = array();
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $arrayProductos[] = $fila;
+    }
+    return array("productos" => $arrayProductos);
+  }
+  return array("productos" => false);
+}
+
 ?>

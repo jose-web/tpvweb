@@ -25,6 +25,10 @@ $app->get("/buscaLocales", function(){
   echo json_encode(buscaLocales(),JSON_FORCE_OBJECT);
 });
 
+$app->get("/muestraFacturasLocal/:codFactura", function($codFactura){
+  echo json_encode(muestraFacturasLocal($codFactura),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

@@ -25,11 +25,11 @@ $(function () {
                     let nombreLocal = result.locales[i].nombreLocal;
                     let direccion = result.locales[i].direccion;
 
-                    $('#locales').append(`<a href="../local/${id}">
+                    $('#locales').append(`<div class="irFacura" idLocal="${id}">
                     <strong>${nombreEmpresa}</strong>
                     <p>${nombreLocal}</p>
                     <p>${direccion}</p>
-                    </a>`)
+                    </div>`)
 
                 }
 
@@ -45,6 +45,20 @@ $("#cerrarSesion").on("click", function () {
         method: 'get',
         success: function (result) {
             location.href = "..";
+        }
+    });
+});
+
+
+
+$(document).on('click', '.irFacura', function () {
+    let idLocal = $(this).attr("idLocal");
+
+    $.ajax({
+        url: "../REST/muestraFacturasLocal/"+idLocal,
+        method: 'get',
+        success: function (result) {
+            console.log(result)
         }
     });
 });

@@ -303,12 +303,39 @@ create table lineaDeFactura (
 
 delimiter $$
 
-CREATE PROCEDURE muestraLocales(codigoTrabajador int)
+CREATE PROCEDURE muestraLocales(codigoUsuario int)
 BEGIN
-	select local.codLocal from local 
-	join trabajador_local 
+	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
+    from local join trabajador_local 
 		on local.codLocal = trabajador_local.codLocal 
-	where codTrabajador = codigoTrabajador;
+        join empresa
+        on local.codEmpresa = empresa.codEmpresa
+			join trabajador
+            on trabajador_local.codTrabajador = trabajador.codTrabajador
+	where trabajador.codUsuario = codigoUsuario and estado = 1;
+END $$
+
+
+CREATE PROCEDURE muestraFacturasLocal(codigoUsuario int,codigoFactura int)
+BEGIN
+	select lineadefactura.codLinea, producto.nombre, lineadefactura.precio, lineadefactura.cantidad, lineadefactura.comentario
+    from lineadefactura join factura
+		on lineadefactura.codFactura = factura.codFactura
+		join mesa
+			on factura.codMesa = mesa.codMesa
+			join mapa
+				on mapa.codMapa = mesa.codMapa
+				join trabajador_local
+					on trabajador_local.codLocal = mapa.codLocal
+					join trabajador
+						on trabajador_local.codTrabajador = trabajador.codTrabajador
+                        join producto
+							on lineadefactura.codProducto = producto.codProducto
+	where trabajador.codUsuario = codigoUsuario 
+    and trabajador_local.estado = 1 
+    and factura.codFactura = codigoFactura;
 END $$
 
 delimiter ;
+
+call muestraFacturasLocal(1,1)

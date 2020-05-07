@@ -316,7 +316,24 @@ BEGIN
 END $$
 
 
-CREATE PROCEDURE muestraFacturasLocal(codigoUsuario int,codigoFactura int)
+CREATE PROCEDURE muestraFacturasLocal(codigoUsuario int,codigoLocal int)
+BEGIN
+	select factura.*
+    from factura join mesa
+		on factura.codMesa = mesa.codMesa
+			join mapa
+				on mapa.codMapa = mesa.codMapa
+				join trabajador_local
+					on trabajador_local.codLocal = mapa.codLocal
+					join trabajador
+						on trabajador_local.codTrabajador = trabajador.codTrabajador
+	where mapa.codLocal = codigoLocal 
+    and trabajador.codUsuario = codigoUsuario
+    and factura.pagado = 0;
+END $$
+
+
+CREATE PROCEDURE muestraProductosFactura(codigoUsuario int,codigoFactura int)
 BEGIN
 	select lineadefactura.codLinea, producto.nombre, lineadefactura.precio, lineadefactura.cantidad, lineadefactura.comentario
     from lineadefactura join factura
@@ -337,5 +354,3 @@ BEGIN
 END $$
 
 delimiter ;
-
-call muestraFacturasLocal(1,1)

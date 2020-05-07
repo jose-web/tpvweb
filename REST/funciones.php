@@ -77,7 +77,7 @@ function buscaLocales(){
   return array("locales" => false);
 }
 
-function muestraFacturasLocal($codLocal){
+function muestraFacturasLocal(){
   if(compruebaSesion()["respuesta"]){
     include "conexion.php";
 
@@ -88,6 +88,7 @@ function muestraFacturasLocal($codLocal){
     mysqli_set_charset($con,"utf8");
   
     $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+    $codLocal = $_SESSION["codLocal"];
 
     $consulta = "call muestraFacturasLocal($codUsuario,$codLocal)";
     $resultado = mysqli_query($con,$consulta);
@@ -118,6 +119,7 @@ function muestraProductosFactura($codFactura){
     mysqli_set_charset($con,"utf8");
   
     $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+    $codFactura = mysqli_real_escape_string($con,$codFactura);
 
     $consulta = "call muestraProductosFactura($codUsuario,$codFactura)";
     $resultado = mysqli_query($con,$consulta);
@@ -135,6 +137,14 @@ function muestraProductosFactura($codFactura){
     return array("productos" => $arrayProductos);
   }
   return array("productos" => false);
+}
+
+
+function cambiaLocal($codLocal){
+  include "conexion.php";
+  $codLocal = mysqli_real_escape_string($con,$codLocal);
+  $_SESSION["codLocal"] = $codLocal;
+  return array("codLocal" =>  $_SESSION["codLocal"]);
 }
 
 ?>

@@ -55,10 +55,11 @@ $(document).on('click', '.irFacura', function () {
     let idLocal = $(this).attr("idLocal");
 
     $.ajax({
-        url: "../REST/muestraFacturasLocal/"+idLocal,
+        url: "../REST/cambiaLocal/"+idLocal,
         method: 'get',
         success: function (result) {
-            console.log(result)
+            console.log(result);
+            location.href = "../facturas";
         }
     });
 });

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPVWEB</title>
+    <link rel="stylesheet" href="../recursosComunes/estilosComunes.css">
+    <link rel="stylesheet" href="estilosFacturas.css">
+</head>
+<body>
+    <div id="pantallaDeCarga">
+        <div>TPVWEB</div>
+    </div>
+    <input type="checkbox" id="checkHamburguesa" />
+    <header id="menu">
+        <label id="menuHamburguesa" for="checkHamburguesa">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div id="menuOpciones">
+            <ul>
+                <a href="../administracion"><li>Administración</li></a>
+                <a href="../suscripcion"><li>Suscripción</li></a>
+                <a id="cerrarSesion"><li>cerrar sesion</li></a>
+            </ul>
+            <div id="bolaMenuOpciones"></div>
+        </div>
+        <label for="checkHamburguesa" id="fondoMenu"></label>
+    </header>
+    <main>
+        <h1>Facturas</h1>
+        <table id="facturas">
+            
+        </table>
+    </main>
+
+    <script src="../recursosComunes/jquery-3.5.1.min.js"></script>
+    <script src="scriptFacturas.js"></script>
+</body>
+</html>

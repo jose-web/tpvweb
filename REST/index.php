@@ -25,12 +25,16 @@ $app->get("/buscaLocales", function(){
   echo json_encode(buscaLocales(),JSON_FORCE_OBJECT);
 });
 
-$app->get("/muestraFacturasLocal/:codLocal", function($codLocal){
-  echo json_encode(muestraFacturasLocal($codLocal),JSON_FORCE_OBJECT);
+$app->get("/muestraFacturasLocal", function(){
+  echo json_encode(muestraFacturasLocal(),JSON_FORCE_OBJECT);
 });
 
 $app->get("/muestraProductosFactura/:codFactura", function($codFactura){
   echo json_encode(muestraProductosFactura($codFactura),JSON_FORCE_OBJECT);
+});
+
+$app->get("/cambiaLocal/:codLocal", function($codLocal){
+  echo json_encode(cambiaLocal($codLocal),JSON_FORCE_OBJECT);
 });
 
 $app->notFound(function (){

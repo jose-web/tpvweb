@@ -7,7 +7,7 @@ $(function () {
             if (!result.respuesta)
                 location.href = "..";
             else
-                $("#pantallaDeCarga").fadeOut();
+                $("body").fadeIn();
         }
     });
 
@@ -55,7 +55,7 @@ $(document).on('click', '.irFacura', function () {
     let idLocal = $(this).attr("idLocal");
 
     $.ajax({
-        url: "../REST/cambiaLocal/"+idLocal,
+        url: "../REST/cambiaLocal/" + idLocal,
         method: 'get',
         success: function (result) {
             console.log(result);

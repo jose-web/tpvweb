@@ -7,7 +7,7 @@ $(function () {
             if (!result.respuesta)
                 location.href = "..";
             else
-                $("#pantallaDeCarga").fadeOut();
+                $("body").fadeIn();
         }
     });
 

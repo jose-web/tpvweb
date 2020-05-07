@@ -1,5 +1,5 @@
-$(function() {
-    
+$(function () {
+
     $.ajax({
         url: "../REST/compruebaSesion",
         method: 'get',
@@ -7,7 +7,7 @@ $(function() {
             if (result.respuesta) {
                 location.href = "../locales";
             }
-            $("#pantallaDeCarga").fadeOut();
+            $("body").fadeIn();
         }
     });
 
@@ -21,7 +21,7 @@ $(function() {
             },
             success: function (result) {
                 if (result.login) {
-                    location.href="../locales";
+                    location.href = "../locales";
                 } else {
                     $('#mensaje').html("Usuario y contraseña incorrectos")
                 }

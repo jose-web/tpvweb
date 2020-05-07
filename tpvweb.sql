@@ -318,7 +318,7 @@ END $$
 
 CREATE PROCEDURE muestraFacturasLocal(codigoUsuario int,codigoLocal int)
 BEGIN
-	select factura.*
+	select factura.codFactura as id, factura.nombreCliente as nombre, count(lineadefactura.precio * lineadefactura.cantidad) as cuentaTotal
     from factura join mesa
 		on factura.codMesa = mesa.codMesa
 			join mapa
@@ -327,9 +327,13 @@ BEGIN
 					on trabajador_local.codLocal = mapa.codLocal
 					join trabajador
 						on trabajador_local.codTrabajador = trabajador.codTrabajador
-	where mapa.codLocal = codigoLocal 
-    and trabajador.codUsuario = codigoUsuario
-    and factura.pagado = 0;
+                        left join lineadefactura
+							on lineadefactura.codFactura = factura.codFactura
+	where mapa.codLocal = codigoLocal
+		and trabajador.codUsuario = codigoUsuario
+		and factura.pagado = 0
+	group by factura.codFactura
+    order by nombre;
 END $$
 
 

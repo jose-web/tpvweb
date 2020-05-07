@@ -169,3 +169,29 @@ h1{
 #checkHamburguesa:checked+ #menu #fondoMenu {
     display: initial;
 }
+
+#facturas{
+    width:100vw;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#facturas tr:first-child{
+    background: linear-gradient(150deg, var(--color3) 50%, var(--color2) 50%);
+    color:var(--color6);
+    border:0.1em solid var(--color1);
+}
+
+ #facturas td{
+    border-bottom:0.1em solid var(--color1);
+    padding:1em;
+}
+
+#facturas th{
+    padding:1em;
+}
+
+#facturas .diferente{
+    background-color: var(--color4);
+
+}

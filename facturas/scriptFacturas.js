@@ -22,17 +22,21 @@ $(function () {
                     resultantiguo = JSON.stringify(result);
                     $('#facturas').html("");
                     $('#facturas').append(`
-                    <th>
-                    <td>Cliente</td>
-                    </th>`
+                    <tr>
+                    <th>Cliente</th>
+                    <th>Cuenta total</th>
+                    </tr>`
                     );
                     for (let i = 0; i < Object.keys(result.facturas).length; i++) {
 
-                        let nombreCliente = result.facturas[i].nombreCliente;
-
+                        let id = result.facturas[i].id;
+                        let nombre = result.facturas[i].nombre;
+                        let cuentaTotal = result.facturas[i].cuentaTotal;
+                        let clase = i%2?"class='diferente'":"";
                         $('#facturas').append(`
-                        <tr>
-                        <td>${nombreCliente}</td>
+                        <tr ${clase}>
+                        <td>${nombre}</td>
+                        <td>${cuentaTotal}</td>
                         </tr>`
                         );
 

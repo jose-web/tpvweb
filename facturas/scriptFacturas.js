@@ -93,6 +93,7 @@ $(function () {
     muestraFacturas();
     let facturas = setInterval(muestraFacturas, 2000);
     let lineaDeFactura;
+    let cambiaBotonIzquierda = 0;
 
     $("#facturas").on('click', 'tr', function () {
         let idFactura = $(this).attr("idFactura");
@@ -106,7 +107,26 @@ $(function () {
             lineaDeFactura = setInterval(function () { muestraLineaDeFactura(idFactura) }, 2000);
 
             $("#nombreFactura").html(nombreFactura);
+            cambiaBotonIzquierda = 1;
         }
+    });
+
+    $("#botonIzquierda").on("click", function () {
+        switch (cambiaBotonIzquierda) {
+            case 0:
+                location.href = "../locales";
+                break;
+
+            case 1:
+                clearInterval(lineaDeFactura);
+                muestraFacturas();
+                facturas = setInterval(muestraFacturas, 2000);
+
+                $('#seccionLineaDeFactura').hide();
+                $("#seccionFacturas").show();
+                cambiaBotonIzquierda = 0;
+        }
+
     });
 
     $("#cerrarSesion").on("click", function () {

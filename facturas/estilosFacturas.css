@@ -1,201 +1,98 @@
-#menu {
-    background-color: var(--color1);
-    color: var(--color6);
-    height: min-content;
-    width: 100vw;
-    display: flex;
-    padding: 1em;
-    position: sticky;
-    top: 0;
-    align-self: start;
-}
-
-#menuHamburguesa {
-    position: relative;
-    cursor: pointer;
-    align-self: center;
-    width: 3em;
-    height: 2.5em;
-}
-
-#menuHamburguesa span {
-    position: absolute;
-    left: 0;
-    display: block;
-    width: 3em;
-    height: 0.5em;
-    background-color: white;
-    transition: 0.5s;
-}
-
-#menuHamburguesa span:nth-child(1) {
-    top: 0;
-}
-
-#menuHamburguesa span:nth-child(2) {
-    top: 1em;
-}
-
-#menuHamburguesa span:nth-child(3) {
-    top: 2em;
-}
-
-#checkHamburguesa {
-    display: none;
-}
-
-#checkHamburguesa:checked+ #menu #menuHamburguesa span:nth-child(1) {
-    transform: rotate(45deg);
-    top: 1em;
-}
-
-#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(2) {
-    width:0;
-}
-
-#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(3) {
-    transform: rotate(-45deg);
-    top: 1em;
-}
-
-#menuOpciones {
-    position: fixed;
-    top: 4.5em;
-    left: 0;
-    overflow: hidden;
-    height: 0;
-    transition:1s;
-}
-
-#menuOpciones ul {
-    position: relative;
-    left: -100vw;
-    transition: 1s;
-    display: flex;
-    flex-direction: column;
-    height:100%;
-    list-style: none;
-}
-
-#menuOpciones li {
-    padding: 1em 2em;
-    text-align: center;
-    text-decoration: none;
-    transition: 0.5s;
-}
-
-#menuOpciones a {
-    text-decoration: none;
-    color: var(--color1);
-}
-
-#menuOpciones a:last-child {
-    margin-top: auto;
-    margin-bottom:4.5em;
-    color: var(--color6);
-    background-color: var(--color7);
-    cursor: pointer;
-}
-
-#menuOpciones li:hover {
-    background-color: var(--color4);
-}
-
-#bolaMenuOpciones {
-    position: absolute;
-    width: 200vh;
-    height: 200vh;
-    background-color: var(--color6);
-    border-radius: 100%;
-    top: -100vh;
-    left: -100vh;
-    z-index: -1;
-    transform: scale(0);
-    transition: 1s;
-}
-
-#checkHamburguesa:checked+ #menu #menuHamburguesa+#menuOpciones{
-    height: 100vh;
-}
-
-#checkHamburguesa:checked+ #menu #menuHamburguesa+#menuOpciones #bolaMenuOpciones {
-    transform: scale(1);
-}
-
-#checkHamburguesa:checked+ #menu #menuHamburguesa+#menuOpciones ul {
-    left: 0;
-}
-
-main section{
-    flex:1 100%;
+main section {
+    flex: 1 100%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-main section a{
+main section a {
     background-color: var(--color4);
-    flex:1 40%;
-    margin:1em;
-    padding:1em;
+    flex: 1 40%;
+    margin: 1em;
+    padding: 1em;
     text-align: center;
     text-decoration: none;
     color: var(--color1);
     transition: 0.5s;
 }
 
-main section a:hover{
+main section a:hover {
     background-color: var(--color2);
-    color:var(--color6);
+    color: var(--color6);
 }
 
-h1{
-    flex:1 100%;
-    text-align:center;
-    margin:1em;
-    margin-bottom:0.5em;
+h1 {
+    flex: 1 100%;
+    text-align: center;
+    margin: 1em;
+    margin-bottom: 0.5em;
 }
 
-#fondoMenu{
-    position:absolute;
-    top:0;
-    left:0;
+#fondoMenu {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    z-index:-1;
-    display:none;
+    z-index: -1;
+    display: none;
 }
 
-#checkHamburguesa:checked+ #menu #fondoMenu {
+#checkHamburguesa:checked+#menu #fondoMenu {
     display: initial;
 }
 
-#facturas{
-    width:100vw;
+#facturas, #LineaDeFactura {
+    width: 100vw;
     border-collapse: collapse;
     text-align: center;
 }
 
-#facturas tr:first-child{
+#divLineaDeFactura {
+    width: 100vw;
+    overflow-x: auto;
+}
+
+#facturas tr:first-child {
     background: linear-gradient(150deg, var(--color3) 50%, var(--color2) 50%);
-    color:var(--color6);
-    border:0.1em solid var(--color1);
+    color: var(--color6);
+    border: 0.1em solid var(--color1);
 }
 
- #facturas td{
-    border-bottom:0.1em solid var(--color1);
-    padding:1em;
+#LineaDeFactura tr:first-child {
+    background-color: var(--color3);
+    color: var(--color6);
+    border: 0.1em solid var(--color1);
 }
 
-#facturas th{
-    padding:1em;
+#facturas td, #LineaDeFactura td {
+    border-bottom: 0.1em solid var(--color1);
+    padding: 1em;
 }
 
-#facturas .diferente{
+#facturas th, #LineaDeFactura th {
+    padding: 1em;
+}
+
+.diferente {
     background-color: var(--color4);
-
 }
 
-#seccionLineaDeFacturas{
+#seccionLineaDeFactura {
     display: none;
+}
+
+#tituloLineaDeFactura {
+    display: flex;
+    padding: 1em;
+    align-items: center;
+}
+
+.derecha {
+    margin-left: auto;
+}
+
+#tituloLineaDeFactura img {
+    width: 2em;
+    margin-left: 1em;
 }

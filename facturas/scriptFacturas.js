@@ -33,9 +33,9 @@ $(function () {
                         let cuentaTotal = result.facturas[i].cuentaTotal;
                         let clase = i % 2 ? "class='diferente'" : "";
                         $('#facturas').append(`
-                        <tr ${clase} idFactura="${id}">
+                        <tr ${clase} idFactura="${id}" nombreFactura="${nombre}">
                         <td>${nombre}</td>
-                        <td>${cuentaTotal}</td>
+                        <td>${cuentaTotal} €</td>
                         </tr>`
                         );
                     }
@@ -52,6 +52,7 @@ $(function () {
             method: 'get',
             success: function (result) {
                 if (result.productos != false && resultantiguo != JSON.stringify(result)) {
+                    let cuentaTotal = 0;
                     resultantiguo = JSON.stringify(result);
                     $('#LineaDeFactura').html("");
                     $('#LineaDeFactura').append(`
@@ -71,16 +72,18 @@ $(function () {
                         let precio = result.productos[i].precio;
                         let comentario = result.productos[i].comentario;
                         let clase = i % 2 ? "class='diferente'" : "";
+                        cuentaTotal += precio * cantidad;
                         $('#LineaDeFactura').append(`
                         <tr ${clase} idFactura="${id}">
                         <td>${nombre}</td>
                         <td>${cantidad}</td>
-                        <td>${precio}</td>
-                        <td>${precio * cantidad}</td>
-                        <td>${comentario == null?"":comentario}</td>
+                        <td>${precio} €</td>
+                        <td>${(precio * cantidad).toFixed(2)} €</td>
+                        <td>${comentario == null ? "" : comentario}</td>
                         </tr>`
                         );
                     }
+                    $("#cuentaTotal").html(cuentaTotal.toFixed(2) + " €")
                 }
             }
         });
@@ -93,6 +96,7 @@ $(function () {
 
     $("#facturas").on('click', 'tr', function () {
         let idFactura = $(this).attr("idFactura");
+        let nombreFactura = $(this).attr("nombreFactura");
         if (typeof idFactura != "undefined") {
             $("#seccionFacturas").hide();
             $("#seccionLineaDeFactura").show();
@@ -101,6 +105,8 @@ $(function () {
 
             muestraLineaDeFactura(idFactura);
             lineaDeFactura = setInterval(muestraLineaDeFactura(idFactura), 2000);
+
+            $("#nombreFactura").html(nombreFactura);
         }
     });
 

@@ -1,2 +1,4 @@
 # TPVWEB
-Proyecto hecho con jQuery
+| Frameworks | Librerías | Iconos |
+| -- | -- | -- |
+| Slim | JQuery | Font Awesome |

@@ -99,12 +99,11 @@ $(function () {
         let nombreFactura = $(this).attr("nombreFactura");
         if (typeof idFactura != "undefined") {
             $("#seccionFacturas").hide();
-            $("#seccionLineaDeFactura").show();
-
+            $('#seccionLineaDeFactura').css('display', 'flex');
             clearInterval(facturas);
 
             muestraLineaDeFactura(idFactura);
-            lineaDeFactura = setInterval(muestraLineaDeFactura(idFactura), 2000);
+            lineaDeFactura = setInterval(function () { muestraLineaDeFactura(idFactura) }, 2000);
 
             $("#nombreFactura").html(nombreFactura);
         }

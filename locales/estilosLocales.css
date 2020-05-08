@@ -28,17 +28,3 @@ h1 {
     margin: 1em;
     margin-bottom: 0.5em;
 }
-
-#fondoMenu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    display: none;
-}
-
-#checkHamburguesa:checked+#menu #fondoMenu {
-    display: initial;
-}

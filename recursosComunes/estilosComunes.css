@@ -41,12 +41,12 @@ main {
     background-color: var(--color1);
     color: var(--color6);
     height: min-content;
-    width: 100vw;
     display: flex;
     padding: 1em;
     position: sticky;
     top: 0;
     align-self: start;
+    z-index: 1;
 }
 
 #menuHamburguesa {
@@ -103,7 +103,7 @@ main {
     left: 0;
     overflow: hidden;
     height: 0;
-    transition: 1s;
+    transition-delay: 2s;
 }
 
 #menuOpciones ul {
@@ -112,7 +112,7 @@ main {
     transition: 1s;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100vh - 4.5em);
     list-style: none;
 }
 
@@ -154,6 +154,7 @@ main {
 
 #checkHamburguesa:checked+#menu #menuHamburguesa+#menuOpciones {
     height: calc(100vh - 4.5em);
+    transition-delay: 0s;
 }
 
 #checkHamburguesa:checked+#menu #menuHamburguesa+#menuOpciones #bolaMenuOpciones {
@@ -162,4 +163,19 @@ main {
 
 #checkHamburguesa:checked+#menu #menuHamburguesa+#menuOpciones ul {
     left: 0;
+    transition-delay: 0.3s;
+}
+
+#fondoMenu {
+    position: absolute;
+    top: 4.5em;
+    right: 0;
+    width: 95vw;
+    height: calc(100vh - 4.5em);
+    display: none;
+    z-index:-2;
+}
+
+#checkHamburguesa:checked+#menu #fondoMenu {
+    display: initial;
 }

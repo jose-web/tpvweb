@@ -195,3 +195,7 @@ h1{
     background-color: var(--color4);
 
 }
+
+#seccionLineaDeFacturas{
+    display: none;
+}

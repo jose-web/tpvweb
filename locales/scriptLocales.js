@@ -36,9 +36,6 @@ $(function () {
             }
         }
     });
-
-});
-
 $("#cerrarSesion").on("click", function () {
     $.ajax({
         url: "../REST/cerrarSesion",
@@ -63,3 +60,5 @@ $(document).on('click', '.irFacura', function () {
         }
     });
 });
+});
+

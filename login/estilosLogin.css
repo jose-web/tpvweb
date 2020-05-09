@@ -67,21 +67,20 @@ h1 {
     color: var(--color1);
 }
 
-
 /******* BOTÓN *******/
 
-.boton {
+#boton {
     height: 3em;
     margin: 0.5em;
     background-color: var(--color2);
-    border:none;
-    cursor:pointer;
+    border: none;
+    cursor: pointer;
     color: var(--color6);
     border-radius: 0.5em;
-    transition:0.5s;
+    transition: 0.5s;
 }
 
-.boton:hover {
+#boton:hover {
     background-color: var(--color1);
 }
 

@@ -84,33 +84,3 @@ h1 {
     width: 2em;
     margin-left: 1em;
 }
-
-/** Botones abajo **/
-.boton{
-    width:6em;
-    height:6em;
-    background-color:var(--color1);
-    border-radius: 100%;
-    position: fixed;
-    bottom:0;
-    margin:1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 0;
-}
-
-.boton img{
-    width:auto;
-    height:50%;
-    color:var(--color6);
-}
-
-#botonIzquierda{
-    left:0;
-}
-
-#botonDerecha{
-    right:0;
-}

@@ -32,6 +32,7 @@ h1 {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
+    margin-bottom:1em;
 }
 
 #divLineaDeFactura {
@@ -41,21 +42,19 @@ h1 {
     flex:1 100%;
 }
 
-#facturas tr:first-child {
-    background: linear-gradient(150deg, var(--color3) 50%, var(--color2) 50%);
+#facturas tr:first-child, #LineaDeFactura tr:first-child {
+    background:var(--color2);
     color: var(--color6);
-    border: 0.1em solid var(--color1);
 }
 
-#LineaDeFactura tr:first-child {
-    background-color: var(--color3);
-    color: var(--color6);
-    border: 0.1em solid var(--color1);
+#facturas tr:not(:first-child):hover, #LineaDeFactura tr:not(:first-child):hover{
+    box-shadow: 0 0 0.5em 0.2em var(--color1);
+    position: relative;
 }
 
 #facturas td, #LineaDeFactura td {
-    border-bottom: 0.1em solid var(--color1);
     padding: 1em;
+    cursor: pointer;
 }
 
 #facturas th, #LineaDeFactura th {

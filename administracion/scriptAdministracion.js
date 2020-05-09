@@ -24,6 +24,7 @@ $(function () {
                 $("h1").html("Locales que puedes administrar");
                 $("#opcionesLocal").hide();
                 $("#opciones").show();
+                cambiaBotonIzquierda = 0;
                 break;
 
         }
@@ -32,10 +33,19 @@ $(function () {
 
     let cambiaBotonIzquierda = 0;
     $(document).on("click", ".administraLocal", function () {
-        $("#opciones").hide();
-        $("#opcionesLocal").show();
-        $("h1").html("Administración");
-        cambiaBotonIzquierda = 1;
+
+        let idLocal = $(this).attr("idLocal");
+
+        $.ajax({
+            url: "../REST/cambiaLocal/" + idLocal,
+            method: 'get',
+            success: function (result) {
+                $("#opciones").hide();
+                $("#opcionesLocal").show();
+                $("h1").html("Administración");
+                cambiaBotonIzquierda = 1;
+            }
+        });
     });
 
     $("#cerrarSesion").on("click", function () {

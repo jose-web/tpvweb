@@ -357,4 +357,19 @@ BEGIN
     and factura.codFactura = codigoFactura;
 END $$
 
+
+CREATE PROCEDURE muestraLocalesEncargado(codigoUsuario int)
+BEGIN
+	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+        join local
+			on local.codLocal = trabajador_local.codLocal
+            join empresa
+				on local.codEmpresa = empresa.codEmpresa
+	where trabajador.codUsuario = codigoUsuario
+    and estado = 1
+    and tipo = "encargado";
+END $$
+
 delimiter ;

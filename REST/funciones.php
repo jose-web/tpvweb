@@ -67,12 +67,12 @@ function buscaLocales(){
       return array("mensaje_error" => "Error al realizar la consulta");
     }
     
-    $arrayLocales = array();
+    $arrayResultados = array();
 
     while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayLocales[] = $fila;
+      $arrayResultados[] = $fila;
     }
-    return array("locales" => $arrayLocales);
+    return array("locales" => $arrayResultados);
   }
   return array("locales" => false);
 }
@@ -98,12 +98,12 @@ function muestraFacturasLocal(){
       return array("mensaje_error" => "Error al realizar la consulta");
     }
     
-    $arrayProductos = array();
+    $arrayResultados = array();
 
     while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayProductos[] = $fila;
+      $arrayResultados[] = $fila;
     }
-    return array("facturas" => $arrayProductos);
+    return array("facturas" => $arrayResultados);
   }
   return array("facturas" => false);
 }
@@ -129,12 +129,12 @@ function muestraProductosFactura($codFactura){
       return array("mensaje_error" => "Error al realizar la consulta");
     }
     
-    $arrayProductos = array();
+    $arrayResultados = array();
 
     while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayProductos[] = $fila;
+      $arrayResultados[] = $fila;
     }
-    return array("productos" => $arrayProductos);
+    return array("productos" => $arrayResultados);
   }
   return array("productos" => false);
 }
@@ -145,6 +145,36 @@ function cambiaLocal($codLocal){
   $codLocal = mysqli_real_escape_string($con,$codLocal);
   $_SESSION["codLocal"] = $codLocal;
   return array("codLocal" =>  $_SESSION["codLocal"]);
+}
+
+function muestraLocalesEncargado(){
+  if(compruebaSesion()["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+
+    $consulta = "call muestraLocalesEncargado($codUsuario)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    
+    $arrayResultados = array();
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $arrayResultados[] = $fila;
+    }
+    return array("locales" => $arrayResultados);
+  }
+  return array("locales" => false);
 }
 
 ?>

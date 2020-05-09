@@ -37,6 +37,10 @@ $app->get("/cambiaLocal/:codLocal", function($codLocal){
   echo json_encode(cambiaLocal($codLocal),JSON_FORCE_OBJECT);
 });
 
+$app->get("/muestraLocalesEncargado", function(){
+  echo json_encode(muestraLocalesEncargado(),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

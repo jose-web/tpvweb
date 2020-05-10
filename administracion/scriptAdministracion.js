@@ -36,16 +36,8 @@ $(function () {
 
         let idLocal = $(this).attr("idLocal");
 
-        $.ajax({
-            url: "../REST/cambiaLocal/" + idLocal,
-            method: 'get',
-            success: function (result) {
-                $("#opciones").hide();
-                $("#opcionesLocal").show();
-                $("h1").html("Administración");
-                cambiaBotonIzquierda = 1;
-            }
-        });
+        cambiaLocal(idLocal);
+        cambiaBotonIzquierda = 1;
     });
 
     $("#cerrarSesion").on("click", function () {
@@ -60,6 +52,17 @@ $(function () {
 
 });
 
+function cambiaLocal(idLocal) {
+    $.ajax({
+        url: "../REST/cambiaLocal/" + idLocal,
+        method: 'get',
+        success: function (result) {
+            $("#opciones").hide();
+            $("#opcionesLocal").show();
+            $("h1").html("Administración");
+        }
+    });
+}
 
 function muestraLocalesEncargado() {
     $.ajax({
@@ -85,6 +88,9 @@ function muestraLocalesEncargado() {
                         <p>${direccion}</p>
                         </div>`)
                     }
+                } else if (numeroDeLocales == 1) {
+                    let id = result.locales[0].id;
+                    cambiaLocal(id)
                 }
             }
         }

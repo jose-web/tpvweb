@@ -393,4 +393,26 @@ BEGIN
     and empleados.estado = 1;
 END $$
 
+
+create procedure cambiaTipoEmpleado(codigoUsuario int, codLocal int, codUsuario int, tipo varchar(20))
+begin
+	select count(*) into @empresario
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+	where trabajador.codUsuario = codigoUsuario
+		and trabajador_local.codLocal = codLocal
+        and trabajador_local.tipo = "encargado";
+        
+	if @empresario = 1 then
+		update trabajador_local 
+        set trabajador_local.tipo = tipo
+        where codTrabajador = (
+				select codTrabajador
+                from trabajador
+                where trabajador.codUsuario = codUsuario
+			)
+            and trabajador_local.codLocal = codLocal;
+	end if;
+end $$
+
 delimiter ;

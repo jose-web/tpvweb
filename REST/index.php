@@ -45,6 +45,10 @@ $app->get("/muestraEmpleadosLocal", function(){
   echo json_encode(muestraEmpleadosLocal(),JSON_FORCE_OBJECT);
 });
 
+$app->get("/cambiaTipoEmpleado/:codigousuario/:tipo", function($codigousuario,$tipo){
+  echo json_encode(cambiaTipoEmpleado($codigousuario,$tipo),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

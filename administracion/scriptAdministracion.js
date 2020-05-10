@@ -18,6 +18,7 @@ $(function () {
             case 0:
                 location.href = "..";
                 break;
+
             case 1:
                 muestraLocalesEncargado();
 
@@ -27,8 +28,13 @@ $(function () {
                 cambiaBotonIzquierda = 0;
                 break;
 
+            case 2:
+                $("#administraEmpleados").remove();
+                $("#opcionesLocal").show();
+                $("h1").html("Administración");
+                cambiaBotonIzquierda = 1;
+                break;
         }
-
     });
 
     let cambiaBotonIzquierda = 0;
@@ -38,6 +44,31 @@ $(function () {
 
         cambiaLocal(idLocal);
         cambiaBotonIzquierda = 1;
+    });
+
+    $("#opcionEmpleados").on("click", function () {
+        $.ajax({
+            url: "../REST/muestraEmpleadosLocal",
+            method: 'get',
+            success: function (result) {
+                if (result != false) {
+                    $("h1").html("Administración de los empleados");
+                    $("main").append("<section id='administraEmpleados'></section>")
+                    for (let i = 0; i < Object.keys(result.empleados).length; i++) {
+                        let tipo = result.empleados[i].tipo;
+                        let nombre = result.empleados[i].nombre;
+                        let apellido1 = result.empleados[i].apellido1;
+                        let apellido2 = result.empleados[i].apellido2;
+
+                        $("#administraEmpleados").append(`<div>
+                            <p>${tipo}: ${nombre} ${apellido1} ${apellido2}</p>
+                        </div>`);
+                    }
+                    $("#opcionesLocal").hide();
+                    cambiaBotonIzquierda = 2;
+                }
+            }
+        });
     });
 
     $("#cerrarSesion").on("click", function () {

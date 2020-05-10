@@ -55,13 +55,19 @@ $(function () {
                     $("h1").html("Administración de los empleados");
                     $("main").append("<section id='administraEmpleados'></section>")
                     for (let i = 0; i < Object.keys(result.empleados).length; i++) {
+                        let codEmpleado = result.empleados[i].codUsuario;
                         let tipo = result.empleados[i].tipo;
                         let nombre = result.empleados[i].nombre;
                         let apellido1 = result.empleados[i].apellido1;
                         let apellido2 = result.empleados[i].apellido2;
 
                         $("#administraEmpleados").append(`<div>
-                            <p>${tipo}: ${nombre} ${apellido1} ${apellido2}</p>
+                            <p>${nombre} ${apellido1} ${apellido2}</p>
+                            <select class="tipoEmpleado" codEmpleado="${codEmpleado}">
+                                <option value="encargado" ${tipo == "encargado" ? "selected" : ""}>encargado/a</option>
+                                <option value="camarero" ${tipo == "camarero" ? "selected" : ""}>camarero/a</option>
+                                <option value="cocinero" ${tipo == "cocinero" ? "selected" : ""}>cocinero/a</option>
+                            </select>
                         </div>`);
                     }
                     $("#opcionesLocal").hide();
@@ -70,6 +76,17 @@ $(function () {
             }
         });
     });
+
+    $(document).on("change", ".tipoEmpleado", function () {
+        let codEmpleado = $(this).attr("codEmpleado");
+        let tipo = $(this).val();
+        $.ajax({
+            url: `../REST/cambiaTipoEmpleado/${codEmpleado}/${tipo}`,
+            method: 'get',
+            success: function (result) {
+            }
+        });
+    })
 
     $("#cerrarSesion").on("click", function () {
         $.ajax({

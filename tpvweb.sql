@@ -372,4 +372,21 @@ BEGIN
     and tipo = "encargado";
 END $$
 
+
+CREATE PROCEDURE muestraEmpleadosLocal(codigoUsuario int, codLocal int)
+BEGIN
+	select empleados.*
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+        join local
+			on local.codLocal = trabajador_local.codLocal
+            join trabajador_local as empleados
+				on empleados.codLocal = local.codLocal
+	where trabajador.codUsuario = codigoUsuario
+    and trabajador_local.estado = 1
+    and trabajador_local.tipo = "encargado"
+    and local.codLocal = codLocal
+    and empleados.estado = 1;
+END $$
+
 delimiter ;

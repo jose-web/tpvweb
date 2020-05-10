@@ -41,6 +41,10 @@ $app->get("/muestraLocalesEncargado", function(){
   echo json_encode(muestraLocalesEncargado(),JSON_FORCE_OBJECT);
 });
 
+$app->get("/muestraEmpleadosLocal", function(){
+  echo json_encode(muestraEmpleadosLocal(),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

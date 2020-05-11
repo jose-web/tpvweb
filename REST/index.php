@@ -1,4 +1,6 @@
 <?php
+header('Access-Control-Allow-Origin: http://localhost:3000');
+
 include "funciones.php";
 require 'Slim/Slim.php';
 // El framework Slim tiene definido un namespace llamado Slim

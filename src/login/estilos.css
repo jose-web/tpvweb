@@ -1,0 +1,38 @@
+main {
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#login {
+    width: 80%;
+    background-color: var(--color4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 0.5em black;
+    border-radius: 0.5em;
+}
+
+h1 {
+    padding: 0.5em;
+    color: var(--color1);
+}
+
+#login form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (min-width:50em) {
+    #login {
+        width: 50%;
+    }
+}
+
+@media (min-width:80em) {
+    #login {
+        width: 30%;
+    }
+}

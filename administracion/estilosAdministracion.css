@@ -5,7 +5,7 @@ main section {
     flex-wrap: wrap;
 }
 
-main section div {
+main section>div {
     background-color: var(--color4);
     flex: 1 60%;
     margin: 1em;
@@ -17,7 +17,7 @@ main section div {
     cursor: pointer;
 }
 
-main section div:hover {
+main section>div:hover {
     background-color: var(--color2);
     color: var(--color6);
 }
@@ -31,4 +31,14 @@ h1 {
 
 #opcionesLocal{
     display: none;
+}
+
+select {
+    background-color: var(--color1);
+    color:var(--color6);
+    padding:1em;
+    border:none;
+    width:100%;
+    text-align: center;
+    margin-top:1em;
 }

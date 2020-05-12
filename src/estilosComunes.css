@@ -15,9 +15,11 @@
     --color7: #D26A6A;
     --color8: #88BA69;
 }
+body {
+    background-color: var(--color5);
+}
 
 main {
-    background-color: var(--color5);
     display: flex;
     flex-wrap: wrap;
 }

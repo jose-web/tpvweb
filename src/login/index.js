@@ -69,7 +69,8 @@ export default class Login extends React.Component {
       return <Redirect to="/locales" />
 
     return (
-      <>
+     
+      <div id="contieneLogin">
         <div id="login">
           <h1>TPVWEB</h1>
           <form method="post" action="/locales" onSubmit={this.compruebaLogin}>
@@ -78,7 +79,7 @@ export default class Login extends React.Component {
             <Button value="INICIAR SESIÓN" submit />
           </form>
         </div>
-      </>
+        </div>
     )
   }
 

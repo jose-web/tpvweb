@@ -1,4 +1,5 @@
 import React from 'react'
+import './estilos.css'
 
 export default class Locales extends React.Component {
 
@@ -52,9 +53,10 @@ export default class Locales extends React.Component {
 
     render() {
         return (
-            <>
+            <section id="locales">
+                <h1>Locales</h1>
                 {this.state.arrayLocales}
-            </>
+            </section>
         )
     }
 

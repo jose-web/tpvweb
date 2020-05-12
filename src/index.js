@@ -4,6 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import './comunes/estilosComunes.css'
 import Login from "./login"
 import Locales from "./locales"
+import Facturas from "./facturas"
 
 class Inicia extends React.Component {
   constructor(props) {
@@ -30,31 +31,27 @@ class Inicia extends React.Component {
       data.append('email', usuario.email)
       data.append('pass', usuario.pass)
 
+      let sesion = async () => {
 
-      fetch(url, {
-        method: 'POST',
-        body: data,
+        await fetch(url, {
+          method: 'POST',
+          body: data,
 
-      }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(res => {
-          this.setState({
-            sesion: res.respuesta
+        }).then(res => res.json())
+          .catch(error => console.error('Error:', error))
+          .then(res => {
+            this.setState(res.respuesta)
           })
-        });
+
+      }
+
+      this.setState({ sesion })
     }
   }
 
   render() {
     if (!this.state.sesion)
-      return <BrowserRouter>
-        <Switch>
-          <Route path="/login" component={() => {
-            return <Login sesion={this.componentDidMount} />
-          }} />
-          <Redirect from="*" to="/login" />
-        </Switch>
-      </BrowserRouter>
+      return <Login sesion={this.componentDidMount} />
     return (
       <>
         <BrowserRouter>
@@ -65,6 +62,7 @@ class Inicia extends React.Component {
               return <Login />
             }} />
             <Route exact path="/locales" component={Locales} />
+            <Route exact path="/facturas" component={Facturas} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

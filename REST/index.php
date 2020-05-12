@@ -27,8 +27,8 @@ $app->post("/buscaLocales", function(){
   echo json_encode(buscaLocales($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
-$app->get("/muestraFacturasLocal", function(){
-  echo json_encode(muestraFacturasLocal(),JSON_FORCE_OBJECT);
+$app->post("/muestraFacturasLocal", function(){
+  echo json_encode(muestraFacturasLocal($_POST["email"],$_POST["pass"],$_POST["id"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/muestraProductosFactura/:codFactura", function($codFactura){

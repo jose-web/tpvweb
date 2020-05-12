@@ -38,7 +38,7 @@ export default class Locales extends React.Component {
                     let nombreLocal = res.locales[i].nombreLocal;
                     let direccion = res.locales[i].direccion;
 
-                    arrayLocales.push(<Link to="/facturas" key={id}>
+                    arrayLocales.push(<Link to={"/facturas/"+id} key={id}>
                         <strong>{nombreEmpresa}</strong>
                         <p>{nombreLocal}</p>
                         <p>{direccion}</p>

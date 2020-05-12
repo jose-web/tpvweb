@@ -70,8 +70,9 @@ function buscaLocales($email,$pass){
   return array("locales" => false);
 }
 
-function muestraFacturasLocal(){
-  if(compruebaSesion()["respuesta"]){
+function muestraFacturasLocal($email,$pass,$id){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
     include "conexion.php";
 
     if(!$con){
@@ -80,8 +81,8 @@ function muestraFacturasLocal(){
   
     mysqli_set_charset($con,"utf8");
   
-    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
-    $codLocal = $_SESSION["codLocal"];
+    $codUsuario = $sesion["id"];
+    $codLocal = $id;
 
     $consulta = "call muestraFacturasLocal($codUsuario,$codLocal)";
     $resultado = mysqli_query($con,$consulta);

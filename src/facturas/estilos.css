@@ -1,0 +1,43 @@
+#seccionFacturas {
+    flex: 1 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#seccionFacturas h1 {
+    flex: 1 100%;
+    text-align: center;
+    margin: 1em;
+    margin-bottom: 0.5em;
+}
+
+#facturas {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+#facturas tr:first-child {
+    background: var(--color2);
+    color: var(--color6);
+}
+
+#facturas tr:not(:first-child):hover {
+    box-shadow: 0 0 0.5em 0.2em var(--color1);
+    position: relative;
+}
+
+#facturas td {
+    padding: 1em;
+    cursor: pointer;
+}
+
+#facturas th {
+    padding: 1em;
+}
+
+#facturas .diferente {
+    background-color: var(--color4);
+}

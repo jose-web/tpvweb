@@ -24,7 +24,7 @@ class Inicia extends React.Component {
       })
     } else {
 
-      let url = global.url+"compruebaSesion"
+      let url = global.url + "compruebaSesion"
 
       let usuario = JSON.parse(localStorage.getItem("usuario"))
 
@@ -63,7 +63,7 @@ class Inicia extends React.Component {
               return <Login />
             }} />
             <Route exact path="/locales" component={Locales} />
-            <Route exact path="/facturas" component={Facturas} />
+            <Route exact path="/facturas/:id" component={Facturas} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

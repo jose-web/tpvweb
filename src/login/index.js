@@ -13,7 +13,8 @@ export default class Login extends React.Component {
     this.state = {
       email: "",
       pass: "",
-      redireccionar: false
+      redireccionar: false,
+      fallo: ""
     };
 
     this.compruebaLogin = this.compruebaLogin.bind(this)
@@ -41,11 +42,16 @@ export default class Login extends React.Component {
         if (res.login) {
 
           localStorage.setItem("usuario", JSON.stringify({
-            "email":this.state.email,
-            "pass":md5(this.state.pass)
+            "email": this.state.email,
+            "pass": md5(this.state.pass)
           }))
+          this.props.sesion()
           this.setState({
             redireccionar: true
+          })
+        } else {
+          this.setState({
+            fallo: <p>Fallo al iniciar sesión</p>
           })
         }
       });
@@ -69,17 +75,17 @@ export default class Login extends React.Component {
       return <Redirect to="/locales" />
 
     return (
-     
       <div id="contieneLogin">
         <div id="login">
           <h1>TPVWEB</h1>
+          {this.state.fallo}
           <form method="post" action="/locales" onSubmit={this.compruebaLogin}>
             <Input label="USUARIO" cambia={this.cambiaEmail} />
             <Input label="CONTRASEÑA" pass cambia={this.cambiaPass} />
             <Button value="INICIAR SESIÓN" submit />
           </form>
         </div>
-        </div>
+      </div>
     )
   }
 

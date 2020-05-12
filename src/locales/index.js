@@ -10,7 +10,7 @@ export default class Locales extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         let url = 'http://localhost/tpvweb/REST/buscaLocales';
         let arrayLocales = []

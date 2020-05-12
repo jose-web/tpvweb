@@ -15,8 +15,8 @@ $app->post("/login", function(){
   echo json_encode(login($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
-$app->get("/compruebaSesion", function(){
-  echo json_encode(compruebaSesion(),JSON_FORCE_OBJECT);
+$app->post("/compruebaSesion", function(){
+  echo json_encode(compruebaSesion($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/cerrarSesion", function(){

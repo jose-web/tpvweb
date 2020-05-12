@@ -14,7 +14,7 @@ export default class Locales extends React.Component {
 
     componentDidMount() {
 
-        let url = 'http://localhost/tpvweb/REST/buscaLocales';
+        let url = global.url+'buscaLocales';
         let arrayLocales = []
 
         let usuario = JSON.parse(localStorage.getItem("usuario"))

@@ -1,0 +1,1 @@
+global.url = "http://localhost/tpvweb/REST/"

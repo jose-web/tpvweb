@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import './comunes/estilosComunes.css'
+import './comunes/global.js'
 import Login from "./login"
 import Locales from "./locales"
 import Facturas from "./facturas"
@@ -23,7 +24,7 @@ class Inicia extends React.Component {
       })
     } else {
 
-      let url = 'http://localhost/tpvweb/REST/compruebaSesion';
+      let url = global.url+"compruebaSesion"
 
       let usuario = JSON.parse(localStorage.getItem("usuario"))
 

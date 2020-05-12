@@ -26,7 +26,7 @@ export default class Login extends React.Component {
   compruebaLogin(event) {
     event.preventDefault()
 
-    let url = 'http://localhost/tpvweb/REST/login';
+    let url = global.url+'login';
 
     let data = new FormData();
     data.append('email', this.state.email);

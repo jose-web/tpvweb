@@ -1,6 +1,7 @@
 import React from 'react'
 import './estilos.css'
 import Menu from './../menu'
+import Tabla from './../tabla'
 
 export default class Facturas extends React.Component {
 
@@ -32,26 +33,18 @@ export default class Facturas extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
 
-                arrayFacturas.push(<tr>
-                    <th>Cliente</th>
-                    <th>Cuenta total</th>
-                </tr>)
+                arrayFacturas.push([["Cliente"], ["Cuenta total"]])
 
                 for (let i = 0; i < Object.keys(res.facturas).length; i++) {
 
                     let id = res.facturas[i].id
                     let nombre = res.facturas[i].nombre
                     let cuentaTotal = res.facturas[i].cuentaTotal
-                    let clase = i % 2 ? "diferente" : ""
 
-                    arrayFacturas.push(<tr className={clase} idFactura={id} nombreFactura={nombre}>
-                        <td>{nombre}</td>
-                        <td>{cuentaTotal} €</td>
-                    </tr>)
-
+                    arrayFacturas.push([[id], [nombre], [cuentaTotal]])
                 }
                 this.setState({
-                    arrayFacturas: arrayFacturas
+                    arrayFacturas: arrayFacturas.slice()
                 })
 
             })
@@ -63,9 +56,7 @@ export default class Facturas extends React.Component {
                 <Menu />
                 <section id="seccionFacturas">
                     <h1>Facturas</h1>
-                    <table id="facturas">
-                        {this.state.arrayFacturas}
-                    </table>
+                    <Tabla datos={this.state.arrayFacturas} />
                 </section>
             </>
         )

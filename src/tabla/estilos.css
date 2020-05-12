@@ -1,0 +1,29 @@
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.tabla th {
+    background: var(--color2);
+    color: var(--color6);
+}
+
+.tabla tbody tr:hover {
+    box-shadow: 0 0 0.5em 0.2em var(--color1);
+    position: relative;
+}
+
+.tabla td {
+    padding: 1em;
+    cursor: pointer;
+}
+
+.tabla th {
+    padding: 1em;
+}
+
+.tabla .diferente {
+    background-color: var(--color4);
+}

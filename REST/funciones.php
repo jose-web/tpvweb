@@ -1,8 +1,5 @@
 <?php
 
-session_name("TPVWEB");
-session_start();
-
 function login($email,$pass){
   include "conexion.php";
 
@@ -13,9 +10,9 @@ function login($email,$pass){
   mysqli_set_charset($con,"utf8");
 
   $emailCodificado = mysqli_real_escape_string($con,$email);
-  $passCodificado = md5($pass);
+  $passCodificado = mysqli_real_escape_string($con,$pass);
 
-  $consulta = "SELECT * FROM usuario WHERE email = '$emailCodificado' AND pass = '$passCodificado'";
+  $consulta = "call login('$emailCodificado', '$passCodificado')";
   $resultado = mysqli_query($con,$consulta);
   mysqli_close($con);
 
@@ -23,32 +20,28 @@ function login($email,$pass){
     return array("mensaje_error" => "Error al realizar la consulta");
   }
 
-  if($fila = mysqli_fetch_assoc($resultado)){
-    $_SESSION["USUARIO"] = array("email"=>$email,"pass"=>$pass, "codUsuario"=>$fila["codUsuario"]);
-    return array("login" => true);
-  } 
+  if($fila = mysqli_fetch_assoc($resultado))
+    return array("login" => true, "id"=>$fila["codUsuario"]);
+  else
     return array("login" => false);
 }
 
-function compruebaSesion(){
-  if(isset($_SESSION["USUARIO"])){
-
-    $email = $_SESSION["USUARIO"]["email"];
-    $pass = $_SESSION["USUARIO"]["pass"];
+function compruebaSesion($email,$pass){
     $login = login($email,$pass);
 
     if($login["login"])
-      return array("respuesta" =>true);
-  }
-    return array("respuesta" => false);
+      return array("respuesta" =>true,"id"=>$login["id"]);
+    else
+      return array("respuesta" => false);
 }
 
 function cerrarSesion(){
   session_destroy();
 }
 
-function buscaLocales(){
-  if(compruebaSesion()["respuesta"]){
+function buscaLocales($email,$pass){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
     include "conexion.php";
 
     if(!$con){
@@ -57,7 +50,7 @@ function buscaLocales(){
   
     mysqli_set_charset($con,"utf8");
   
-    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+    $codUsuario = $sesion["id"];
 
     $consulta = "call muestraLocales($codUsuario)";
     $resultado = mysqli_query($con,$consulta);

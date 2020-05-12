@@ -23,8 +23,8 @@ $app->get("/cerrarSesion", function(){
   echo json_encode(cerrarSesion(),JSON_FORCE_OBJECT);
 });
 
-$app->get("/buscaLocales", function(){
-  echo json_encode(buscaLocales(),JSON_FORCE_OBJECT);
+$app->post("/buscaLocales", function(){
+  echo json_encode(buscaLocales($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/muestraFacturasLocal", function(){

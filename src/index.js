@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import './estilosComunes.css'
 import Login from "./login"
+import Locales from "./locales"
 
 class Inicia extends React.Component {
 
@@ -12,6 +13,7 @@ class Inicia extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/login" component={Login} />
+            <Route exact path="/locales" component={Locales} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

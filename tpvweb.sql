@@ -303,8 +303,17 @@ create table lineaDeFactura (
 
 delimiter $$
 
-CREATE PROCEDURE muestraLocales(codigoUsuario int)
-BEGIN
+create procedure login(email varchar(50), pass varchar(32))
+begin
+	select * 
+    from usuario 
+    where usuario.email = email
+		and usuario.pass = pass;
+end $$
+
+
+create procedure muestraLocales(codigoUsuario int)
+begin
 	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
     from local join trabajador_local 
 		on local.codLocal = trabajador_local.codLocal 
@@ -313,11 +322,11 @@ BEGIN
 			join trabajador
             on trabajador_local.codTrabajador = trabajador.codTrabajador
 	where trabajador.codUsuario = codigoUsuario and estado = 1;
-END $$
+end $$
 
 
-CREATE PROCEDURE muestraFacturasLocal(codigoUsuario int,codigoLocal int)
-BEGIN
+create procedure muestraFacturasLocal(codigoUsuario int,codigoLocal int)
+begin
 	select factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(lineadefactura.precio * lineadefactura.cantidad),0) as cuentaTotal
     from factura join mesa
 		on factura.codMesa = mesa.codMesa
@@ -334,11 +343,11 @@ BEGIN
 		and factura.pagado = 0
 	group by factura.codFactura
     order by nombre;
-END $$
+end $$
 
 
-CREATE PROCEDURE muestraProductosFactura(codigoUsuario int,codigoFactura int)
-BEGIN
+create procedure muestraProductosFactura(codigoUsuario int,codigoFactura int)
+begin
 	select lineadefactura.codLinea, producto.nombre, lineadefactura.precio, lineadefactura.cantidad, lineadefactura.comentario
     from lineadefactura join factura
 		on lineadefactura.codFactura = factura.codFactura
@@ -355,11 +364,11 @@ BEGIN
 	where trabajador.codUsuario = codigoUsuario 
     and trabajador_local.estado = 1 
     and factura.codFactura = codigoFactura;
-END $$
+end $$
 
 
-CREATE PROCEDURE muestraLocalesEncargado(codigoUsuario int)
-BEGIN
+create procedure muestraLocalesEncargado(codigoUsuario int)
+begin
 	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
     from trabajador join trabajador_local
 		on trabajador.codTrabajador = trabajador_local.codTrabajador
@@ -370,11 +379,11 @@ BEGIN
 	where trabajador.codUsuario = codigoUsuario
     and estado = 1
     and tipo = "encargado";
-END $$
+end $$
 
 
-CREATE PROCEDURE muestraEmpleadosLocal(codigoUsuario int, codLocal int)
-BEGIN
+create procedure muestraEmpleadosLocal(codigoUsuario int, codLocal int)
+begin
 	select usuario.codUsuario, usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.img, empleados.tipo
     from trabajador join trabajador_local
 		on trabajador.codTrabajador = trabajador_local.codTrabajador
@@ -391,7 +400,7 @@ BEGIN
     and trabajador_local.tipo = "encargado"
     and local.codLocal = codLocal
     and empleados.estado = 1;
-END $$
+end $$
 
 
 create procedure cambiaTipoEmpleado(codigoUsuario int, codLocal int, codUsuario int, tipo varchar(20))

@@ -2,6 +2,9 @@ import React from 'react'
 import './estilos.css'
 import Input from "../input"
 import Button from "../button"
+import { Redirect } from "react-router-dom"
+import md5 from 'md5'
+
 
 export default class Login extends React.Component {
 
@@ -9,7 +12,8 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       email: "",
-      pass: ""
+      pass: "",
+      redireccionar: false
     };
 
     this.compruebaLogin = this.compruebaLogin.bind(this)
@@ -21,11 +25,11 @@ export default class Login extends React.Component {
   compruebaLogin(event) {
     event.preventDefault()
 
-    var url = 'http://localhost/tpvweb/REST/login';
+    let url = 'http://localhost/tpvweb/REST/login';
 
-    var data = new FormData();
+    let data = new FormData();
     data.append('email', this.state.email);
-    data.append('pass', this.state.pass);
+    data.append('pass', md5(this.state.pass));
 
     fetch(url, {
       method: 'POST',
@@ -33,7 +37,18 @@ export default class Login extends React.Component {
 
     }).then(res => res.json())
       .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .then(res => {
+        if (res.login) {
+
+          localStorage.setItem("usuario", JSON.stringify({
+            "email":this.state.email,
+            "pass":md5(this.state.pass)
+          }))
+          this.setState({
+            redireccionar: true
+          })
+        }
+      });
 
   }
 
@@ -50,6 +65,9 @@ export default class Login extends React.Component {
   }
 
   render() {
+    if (this.state.redireccionar)
+      return <Redirect to="/locales" />
+
     return (
       <>
         <div id="login">

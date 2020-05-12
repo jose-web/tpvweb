@@ -1,0 +1,142 @@
+#menu {
+    background-color: var(--color1);
+    color: var(--color6);
+    height: min-content;
+    width: 100vw;
+    display: flex;
+    padding: 1em;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    z-index: 1;
+}
+
+#menuHamburguesa {
+    position: relative;
+    cursor: pointer;
+    align-self: center;
+    width: 3em;
+    height: 2.5em;
+}
+
+#menuHamburguesa span {
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 3em;
+    height: 0.5em;
+    background-color: white;
+    transition: 0.5s;
+}
+
+#menuHamburguesa span:nth-child(1) {
+    top: 0;
+}
+
+#menuHamburguesa span:nth-child(2) {
+    top: 1em;
+}
+
+#menuHamburguesa span:nth-child(3) {
+    top: 2em;
+}
+
+#checkHamburguesa {
+    display: none;
+}
+
+#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 1em;
+}
+
+#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(2) {
+    width: 0;
+}
+
+#checkHamburguesa:checked+#menu #menuHamburguesa span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 1em;
+}
+
+#menuOpciones {
+    position: absolute;
+    top: 4.5em;
+    left: 0;
+    overflow: hidden;
+    height: 0;
+    transition-delay: 1s;
+}
+
+#menuOpciones ul {
+    position: relative;
+    left: -100vw;
+    transition: 1s;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 4.5em);
+    list-style: none;
+}
+
+#menuOpciones li {
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+#menuOpciones a {
+    text-decoration: none;
+    color: var(--color1);
+}
+
+#menuOpciones a:last-child {
+    margin-top: auto;
+    color: var(--color6);
+    background-color: var(--color7);
+    cursor: pointer;
+}
+
+#menuOpciones li:hover {
+    background-color: var(--color4);
+}
+
+#bolaMenuOpciones {
+    position: absolute;
+    width: 200vh;
+    height: 200vh;
+    background-color: var(--color6);
+    border-radius: 100%;
+    top: -100vh;
+    left: -100vh;
+    z-index: -1;
+    transform: scale(0);
+    transition: 1s;
+}
+
+#checkHamburguesa:checked+#menu #menuHamburguesa+#menuOpciones {
+    height: calc(100vh - 4.5em);
+    transition-delay: 0s;
+}
+
+#checkHamburguesa:checked+#menu #menuHamburguesa+#menuOpciones #bolaMenuOpciones {
+    transform: scale(1);
+}
+
+#checkHamburguesa:checked+#menu #menuHamburguesa+#menuOpciones ul {
+    left: 0;
+}
+
+#fondoMenu {
+    position: absolute;
+    top: 4.5em;
+    right: 0;
+    width: 95vw;
+    height: calc(100vh - 4.5em);
+    display: none;
+    z-index: -2;
+}
+
+#checkHamburguesa:checked+#menu #fondoMenu {
+    display: initial;
+}

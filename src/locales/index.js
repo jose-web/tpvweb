@@ -1,5 +1,6 @@
 import React from 'react'
 import './estilos.css'
+import Menu from './../menu'
 
 export default class Locales extends React.Component {
 
@@ -53,10 +54,13 @@ export default class Locales extends React.Component {
 
     render() {
         return (
-            <section id="locales">
-                <h1>Locales</h1>
-                {this.state.arrayLocales}
-            </section>
+            <>
+                <Menu />
+                <section id="locales">
+                    <h1>Locales</h1>
+                    {this.state.arrayLocales}
+                </section>
+            </>
         )
     }
 

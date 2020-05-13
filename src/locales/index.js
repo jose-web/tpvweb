@@ -46,7 +46,7 @@ export default class Locales extends React.Component {
                     let nombreLocal = res.locales[i].nombreLocal;
                     let direccion = res.locales[i].direccion;
 
-                    arrayLocales.push(<article onClick={() => this.guardaSesionYRedirije(id)} key={id}>
+                    arrayLocales.push(<article onClick={() => this.guardaSesionYRedirije(id)} key={id} tabindex="0">
                         <strong>{nombreEmpresa}</strong>
                         <p>{nombreLocal}</p>
                         <p>{direccion}</p>

@@ -41,7 +41,7 @@ export default class Tabla extends React.Component {
                 }
 
                 arrayFilas.push(
-                    <tr key={datos[i][0]} onClick={this.irLineaDeFactura}>{fila}</tr>
+                    <tr tabindex="0" key={datos[i][0]} className={i%2?"":"diferente"} onClick={this.irLineaDeFactura}>{fila}</tr>
                 )
 
             }

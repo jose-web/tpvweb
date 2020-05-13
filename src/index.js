@@ -63,7 +63,7 @@ class Inicia extends React.Component {
               return <Login />
             }} />
             <Route exact path="/locales" component={Locales} />
-            <Route exact path="/facturas/:id" component={Facturas} />
+            <Route exact path="/facturas" component={Facturas} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

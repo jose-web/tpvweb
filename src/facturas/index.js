@@ -2,20 +2,28 @@ import React from 'react'
 import './estilos.css'
 import Menu from './../menu'
 import Tabla from './../tabla'
+import { Redirect } from "react-router-dom"
 
 export default class Facturas extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            arrayFacturas: []
+            arrayFacturas: [],
+            redireccionar: false
         };
     }
 
     componentDidMount() {
+        let id = sessionStorage.getItem("idFactura")
+
+        if (id == null)
+            this.setState({
+                redireccionar: true
+            })
 
         let url = global.url + 'muestraFacturasLocal'
-        const { id } = this.props.match.params
+
         let arrayFacturas = []
 
         let usuario = JSON.parse(localStorage.getItem("usuario"))
@@ -51,6 +59,8 @@ export default class Facturas extends React.Component {
     }
 
     render() {
+        if (this.state.redireccionar)
+            return <Redirect to="/locales" />
         return (
             <>
                 <Menu />

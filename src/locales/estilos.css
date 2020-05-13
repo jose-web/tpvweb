@@ -6,7 +6,7 @@
     align-self: flex-start;
 }
 
-#locales a {
+#locales article {
     background-color: var(--color4);
     flex: 1 40%;
     margin: 1em;
@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-#locales a:hover {
+#locales article:hover {
     background-color: var(--color2);
     color: var(--color6);
 }

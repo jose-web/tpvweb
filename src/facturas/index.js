@@ -10,8 +10,42 @@ export default class Facturas extends React.Component {
         super(props);
         this.state = {
             arrayFacturas: [],
-            redireccionar: false
+            redireccionar: false,
+            data: ""
         };
+        this.repetir = this.repetir.bind(this)
+    }
+
+    repetir() {
+        let url = global.url + 'muestraFacturasLocal'
+
+        let arrayFacturas = []
+
+        fetch(url, {
+            method: 'POST',
+            body: this.state.data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+
+                arrayFacturas.push([["Cliente"], ["Cuenta total"]])
+
+                if (typeof res !== "undefined")
+                    for (let i = 0; i < Object.keys(res.facturas).length; i++) {
+
+                        let id = res.facturas[i].id
+                        let nombre = res.facturas[i].nombre
+                        let cuentaTotal = res.facturas[i].cuentaTotal
+
+                        arrayFacturas.push([[id], [nombre], [cuentaTotal]])
+                    }
+                this.setState({
+                    arrayFacturas: arrayFacturas.slice()
+                })
+
+            })
+
     }
 
     componentDidMount() {
@@ -22,10 +56,6 @@ export default class Facturas extends React.Component {
                 redireccionar: true
             })
 
-        let url = global.url + 'muestraFacturasLocal'
-
-        let arrayFacturas = []
-
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let data = new FormData()
@@ -33,34 +63,19 @@ export default class Facturas extends React.Component {
         data.append('pass', usuario.pass)
         data.append('id', id)
 
-        fetch(url, {
-            method: 'POST',
-            body: data,
+        this.setState({ data: data })
 
-        }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(res => {
-
-                arrayFacturas.push([["Cliente"], ["Cuenta total"]])
-
-                for (let i = 0; i < Object.keys(res.facturas).length; i++) {
-
-                    let id = res.facturas[i].id
-                    let nombre = res.facturas[i].nombre
-                    let cuentaTotal = res.facturas[i].cuentaTotal
-
-                    arrayFacturas.push([[id], [nombre], [cuentaTotal]])
-                }
-                this.setState({
-                    arrayFacturas: arrayFacturas.slice()
-                })
-
-            })
     }
 
     render() {
-        if (this.state.redireccionar)
+        this.repetir()
+        let intervalo = setInterval(this.repetir, 2000)
+
+        if (this.state.redireccionar) {
+            clearInterval(intervalo)
             return <Redirect to="/locales" />
+        }
+
         return (
             <>
                 <Menu />

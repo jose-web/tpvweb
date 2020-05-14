@@ -81,7 +81,7 @@ export default class Facturas extends React.Component {
                 <Menu />
                 <section id="seccionFacturas">
                     <h1>Facturas</h1>
-                    <Tabla datos={this.state.arrayFacturas} />
+                    <Tabla datos={this.state.arrayFacturas} link="/lineaDeFactura"/>
                 </section>
             </>
         )

@@ -12,13 +12,14 @@ export default class Tabla extends React.Component {
             arrayFilas: [],
             redireccionar: false
         };
-        this.irLineaDeFactura = this.irLineaDeFactura.bind(this)
+        this.irLink = this.irLink.bind(this)
     }
 
-    irLineaDeFactura() {
-        this.setState({
-            redireccionar: true
-        })
+    irLink() {
+        if (typeof this.props.link !== "undefined")
+            this.setState({
+                redireccionar: true
+            })
     }
 
     componentDidUpdate(propsAntiguas) {
@@ -41,7 +42,7 @@ export default class Tabla extends React.Component {
                 }
 
                 arrayFilas.push(
-                    <tr tabindex="0" key={datos[i][0]} className={i%2?"":"diferente"} onClick={this.irLineaDeFactura}>{fila}</tr>
+                    <tr tabindex="0" key={datos[i][0]} className={i % 2 ? "" : "diferente"} onClick={this.irLink}>{fila}</tr>
                 )
 
             }
@@ -55,7 +56,7 @@ export default class Tabla extends React.Component {
 
     render() {
         if (this.state.redireccionar)
-            return <Redirect to="/lineaDeFactura" />
+            return <Redirect to={this.props.link} />
         return (
             <table className="tabla">
                 <thead>

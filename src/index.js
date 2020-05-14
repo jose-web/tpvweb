@@ -6,6 +6,8 @@ import './comunes/global.js'
 import Login from "./paginas/login"
 import Locales from "./paginas/locales"
 import Facturas from "./paginas/facturas"
+import LineaDeFactura from "./paginas/lineaDeFactura"
+
 
 class Inicia extends React.Component {
   constructor(props) {
@@ -64,6 +66,7 @@ class Inicia extends React.Component {
             }} />
             <Route exact path="/locales" component={Locales} />
             <Route exact path="/facturas" component={Facturas} />
+            <Route exact path="/lineaDeFactura" component={LineaDeFactura} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

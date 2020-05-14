@@ -14,7 +14,7 @@ export default class Locales extends React.Component {
     }
 
     guardaSesionYRedirije(id) {
-        sessionStorage.setItem("idFactura", id)
+        sessionStorage.setItem("idLocal", id)
         this.setState({
             redireccionar: true
         })
@@ -46,7 +46,7 @@ export default class Locales extends React.Component {
                     let nombreLocal = res.locales[i].nombreLocal;
                     let direccion = res.locales[i].direccion;
 
-                    arrayLocales.push(<article onClick={() => this.guardaSesionYRedirije(id)} key={id} tabindex="0">
+                    arrayLocales.push(<article onClick={() => this.guardaSesionYRedirije(id)} key={id} tabIndex="0">
                         <strong>{nombreEmpresa}</strong>
                         <p>{nombreLocal}</p>
                         <p>{direccion}</p>

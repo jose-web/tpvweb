@@ -102,8 +102,9 @@ function muestraFacturasLocal($email,$pass,$id){
   return array("facturas" => false);
 }
 
-function muestraProductosFactura($codFactura){
-  if(compruebaSesion()["respuesta"]){
+function muestraProductosFactura($email,$pass,$codFactura){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
     include "conexion.php";
 
     if(!$con){
@@ -112,7 +113,7 @@ function muestraProductosFactura($codFactura){
   
     mysqli_set_charset($con,"utf8");
   
-    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
+    $codUsuario = $sesion["id"];
     $codFactura = mysqli_real_escape_string($con,$codFactura);
 
     $consulta = "call muestraProductosFactura($codUsuario,$codFactura)";

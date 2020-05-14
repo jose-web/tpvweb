@@ -1,3 +1,8 @@
+.contieneTabla {
+    width: 100vw;
+    overflow-y: auto;
+}
+
 .tabla {
     width: 100%;
     border-collapse: collapse;
@@ -8,6 +13,7 @@
 .tabla th {
     background: var(--color2);
     color: var(--color6);
+    padding: 1em;
 }
 
 .tabla tbody tr:hover {
@@ -18,10 +24,6 @@
 .tabla td {
     padding: 1em;
     cursor: pointer;
-}
-
-.tabla th {
-    padding: 1em;
 }
 
 .tabla .diferente {

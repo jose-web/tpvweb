@@ -31,8 +31,8 @@ $app->post("/muestraFacturasLocal", function(){
   echo json_encode(muestraFacturasLocal($_POST["email"],$_POST["pass"],$_POST["id"]),JSON_FORCE_OBJECT);
 });
 
-$app->get("/muestraProductosFactura/:codFactura", function($codFactura){
-  echo json_encode(muestraProductosFactura($codFactura),JSON_FORCE_OBJECT);
+$app->post("/muestraProductosFactura", function(){
+  echo json_encode(muestraProductosFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/cambiaLocal/:codLocal", function($codLocal){

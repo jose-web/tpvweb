@@ -8,7 +8,7 @@ export default class Menu extends React.Component {
             <>
                 <input type="checkbox" id="checkHamburguesa" />
                 <header id="menu">
-                    <label id="menuHamburguesa" htmlFor="checkHamburguesa" tabindex="0">
+                    <label id="menuHamburguesa" htmlFor="checkHamburguesa" tabIndex="0">
                         <span></span>
                         <span></span>
                         <span></span>

@@ -1,7 +1,5 @@
 import React from 'react'
 import './estilos.css'
-import { Redirect } from "react-router-dom"
-
 
 export default class Tabla extends React.Component {
 
@@ -9,17 +7,8 @@ export default class Tabla extends React.Component {
         super(props);
         this.state = {
             arrayTitulo: [],
-            arrayFilas: [],
-            redireccionar: false
+            arrayFilas: []
         };
-        this.irLink = this.irLink.bind(this)
-    }
-
-    irLink() {
-        if (typeof this.props.link !== "undefined")
-            this.setState({
-                redireccionar: true
-            })
     }
 
     componentDidUpdate(propsAntiguas) {
@@ -42,7 +31,7 @@ export default class Tabla extends React.Component {
                 }
 
                 arrayFilas.push(
-                    <tr tabindex="0" key={datos[i][0]} className={i % 2 ? "" : "diferente"} onClick={this.irLink}>{fila}</tr>
+                    <tr tabIndex="0" key={datos[i][0]} className={i % 2 ? "" : "diferente"} onClick={() => this.props.onClick(datos[i][0])}>{fila}</tr>
                 )
 
             }
@@ -55,17 +44,17 @@ export default class Tabla extends React.Component {
     }
 
     render() {
-        if (this.state.redireccionar)
-            return <Redirect to={this.props.link} />
         return (
-            <table className="tabla">
-                <thead>
-                    {this.state.arrayTitulo}
-                </thead>
-                <tbody>
-                    {this.state.arrayFilas}
-                </tbody>
-            </table>
+            <article class="contieneTabla">
+                <table className="tabla">
+                    <thead>
+                        {this.state.arrayTitulo}
+                    </thead>
+                    <tbody>
+                        {this.state.arrayFilas}
+                    </tbody>
+                </table>
+            </article>
         )
     }
 

@@ -10,10 +10,12 @@ export default class Facturas extends React.Component {
         super(props);
         this.state = {
             arrayFacturas: [],
-            redireccionar: false,
-            data: ""
+            redireccionar: "",
+            data: "",
+            intervalo: ""
         };
         this.repetir = this.repetir.bind(this)
+        this.irLineaDeFactura = this.irLineaDeFactura.bind(this)
     }
 
     repetir() {
@@ -25,7 +27,7 @@ export default class Facturas extends React.Component {
             method: 'POST',
             body: this.state.data,
 
-        }).then(res => res.json())
+        }).then(res => { if (res.ok) return res.json() })
             .catch(error => console.error('Error:', error))
             .then(res => {
 
@@ -49,11 +51,11 @@ export default class Facturas extends React.Component {
     }
 
     componentDidMount() {
-        let id = sessionStorage.getItem("idFactura")
+        let id = sessionStorage.getItem("idLocal")
 
         if (id == null)
             this.setState({
-                redireccionar: true
+                redireccionar: "/locales"
             })
 
         let usuario = JSON.parse(localStorage.getItem("usuario"))
@@ -63,17 +65,28 @@ export default class Facturas extends React.Component {
         data.append('pass', usuario.pass)
         data.append('id', id)
 
-        this.setState({ data: data })
+        this.setState({ data })
+
+        this.repetir()
+        let intervalo = setInterval(this.repetir, 100)
+
+        this.setState({ intervalo })
 
     }
 
-    render() {
-        this.repetir()
-        let intervalo = setInterval(this.repetir, 2000)
+    irLineaDeFactura($id) {
+        console.log($id)
+        sessionStorage.setItem("idFactura", $id)
+        this.setState({
+            redireccionar: "/lineaDeFactura"
+        })
+    }
 
-        if (this.state.redireccionar) {
-            clearInterval(intervalo)
-            return <Redirect to="/locales" />
+    render() {
+
+        if (this.state.redireccionar !== "") {
+            clearInterval(this.state.intervalo)
+            return <Redirect to={this.state.redireccionar} />
         }
 
         return (
@@ -81,7 +94,7 @@ export default class Facturas extends React.Component {
                 <Menu />
                 <section id="seccionFacturas">
                     <h1>Facturas</h1>
-                    <Tabla datos={this.state.arrayFacturas} link="/lineaDeFactura"/>
+                    <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} />
                 </section>
             </>
         )

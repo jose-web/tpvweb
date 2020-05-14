@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import './comunes/estilosComunes.css'
 import './comunes/global.js'
-import Login from "./login"
-import Locales from "./locales"
-import Facturas from "./facturas"
+import Login from "./paginas/login"
+import Locales from "./paginas/locales"
+import Facturas from "./paginas/facturas"
 
 class Inicia extends React.Component {
   constructor(props) {

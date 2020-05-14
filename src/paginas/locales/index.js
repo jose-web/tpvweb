@@ -1,6 +1,6 @@
 import React from 'react'
 import './estilos.css'
-import Menu from './../menu'
+import Menu from '../../componentes/menu'
 import { Redirect } from "react-router-dom"
 
 export default class Locales extends React.Component {

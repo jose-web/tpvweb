@@ -1,7 +1,7 @@
 import React from 'react'
 import './estilos.css'
-import Menu from './../menu'
-import Tabla from './../tabla'
+import Menu from '../../componentes/menu'
+import Tabla from '../../componentes/tabla'
 import { Redirect } from "react-router-dom"
 
 export default class Facturas extends React.Component {

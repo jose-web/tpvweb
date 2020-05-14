@@ -1,7 +1,7 @@
 import React from 'react'
 import './estilos.css'
-import Input from "../input"
-import Button from "../button"
+import Input from "../../componentes/input"
+import Button from "../../componentes/button"
 import { Redirect } from "react-router-dom"
 import md5 from 'md5'
 

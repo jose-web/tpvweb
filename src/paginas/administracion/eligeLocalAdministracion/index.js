@@ -1,10 +1,10 @@
 import React from 'react'
 import './estilos.css'
-import Menu from '../../componentes/menu'
-import BotonAbajo from '../../componentes/botonAbajo'
+import Menu from '../../../componentes/menu'
+import BotonAbajo from '../../../componentes/botonAbajo'
 import { Redirect } from "react-router-dom"
 
-export default class Facturas extends React.Component {
+export default class localAdministracion extends React.Component {
 
     constructor(props) {
         super(props);

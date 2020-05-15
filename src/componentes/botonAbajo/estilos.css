@@ -1,0 +1,22 @@
+.botonAbajo {
+    width: 5em;
+    height: 5em;
+    background-color: var(--color1);
+    border-radius: 100%;
+    position: fixed;
+    bottom: 0;
+    margin: 1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botonAbajoDerecha {
+    right: 0;
+}
+
+.botonAbajo img {
+    width: 2em;
+    height: 2em;
+}

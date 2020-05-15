@@ -2,8 +2,9 @@ import React from 'react'
 import './estilos.css'
 import Menu from '../../componentes/menu'
 import Tabla from '../../componentes/tabla'
+import BotonAbajo from '../../componentes/botonAbajo'
 import iconoPagar from "./cash-register-solid.svg"
-// import { Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 
 export default class LineaDeFactura extends React.Component {
 
@@ -14,9 +15,11 @@ export default class LineaDeFactura extends React.Component {
             redireccionar: false,
             data: "",
             nombreCliente: "",
-            cuentaTotal: 0
+            cuentaTotal: 0,
+            intervalo: ""
         };
         this.repetir = this.repetir.bind(this)
+        this.atras = this.atras.bind(this)
     }
 
     repetir() {
@@ -77,22 +80,32 @@ export default class LineaDeFactura extends React.Component {
 
         this.setState({ data })
 
-        let intervalo = setInterval(this.repetir, 2000)
+        let intervalo = setInterval(this.repetir, 1000)
 
         this.setState({ intervalo })
 
     }
 
-    render() {
+    atras() {
+        clearInterval(this.state.intervalo)
+        this.setState({
+            redireccionar: true
+        })
+    }
 
+    render() {
+        if (this.state.redireccionar)
+            return <Redirect to="/facturas" />
         return (
             <>
                 <Menu />
                 <section id="seccionLineaDeFactura">
-                    <h1>Linea de factura</h1>
-                    <div id="titulo"><p>{this.state.nombreCliente}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><img src={iconoPagar} alt="Pagar"></img></div>
+                    <h1>Línea de factura</h1>
+                    <div id="titulo"><p>{this.state.nombreCliente}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><img src={iconoPagar} alt="Pagar" /></div>
                     <Tabla datos={this.state.arrayFacturas} />
                 </section>
+                <BotonAbajo onClick={this.atras} />
+                <BotonAbajo derecha />
             </>
         )
     }

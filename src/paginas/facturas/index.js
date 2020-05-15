@@ -2,6 +2,7 @@ import React from 'react'
 import './estilos.css'
 import Menu from '../../componentes/menu'
 import Tabla from '../../componentes/tabla'
+import BotonAbajo from '../../componentes/botonAbajo'
 import { Redirect } from "react-router-dom"
 
 export default class Facturas extends React.Component {
@@ -16,6 +17,7 @@ export default class Facturas extends React.Component {
         };
         this.repetir = this.repetir.bind(this)
         this.irLineaDeFactura = this.irLineaDeFactura.bind(this)
+        this.atras = this.atras.bind(this)
     }
 
     repetir() {
@@ -68,18 +70,22 @@ export default class Facturas extends React.Component {
 
         this.setState({ data })
 
-        this.repetir()
-        let intervalo = setInterval(this.repetir, 100)
+        let intervalo = setInterval(this.repetir, 1000)
 
         this.setState({ intervalo })
 
     }
 
     irLineaDeFactura($id) {
-        console.log($id)
         sessionStorage.setItem("idFactura", $id)
         this.setState({
             redireccionar: "/lineaDeFactura"
+        })
+    }
+
+    atras() {
+        this.setState({
+            redireccionar: "/locales"
         })
     }
 
@@ -97,6 +103,7 @@ export default class Facturas extends React.Component {
                     <h1>Facturas</h1>
                     <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} />
                 </section>
+                <BotonAbajo onClick={this.atras} />
             </>
         )
     }

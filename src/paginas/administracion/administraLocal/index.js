@@ -10,18 +10,17 @@ export default class AdministracionLocal extends React.Component {
         this.state = {
             redireccionar: ""
         };
-        this.atras = this.atras.bind(this)
+        this.irA = this.irA.bind(this)
     }
 
-    atras() {
+    irA($sitio) {
         this.setState({
-            redireccionar: "/administracion/seleccionLocal"
+            redireccionar: $sitio
         })
     }
 
     render() {
         if (this.state.redireccionar !== "") {
-            clearInterval(this.state.intervalo)
             return <Redirect to={this.state.redireccionar} />
         }
 
@@ -30,11 +29,11 @@ export default class AdministracionLocal extends React.Component {
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>Administración</h1>
-                    <article>Empleados</article>
+                    <article onClick={() => this.irA("/administracion/empleados")}>Empleados</article>
                     <article>Productos</article>
                     <article>Mapa</article>
                 </section>
-                <BotonAbajo onClick={this.atras} />
+                <BotonAbajo onClick={() => this.irA("/administracion/seleccionLocal")} />
             </>
         )
     }

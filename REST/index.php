@@ -43,8 +43,8 @@ $app->post("/muestraLocalesEncargado", function(){
   echo json_encode(muestraLocalesEncargado($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
-$app->get("/muestraEmpleadosLocal", function(){
-  echo json_encode(muestraEmpleadosLocal(),JSON_FORCE_OBJECT);
+$app->post("/muestraEmpleadosLocal", function(){
+  echo json_encode(muestraEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/cambiaTipoEmpleado/:codigousuario/:tipo", function($codigousuario,$tipo){

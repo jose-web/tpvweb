@@ -173,8 +173,9 @@ function muestraLocalesEncargado($email,$pass){
   return array("locales" => false);
 }
 
-function muestraEmpleadosLocal(){
-  if(compruebaSesion()["respuesta"]){
+function muestraEmpleadosLocal($email,$pass,$codLocal){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
     include "conexion.php";
 
     if(!$con){
@@ -183,8 +184,8 @@ function muestraEmpleadosLocal(){
   
     mysqli_set_charset($con,"utf8");
   
-    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
-    $codLocal = $_SESSION["codLocal"];
+    $codUsuario = $sesion["id"];
+    $codLocal = mysqli_real_escape_string($con,$codLocal);
 
     $consulta = "call muestraEmpleadosLocal($codUsuario,$codLocal)";
     $resultado = mysqli_query($con,$consulta);

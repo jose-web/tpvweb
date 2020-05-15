@@ -39,8 +39,8 @@ $app->get("/cambiaLocal/:codLocal", function($codLocal){
   echo json_encode(cambiaLocal($codLocal),JSON_FORCE_OBJECT);
 });
 
-$app->get("/muestraLocalesEncargado", function(){
-  echo json_encode(muestraLocalesEncargado(),JSON_FORCE_OBJECT);
+$app->post("/muestraLocalesEncargado", function(){
+  echo json_encode(muestraLocalesEncargado($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/muestraEmpleadosLocal", function(){

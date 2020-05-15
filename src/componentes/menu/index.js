@@ -15,9 +15,9 @@ export default class Menu extends React.Component {
                     </label>
                     <div id="menuOpciones">
                         <ul>
-                            <Link to="/administracion"><li>Administración</li></Link>
-                            <Link to="/suscripcion"><li>Suscripción</li></Link>
-                            <Link to="/cerrarSesion" id="cerrarSesion"><li>cerrar sesion</li></Link>
+                            <Link to="/administracion" className={this.props.estoyEn === "administracion" ? "activo" : ""}><li>Administración</li></Link>
+                            <Link to="/suscripcion" className={this.props.estoyEn === "suscripcion" ? "activo" : ""}><li>Suscripción</li></Link>
+                            <Link to="/cerrarSesion" id="cerrarSesion"><li>cerrar sesión</li></Link>
                         </ul>
                         <div id="bolaMenuOpciones"></div>
                     </div>

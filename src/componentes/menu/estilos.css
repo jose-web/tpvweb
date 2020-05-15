@@ -82,13 +82,18 @@
     padding: 1em 2em;
     text-align: center;
     text-decoration: none;
-    transition: 0.5s;
 }
 
 #menuOpciones a {
     text-decoration: none;
     color: var(--color1);
-    background-color:var(--color6)
+    background-color: var(--color6);
+    transition: 0.5s;
+}
+
+#menuOpciones .activo {
+    background-color: var(--color2);
+    color: var(--color6)
 }
 
 #menuOpciones a:last-child {
@@ -98,7 +103,7 @@
     cursor: pointer;
 }
 
-#menuOpciones li:hover {
+#menuOpciones a:not(.activo):hover {
     background-color: var(--color4);
 }
 

@@ -7,7 +7,8 @@ import Login from "./paginas/login"
 import Locales from "./paginas/locales"
 import Facturas from "./paginas/facturas"
 import LineaDeFactura from "./paginas/lineaDeFactura"
-import localAdministracion from "./paginas/administracion/eligeLocalAdministracion"
+import EligeLocalAdministracion from "./paginas/administracion/eligeLocalAdministracion"
+import AdministracionLocal from "./paginas/administracion/administraLocal"
 
 
 class Inicia extends React.Component {
@@ -68,7 +69,8 @@ class Inicia extends React.Component {
             <Route exact path="/locales" component={Locales} />
             <Route exact path="/facturas" component={Facturas} />
             <Route exact path="/lineaDeFactura" from="/facturas" component={LineaDeFactura} />
-            <Route exact path="/administracion/seleccionLocal" component={localAdministracion} />
+            <Route exact path="/administracion/seleccionLocal" component={EligeLocalAdministracion} />
+            <Route exact path="/administracion" component={AdministracionLocal} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

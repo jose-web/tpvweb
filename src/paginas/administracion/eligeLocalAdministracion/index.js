@@ -4,7 +4,7 @@ import Menu from '../../../componentes/menu'
 import BotonAbajo from '../../../componentes/botonAbajo'
 import { Redirect } from "react-router-dom"
 
-export default class localAdministracion extends React.Component {
+export default class EligeLocalAdministracion extends React.Component {
 
     constructor(props) {
         super(props);
@@ -12,6 +12,7 @@ export default class localAdministracion extends React.Component {
             arrayFacturas: [],
             redireccionar: ""
         };
+        this.irAAdministrarLocal = this.irAAdministrarLocal.bind(this)
         this.atras = this.atras.bind(this)
     }
 
@@ -42,7 +43,7 @@ export default class localAdministracion extends React.Component {
                         let nombreLocal = res.locales[i].nombreLocal
                         let direccion = res.locales[i].direccion
 
-                        arrayFacturas.push(<article key={id} tabIndex="0">
+                        arrayFacturas.push(<article key={id} tabIndex="0" onClick={() => this.irAAdministrarLocal(id)}>
                             <strong>{nombreEmpresa}</strong>
                             <p>{nombreLocal}</p>
                             <p>{direccion}</p>
@@ -54,6 +55,14 @@ export default class localAdministracion extends React.Component {
                 })
 
             })
+    }
+
+    irAAdministrarLocal($id) {
+        console.log("dfds")
+        sessionStorage.setItem("idLocal", $id)
+        this.setState({
+            redireccionar: "/administracion"
+        })
     }
 
     atras() {
@@ -72,7 +81,7 @@ export default class localAdministracion extends React.Component {
             <>
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
-                    <h1>Administración</h1>
+                    <h1>Locales que puedes administrar</h1>
                     {this.state.arrayFacturas}
                 </section>
                 <BotonAbajo onClick={this.atras} />

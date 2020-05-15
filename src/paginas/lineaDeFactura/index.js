@@ -2,6 +2,7 @@ import React from 'react'
 import './estilos.css'
 import Menu from '../../componentes/menu'
 import Tabla from '../../componentes/tabla'
+import iconoPagar from "./cash-register-solid.svg"
 // import { Redirect } from "react-router-dom"
 
 export default class LineaDeFactura extends React.Component {
@@ -11,7 +12,9 @@ export default class LineaDeFactura extends React.Component {
         this.state = {
             arrayFacturas: [],
             redireccionar: false,
-            data: ""
+            data: "",
+            nombreCliente: "",
+            cuentaTotal: 0
         };
         this.repetir = this.repetir.bind(this)
     }
@@ -28,7 +31,7 @@ export default class LineaDeFactura extends React.Component {
         }).then(res => { if (res.ok) return res.json() })
             .catch(error => console.error('Error:', error))
             .then(res => {
-                console.log(res)
+                let cuentaTotal = 0
                 arrayFacturas.push([["Nombre"], ["Precio"], ["Cantidad"], ["Precio total"], ["Comentario"]])
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.productos).length; i++) {
@@ -37,11 +40,12 @@ export default class LineaDeFactura extends React.Component {
                         let precio = res.productos[i].precio
                         let cantidad = res.productos[i].cantidad
                         let comentario = res.productos[i].comentario
-
-                        arrayFacturas.push([[id], [nombre], [precio], [cantidad], [precio * cantidad], [comentario]])
+                        cuentaTotal += precio * cantidad
+                        arrayFacturas.push([[id], [nombre], [Number(precio).toFixed(2) + " €"], [cantidad], [Number(precio * cantidad).toFixed(2) + " €"], [comentario]])
                     }
                 this.setState({
-                    arrayFacturas: arrayFacturas.slice()
+                    arrayFacturas: arrayFacturas.slice(),
+                    cuentaTotal: cuentaTotal
                 })
 
             })
@@ -56,6 +60,14 @@ export default class LineaDeFactura extends React.Component {
                 redireccionar: true
             })
 
+        let arrayFacturas = JSON.parse(sessionStorage.getItem("arrayFacturas"))
+        for (let i = 1; i < arrayFacturas.length; i++) {
+            if (Number(arrayFacturas[i][0]) === Number(id)) {
+                this.setState({ nombreCliente: arrayFacturas[i][1] })
+                break;
+            }
+        }
+
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let data = new FormData()
@@ -65,7 +77,6 @@ export default class LineaDeFactura extends React.Component {
 
         this.setState({ data })
 
-        this.repetir()
         let intervalo = setInterval(this.repetir, 2000)
 
         this.setState({ intervalo })
@@ -79,6 +90,7 @@ export default class LineaDeFactura extends React.Component {
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Linea de factura</h1>
+                    <div id="titulo"><p>{this.state.nombreCliente}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><img src={iconoPagar} alt="Pagar"></img></div>
                     <Tabla datos={this.state.arrayFacturas} />
                 </section>
             </>

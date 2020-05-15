@@ -45,7 +45,7 @@ export default class Tabla extends React.Component {
 
     render() {
         return (
-            <article class="contieneTabla">
+            <article className="contieneTabla">
                 <table className="tabla">
                     <thead>
                         {this.state.arrayTitulo}

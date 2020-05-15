@@ -42,6 +42,7 @@ export default class Facturas extends React.Component {
 
                         arrayFacturas.push([[id], [nombre], [cuentaTotal]])
                     }
+                sessionStorage.setItem("arrayFacturas", JSON.stringify(arrayFacturas))
                 this.setState({
                     arrayFacturas: arrayFacturas.slice()
                 })

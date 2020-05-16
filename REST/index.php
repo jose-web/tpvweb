@@ -19,10 +19,6 @@ $app->post("/compruebaSesion", function(){
   echo json_encode(compruebaSesion($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
-$app->get("/cerrarSesion", function(){
-  echo json_encode(cerrarSesion(),JSON_FORCE_OBJECT);
-});
-
 $app->post("/buscaLocales", function(){
   echo json_encode(buscaLocales($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
@@ -33,10 +29,6 @@ $app->post("/muestraFacturasLocal", function(){
 
 $app->post("/muestraProductosFactura", function(){
   echo json_encode(muestraProductosFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
-});
-
-$app->get("/cambiaLocal/:codLocal", function($codLocal){
-  echo json_encode(cambiaLocal($codLocal),JSON_FORCE_OBJECT);
 });
 
 $app->post("/muestraLocalesEncargado", function(){

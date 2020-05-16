@@ -35,10 +35,6 @@ function compruebaSesion($email,$pass){
       return array("respuesta" => false);
 }
 
-function cerrarSesion(){
-  session_destroy();
-}
-
 function buscaLocales($email,$pass){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
@@ -132,14 +128,6 @@ function muestraProductosFactura($email,$pass,$codFactura){
     return array("productos" => $arrayResultados);
   }
   return array("productos" => false);
-}
-
-
-function cambiaLocal($codLocal){
-  include "conexion.php";
-  $codLocal = mysqli_real_escape_string($con,$codLocal);
-  $_SESSION["codLocal"] = $codLocal;
-  return array("codLocal" =>  $_SESSION["codLocal"]);
 }
 
 function muestraLocalesEncargado($email,$pass){

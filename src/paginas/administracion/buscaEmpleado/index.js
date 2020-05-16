@@ -1,6 +1,7 @@
 import React from 'react'
 import Menu from '../../../componentes/menu'
 import BotonAbajo from '../../../componentes/botonAbajo'
+import Buscar from '../../../componentes/buscar'
 import { Redirect } from "react-router-dom"
 
 export default class BuscaEmpleado extends React.Component {
@@ -93,7 +94,8 @@ export default class BuscaEmpleado extends React.Component {
             <>
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
-                    <h1>Buscar de empleados</h1>
+                    <h1>Búsqueda de empleados</h1>
+                    <Buscar />
                     {this.state.arrayEmpleados}
                 </section>
                 <BotonAbajo onClick={() => this.irA("/administracion/empleados")} />

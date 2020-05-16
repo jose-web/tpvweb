@@ -32,7 +32,6 @@ export default class AdministracionLocal extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
                 let arrayEmpleados = []
-                console.log(res)
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.empleados).length; i++) {
 
@@ -45,8 +44,14 @@ export default class AdministracionLocal extends React.Component {
 
                         arrayEmpleados.push(<article key={id} tabIndex="0">
                             <img src={img} alt="Perfil" />
+                            <br />
                             <strong>{nombre}  {apellido1} {apellido2}</strong>
-                            <p>{tipo}/a</p>
+                            <br />
+                            <select defaultValue={tipo} onChange={(value) => this.cambiaTipoEmpleado(value.target.value, id)}>
+                                <option value="encargado">encargado/a</option>
+                                <option value="camarero">camarero/a</option>
+                                <option value="cocinero">cocinero/a</option>
+                            </select>
                         </article>)
                     }
                 this.setState({
@@ -54,6 +59,26 @@ export default class AdministracionLocal extends React.Component {
                 })
 
             })
+    }
+
+    cambiaTipoEmpleado($tipo, $id) {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('codLocal', sessionStorage.getItem("idLocal"))
+        data.append('tipo', $tipo)
+        data.append('codUsuario', $id)
+
+        let url = global.url + 'cambiaTipoEmpleado'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
     }
 
     atras() {

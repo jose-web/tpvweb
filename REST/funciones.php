@@ -205,8 +205,9 @@ function muestraEmpleadosLocal($email,$pass,$codLocal){
   return array("empleados" => false);
 }
 
-function cambiaTipoEmpleado($codigousuario,$tipo){
-  if(compruebaSesion()["respuesta"]){
+function cambiaTipoEmpleado($email,$pass,$codigousuario,$tipo,$codLocal){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
     include "conexion.php";
 
     if(!$con){
@@ -215,8 +216,8 @@ function cambiaTipoEmpleado($codigousuario,$tipo){
   
     mysqli_set_charset($con,"utf8");
   
-    $codUsuario = $_SESSION["USUARIO"]["codUsuario"];
-    $codLocal = $_SESSION["codLocal"];
+    $codUsuario = $sesion["id"];
+    $codLocal = mysqli_real_escape_string($con,$codLocal);
     $codigousuario = mysqli_real_escape_string($con,$codigousuario);
     $tipo = mysqli_real_escape_string($con,$tipo);
 
@@ -227,13 +228,8 @@ function cambiaTipoEmpleado($codigousuario,$tipo){
     if(!$resultado){
       return array("mensaje_error" => "Error al realizar la consulta");
     }
-    
-    $arrayResultados = array();
 
-    while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayResultados[] = $fila;
-    }
-    return array("empleados" => $arrayResultados);
+    return array("empleados" => $resultado);
   }
   return array("empleados" => false);
 }

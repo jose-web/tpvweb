@@ -255,4 +255,33 @@ function cambiaTipoEmpleado($email,$pass,$codigousuario,$tipo,$codLocal){
   return array("empleados" => false);
 }
 
+function contratarEmpleado($email,$pass,$codLocal,$codUsuarioEmpleado,$tipo){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $codLocal = mysqli_real_escape_string($con,$codLocal);
+    $codUsuarioEmpleado = mysqli_real_escape_string($con,$codUsuarioEmpleado);
+    $tipo = mysqli_real_escape_string($con,$tipo);
+
+    $consulta = "call contratarEmpleado($codUsuario,$codLocal,$codUsuarioEmpleado,'$tipo')";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+
+    return array("empleados" => $resultado);
+  }
+  return array("empleados" => false);
+}
+
 ?>

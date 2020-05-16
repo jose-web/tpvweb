@@ -481,4 +481,24 @@ begin
 			  );
 end $$
 
+
+create procedure contratarEmpleado(codigoUsuario int, codLocal int, codUsuarioTrabajador int, tipoEmpleado varchar(20))
+begin
+	select count(*) into @empresario
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+	where trabajador.codUsuario = codigoUsuario
+		and trabajador_local.codLocal = codLocal
+        and trabajador_local.tipo = "encargado";
+        
+	select codTrabajador into @codTrabajador
+    from trabajador
+    where codUsuario = codUsuarioTrabajador;
+    
+	if @empresario = 1 then
+		insert into trabajador_local(codTrabajador,codLocal,tipo,estado)
+        values (@codTrabajador,codLocal,tipoEmpleado,1);
+	end if;
+end $$
+
 delimiter ;

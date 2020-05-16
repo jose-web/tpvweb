@@ -60,7 +60,11 @@ export default class BuscaEmpleado extends React.Component {
                             <br />
                             <strong>{nombre}  {apellido1} {apellido2}</strong>
                             <br />
-                            <p>{tipo !== "" ? `Ya es ${tipo}/a` : <button>Contratar</button>}</p>
+                            <p>{tipo !== "" ? `Ya es ${tipo}/a` : <>
+                                <button onClick={() => this.contratar(id, "encargado")}>Contratar Encargado/a</button>
+                                <button onClick={() => this.contratar(id, "camarero")}>Contratar Camarero/a</button>
+                                <button onClick={() => this.contratar(id, "cocinero")}>Contratar Cocinero/a</button>
+                            </>}</p>
                         </article>)
                     }
                 this.setState({
@@ -68,6 +72,30 @@ export default class BuscaEmpleado extends React.Component {
                 })
 
             })
+    }
+
+    contratar($id, $tipo) {
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('codLocal', sessionStorage.getItem("idLocal"))
+        data.append('codUsuarioEmpleado', $id)
+        data.append('tipo', $tipo)
+
+
+        let url = global.url + 'contratarEmpleado'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+
+        this.irA("/administracion/empleados")
     }
 
     render() {

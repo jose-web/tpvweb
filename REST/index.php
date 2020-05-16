@@ -43,6 +43,10 @@ $app->post("/cambiaTipoEmpleado", function(){
   echo json_encode(cambiaTipoEmpleado($_POST["email"],$_POST["pass"],$_POST["codUsuario"],$_POST["tipo"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/buscarEmpleadosLocal", function(){
+  echo json_encode(buscarEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

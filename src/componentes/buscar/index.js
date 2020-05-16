@@ -10,6 +10,8 @@ export default class Buscar extends React.Component {
             value: ""
         }
         this.cambiaValor = this.cambiaValor.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
+
     }
 
     cambiaValor(event) {
@@ -18,13 +20,18 @@ export default class Buscar extends React.Component {
         })
     }
 
+    onSubmit(event) {
+        event.preventDefault()
+        this.props.onClick(this.state.value)
+    }
+
     render() {
         return (
-            <div id="botonBuscar">
+            <form id="botonBuscar" onSubmit={this.onSubmit}>
                 <input type="text" value={this.state.value} onChange={this.cambiaValor} />
                 <div></div>
-                <div className="busca" onClick={() => this.props.onClick(this.state.value)}><img src={lupa} alt="Buscar" /></div>
-            </div>
+                <button type="submit" className="busca"><img src={lupa} alt="Buscar" /></button>
+            </form>
         )
     }
 

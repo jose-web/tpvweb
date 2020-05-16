@@ -13,15 +13,27 @@ export default class BuscaEmpleado extends React.Component {
             redireccionar: ""
         };
         this.irA = this.irA.bind(this)
+        this.BuscaEmpleado = this.BuscaEmpleado.bind(this)
     }
 
     componentDidMount() {
+        this.BuscaEmpleado("")
+    }
+
+    irA($sitio) {
+        this.setState({
+            redireccionar: $sitio
+        })
+    }
+
+    BuscaEmpleado($valor) {
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let data = new FormData()
         data.append('email', usuario.email)
         data.append('pass', usuario.pass)
         data.append('codLocal', sessionStorage.getItem("idLocal"))
+        data.append('busqueda', $valor)
 
         let url = global.url + 'buscarEmpleadosLocal'
 
@@ -58,32 +70,6 @@ export default class BuscaEmpleado extends React.Component {
             })
     }
 
-    cambiaTipoEmpleado($tipo, $id) {
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
-
-        let data = new FormData()
-        data.append('email', usuario.email)
-        data.append('pass', usuario.pass)
-        data.append('codLocal', sessionStorage.getItem("idLocal"))
-        data.append('tipo', $tipo)
-        data.append('codUsuario', $id)
-
-        let url = global.url + 'cambiaTipoEmpleado'
-
-        fetch(url, {
-            method: 'POST',
-            body: data,
-
-        }).then(res => { if (res.ok) return res.json() })
-            .catch(error => console.error('Error:', error))
-    }
-
-    irA($sitio) {
-        this.setState({
-            redireccionar: $sitio
-        })
-    }
-
     render() {
         if (this.state.redireccionar !== "") {
             clearInterval(this.state.intervalo)
@@ -95,7 +81,7 @@ export default class BuscaEmpleado extends React.Component {
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>Búsqueda de empleados</h1>
-                    <Buscar />
+                    <Buscar onClick={this.BuscaEmpleado} />
                     {this.state.arrayEmpleados}
                 </section>
                 <BotonAbajo onClick={() => this.irA("/administracion/empleados")} />

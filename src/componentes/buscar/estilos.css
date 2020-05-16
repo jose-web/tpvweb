@@ -25,6 +25,18 @@
     z-index: 0;
 }
 
+#botonBuscar button {
+    width: 3rem;
+    height: 3rem;
+    top: 0;
+    background-color: var(--color6);
+    position: absolute;
+    border-radius: 100%;
+    left: -1.5em;
+    z-index: 0;
+    border:none;
+}
+
 #botonBuscar .busca {
     background-color: var(--color1);
     right: -1.5em;

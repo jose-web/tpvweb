@@ -44,7 +44,7 @@ $app->post("/cambiaTipoEmpleado", function(){
 });
 
 $app->post("/buscarEmpleadosLocal", function(){
-  echo json_encode(buscarEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
+  echo json_encode(buscarEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["busqueda"]),JSON_FORCE_OBJECT);
 });
 
 $app->notFound(function (){

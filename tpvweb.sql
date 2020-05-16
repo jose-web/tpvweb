@@ -425,7 +425,7 @@ begin
 end $$
 
 
-create procedure buscarEmpleadosLocal(codigoUsuario int, codLocal int)
+create procedure buscarEmpleadosLocal(codigoUsuario int, codLocal int, busqueda varchar(50))
 begin
 	select usuario.codUsuario, usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.img, empleados.tipo
     from trabajador join trabajador_local
@@ -443,7 +443,12 @@ begin
 		and trabajador_local.tipo = "encargado"
 		and local.codLocal = codLocal
 		and empleados.estado = 1
-	union 
+        and (
+				usuario.nombre like concat('%',busqueda,'%')
+				or usuario.apellido1 like concat('%',busqueda,'%')
+				or usuario.apellido2 like concat('%',busqueda,'%')
+			)
+	union
     select usuario.codUsuario, usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.img,"" 
     from usuario join trabajador
 		on usuario.codUsuario = trabajador.codUsuario
@@ -464,7 +469,16 @@ begin
 				and trabajador_local.tipo = "encargado"
 				and local.codLocal = codLocal
 				and empleados.estado = 1
-        );
+                and (
+						usuario.nombre like concat('%',busqueda,'%')
+						or usuario.apellido1 like concat('%',busqueda,'%')
+						or usuario.apellido2 like concat('%',busqueda,'%')
+					)
+        ) and (
+				usuario.nombre like concat('%',busqueda,'%')
+				or usuario.apellido1 like concat('%',busqueda,'%')
+				or usuario.apellido2 like concat('%',busqueda,'%')
+			  );
 end $$
 
 delimiter ;

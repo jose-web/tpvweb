@@ -193,7 +193,7 @@ function muestraEmpleadosLocal($email,$pass,$codLocal){
   return array("empleados" => false);
 }
 
-function buscarEmpleadosLocal($email,$pass,$codLocal){
+function buscarEmpleadosLocal($email,$pass,$codLocal,$busqueda){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -206,8 +206,9 @@ function buscarEmpleadosLocal($email,$pass,$codLocal){
   
     $codUsuario = $sesion["id"];
     $codLocal = mysqli_real_escape_string($con,$codLocal);
+    $busqueda = mysqli_real_escape_string($con,$busqueda);
 
-    $consulta = "call buscarEmpleadosLocal($codUsuario,$codLocal)";
+    $consulta = "call buscarEmpleadosLocal($codUsuario,$codLocal,'$busqueda')";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

@@ -3,7 +3,7 @@ import Menu from '../../../componentes/menu'
 import BotonAbajo from '../../../componentes/botonAbajo'
 import { Redirect } from "react-router-dom"
 
-export default class AdministracionLocal extends React.Component {
+export default class BuscaEmpleado extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,7 +22,7 @@ export default class AdministracionLocal extends React.Component {
         data.append('pass', usuario.pass)
         data.append('codLocal', sessionStorage.getItem("idLocal"))
 
-        let url = global.url + 'muestraEmpleadosLocal'
+        let url = global.url + 'buscarEmpleadosLocal'
 
         fetch(url, {
             method: 'POST',
@@ -47,11 +47,7 @@ export default class AdministracionLocal extends React.Component {
                             <br />
                             <strong>{nombre}  {apellido1} {apellido2}</strong>
                             <br />
-                            <select defaultValue={tipo} onChange={(value) => this.cambiaTipoEmpleado(value.target.value, id)}>
-                                <option value="encargado">encargado/a</option>
-                                <option value="camarero">camarero/a</option>
-                                <option value="cocinero">cocinero/a</option>
-                            </select>
+                            <p>{tipo !== "" ? `Ya es ${tipo}/a` : <button>Contratar</button>}</p>
                         </article>)
                     }
                 this.setState({
@@ -97,11 +93,10 @@ export default class AdministracionLocal extends React.Component {
             <>
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
-                    <h1>Administración de empleados</h1>
+                    <h1>Buscar de empleados</h1>
                     {this.state.arrayEmpleados}
                 </section>
-                <BotonAbajo onClick={() => this.irA("/administracion")} />
-                <BotonAbajo derecha onClick={() => this.irA("/administracion/empleados/buscar")} />
+                <BotonAbajo onClick={() => this.irA("/administracion/empleados")} />
             </>
         )
     }

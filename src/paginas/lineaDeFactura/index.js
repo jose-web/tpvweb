@@ -10,11 +10,35 @@ export default class LineaDeFactura extends React.Component {
 
     constructor(props) {
         super(props);
+
+        let id = sessionStorage.getItem("idFactura")
+
+        if (id == null)
+            this.setState({
+                redireccionar: true
+            })
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('codFactura', id)
+
+        let nombreCliente = ""
+        let arrayFacturas = JSON.parse(sessionStorage.getItem("arrayFacturas"))
+        for (let i = 1; i < arrayFacturas.length; i++) {
+            if (Number(arrayFacturas[i][0]) === Number(id)) {
+                nombreCliente = arrayFacturas[i][1]
+                break
+            }
+        }
+
         this.state = {
             arrayFacturas: [],
             redireccionar: false,
-            data: "",
-            nombreCliente: "",
+            data,
+            nombreCliente,
             cuentaTotal: 0,
             intervalo: ""
         };
@@ -56,31 +80,9 @@ export default class LineaDeFactura extends React.Component {
     }
 
     componentDidMount() {
-        let id = sessionStorage.getItem("idFactura")
 
-        if (id == null)
-            this.setState({
-                redireccionar: true
-            })
-
-        let arrayFacturas = JSON.parse(sessionStorage.getItem("arrayFacturas"))
-        for (let i = 1; i < arrayFacturas.length; i++) {
-            if (Number(arrayFacturas[i][0]) === Number(id)) {
-                this.setState({ nombreCliente: arrayFacturas[i][1] })
-                break;
-            }
-        }
-
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
-
-        let data = new FormData()
-        data.append('email', usuario.email)
-        data.append('pass', usuario.pass)
-        data.append('codFactura', id)
-
-        this.setState({ data })
-
-        let intervalo = setInterval(this.repetir, 1000)
+        this.repetir()
+        let intervalo = setInterval(this.repetir, 3000)
 
         this.setState({ intervalo })
 

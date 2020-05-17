@@ -9,10 +9,25 @@ export default class Facturas extends React.Component {
 
     constructor(props) {
         super(props);
+
+        let id = sessionStorage.getItem("idLocal")
+
+        if (id == null)
+            this.setState({
+                redireccionar: "/locales"
+            })
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('id', id)
+
         this.state = {
             arrayFacturas: [],
             redireccionar: "",
-            data: "",
+            data: data,
             intervalo: ""
         };
         this.repetir = this.repetir.bind(this)
@@ -54,22 +69,8 @@ export default class Facturas extends React.Component {
     }
 
     componentDidMount() {
-        let id = sessionStorage.getItem("idLocal")
 
-        if (id == null)
-            this.setState({
-                redireccionar: "/locales"
-            })
-
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
-
-        let data = new FormData()
-        data.append('email', usuario.email)
-        data.append('pass', usuario.pass)
-        data.append('id', id)
-
-        this.setState({ data })
-
+        this.repetir()
         let intervalo = setInterval(this.repetir, 1000)
 
         this.setState({ intervalo })

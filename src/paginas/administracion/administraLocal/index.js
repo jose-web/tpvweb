@@ -24,16 +24,19 @@ export default class AdministracionLocal extends React.Component {
             return <Redirect to={this.state.redireccionar} />
         }
 
+        let atras = sessionStorage.getItem("irAtras") === "atras" ? "/locales" : "/administracion/seleccionLocal"
+        sessionStorage.removeItem("irAtras")
+
         return (
             <>
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
-                    <h1>Administración</h1>
+                    <h1>{sessionStorage.getItem("nombreLocal")} - Administración</h1>
                     <article onClick={() => this.irA("/administracion/empleados")}>Empleados</article>
                     <article>Productos</article>
                     <article>Mapa</article>
                 </section>
-                <BotonAbajo onClick={() => this.irA("/administracion/seleccionLocal")} />
+                <BotonAbajo onClick={() => this.irA(atras)} />
             </>
         )
     }

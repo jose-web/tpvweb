@@ -108,7 +108,7 @@ export default class BuscaEmpleado extends React.Component {
             <>
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
-                    <h1>Búsqueda de empleados</h1>
+                    <h1>{sessionStorage.getItem("nombreLocal")} - Búsqueda de empleados</h1>
                     <Buscar onClick={this.BuscaEmpleado} />
                     {this.state.arrayEmpleados}
                 </section>

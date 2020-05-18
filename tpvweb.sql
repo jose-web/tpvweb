@@ -111,7 +111,7 @@ create table trabajador_local (
     codTrabajador int,
     codLocal int,
     tipo enum('encargado', 'camarero','cocinero')  not null,
-    estado boolean not null,
+    estado boolean not null default 1,
     fechaDespido date,
     
     constraint primary key (codTrabajador , codLocal),
@@ -229,8 +229,6 @@ create table producto (
     codProducto int primary key auto_increment,
 	nombre varchar(20)  not null,
     img varchar(20),
-    precio double(6,2) not null,
-    disponibilidad boolean default true,
     descripcion text not null
 );
 
@@ -252,6 +250,25 @@ create table producto_ingrediente (
         on delete no action 
         on update cascade
 );
+
+create table local_tiene_producto(
+	codLocal int not null,
+	codProducto int not null,
+    precio double(6,2) not null,
+    disponibilidad boolean default true,
+    
+    constraint primary key (codLocal , codProducto),
+    
+	constraint foreign key (codLocal)
+        references local (codLocal)
+        on delete no action 
+        on update cascade,
+        
+    constraint foreign key (codProducto)
+        references producto (codProducto)
+        on delete no action 
+        on update cascade
+    );
 
 create table categoria (
     codCategoria int primary key auto_increment,
@@ -499,6 +516,21 @@ begin
 		insert into trabajador_local(codTrabajador,codLocal,tipo,estado)
         values (@codTrabajador,codLocal,tipoEmpleado,1);
 	end if;
+end $$
+
+
+create procedure muestraProductosLocal(codigoUsuario int, codLocal int)
+begin
+	select producto.*, local_tiene_producto.precio, local_tiene_producto.disponibilidad
+    from producto join local_tiene_producto
+		on producto.codProducto = local_tiene_producto.codProducto
+		join trabajador_local
+			on trabajador_local.codLocal = local_tiene_producto.codLocal
+            join trabajador
+				on trabajador.codTrabajador = trabajador_local.codTrabajador
+	where local_tiene_producto.codLocal = codLocal
+		and trabajador.codUsuario = codigoUsuario
+        and trabajador_local.estado = 1;
 end $$
 
 delimiter ;

@@ -51,6 +51,10 @@ $app->post("/contratarEmpleado", function(){
   echo json_encode(contratarEmpleado($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["codUsuarioEmpleado"],$_POST["tipo"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/muestraProductosLocal", function(){
+  echo json_encode(muestraProductosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

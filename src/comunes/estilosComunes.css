@@ -23,3 +23,7 @@ main {
     display: flex;
     flex-wrap: wrap;
 }
+
+h1 {
+    color: var(--color1);
+}

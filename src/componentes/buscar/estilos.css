@@ -49,7 +49,8 @@
     align-items: center;
 }
 
-#botonBuscar img {
+#botonBuscar svg {
     width: 1em;
     height: 1em;
+    color: var(--color6)
 }

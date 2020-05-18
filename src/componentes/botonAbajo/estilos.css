@@ -16,7 +16,11 @@
     right: 0;
 }
 
-.botonAbajo img {
+.botonAbajo svg {
     width: 2em;
-    height: 2em;
+    height: 2em
+}
+
+.botonAbajo svg {
+    color: var(--color6);
 }

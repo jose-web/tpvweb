@@ -3,7 +3,7 @@ import './estilos.css'
 import Menu from '../../componentes/menu'
 import Tabla from '../../componentes/tabla'
 import BotonAbajo from '../../componentes/botonAbajo'
-import iconoPagar from "./cash-register-solid.svg"
+import { ReactComponent as IconoPagar } from "./cash-register-solid.svg"
 import { Redirect } from "react-router-dom"
 
 export default class LineaDeFactura extends React.Component {
@@ -103,7 +103,7 @@ export default class LineaDeFactura extends React.Component {
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
-                    <div id="titulo"><p>{this.state.nombreCliente}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><img src={iconoPagar} alt="Pagar" /></div>
+                    <div id="titulo"><p>{this.state.nombreCliente}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
                     <Tabla datos={this.state.arrayFacturas} />
                 </section>
                 <BotonAbajo onClick={this.atras} />

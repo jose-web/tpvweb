@@ -2,6 +2,7 @@
     flex: 1 100%;
     margin: 1em 3em;
     position: relative;
+    z-index: 0;
 }
 
 #botonBuscar input {
@@ -34,7 +35,7 @@
     border-radius: 100%;
     left: -1.5em;
     z-index: 0;
-    border:none;
+    border: none;
 }
 
 #botonBuscar .busca {

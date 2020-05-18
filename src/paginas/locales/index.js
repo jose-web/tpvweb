@@ -58,6 +58,7 @@ export default class Locales extends React.Component {
                 })
 
             });
+        sessionStorage.removeItem("irAtras")
     }
 
 

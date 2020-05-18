@@ -25,7 +25,6 @@ export default class AdministracionLocal extends React.Component {
         }
 
         let atras = sessionStorage.getItem("irAtras") === "atras" ? "/locales" : "/administracion/seleccionLocal"
-        sessionStorage.removeItem("irAtras")
 
         return (
             <>

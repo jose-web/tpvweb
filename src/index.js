@@ -11,6 +11,7 @@ import EligeLocalAdministracion from "./paginas/administracion/eligeLocalAdminis
 import AdministracionLocal from "./paginas/administracion/administraLocal"
 import AdministracionEmpleados from "./paginas/administracion/administraEmpleados"
 import BuscaEmpleado from "./paginas/administracion/buscaEmpleado"
+import Productos from "./paginas/administracion/administraProductos"
 
 class Inicia extends React.Component {
   constructor(props) {
@@ -74,6 +75,7 @@ class Inicia extends React.Component {
             <Route exact path="/administracion" component={AdministracionLocal} />
             <Route exact path="/administracion/empleados" component={AdministracionEmpleados} />
             <Route exact path="/administracion/empleados/buscar" component={BuscaEmpleado} />
+            <Route exact path="/administracion/productos" component={Productos} />
             <Redirect from="*" to="/login" />
           </Switch>
         </BrowserRouter>

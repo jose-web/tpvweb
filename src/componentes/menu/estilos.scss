@@ -118,6 +118,10 @@
 
     &:checked+#menu{
 
+        &~*{
+            filter: blur(.3em);
+        }
+
         #fondoMenu {
             display: initial;
         }

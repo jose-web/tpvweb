@@ -1,5 +1,5 @@
 import React from 'react'
-import './estilos.css'
+import './estilos.scss'
 
 export default class Tabla extends React.Component {
 

@@ -1,0 +1,157 @@
+#menu {
+    background-color: var(--color1);
+    color: var(--color6);
+    height: min-content;
+    width: 100vw;
+    display: flex;
+    padding: 1em;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    z-index: 1;
+
+    #menuHamburguesa {
+        position: relative;
+        cursor: pointer;
+        align-self: center;
+        width: 3em;
+        height: 2.5em;
+
+        span {
+            position: absolute;
+            left: 0;
+            display: block;
+            width: 3em;
+            height: 0.5em;
+            background-color: var(--color6);
+            transition: 0.5s;
+
+            &:nth-child(1) {
+                top: 0;
+            }
+
+            &:nth-child(2) {
+                top: 1em;
+            }
+
+            &:nth-child(3) {
+                top: 2em;
+            }
+        }
+    }
+
+    #menuOpciones {
+        position: absolute;
+        top: 4.5em;
+        left: 0;
+        overflow: hidden;
+        height: 0;
+        transition-delay: 1s;
+    
+        ul {
+            position: relative;
+            left: -100vw;
+            transition: 1s;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 4.5em);
+            list-style: none;
+        }
+    
+        li {
+            padding: 1em 2em;
+            text-align: center;
+            text-decoration: none;
+        }
+    
+        a {
+            text-decoration: none;
+            color: var(--color1);
+            background-color: var(--color6);
+            transition: 0.5s;
+        }
+    
+        .activo {
+            background-color: var(--color2);
+            color: var(--color6)
+        }
+        
+         a:last-child {
+            margin-top: auto;
+            color: var(--color6);
+            background-color: var(--color7);
+            cursor: pointer;
+        }
+        
+         a:not(.activo):hover {
+            background-color: var(--color4);
+        }
+    
+    }
+
+    #bolaMenuOpciones {
+        position: absolute;
+        width: 200vh;
+        height: 200vh;
+        background-color: var(--color6);
+        border-radius: 100%;
+        top: -100vh;
+        left: -100vh;
+        z-index: -1;
+        transform: scale(0);
+        transition: 1s;
+    }
+    
+    #fondoMenu {
+        position: absolute;
+        top: 4.5em;
+        right: 0;
+        width: 95vw;
+        height: calc(100vh - 4.5em);
+        display: none;
+        z-index: -2;
+    }
+}
+
+#checkHamburguesa {
+    display: none;
+
+    &:checked+#menu{
+
+        #fondoMenu {
+            display: initial;
+        }
+
+        #menuHamburguesa{
+
+            span{
+                &:nth-child(1) {
+                    transform: rotate(45deg);
+                    top: 1em;
+                }
+
+                &:nth-child(2) {
+                    width: 0;
+                }
+
+                &:nth-child(3) {
+                    transform: rotate(-45deg);
+                    top: 1em;
+                }
+            }
+
+            &+#menuOpciones {
+                height: calc(100vh - 4.5em);
+                transition-delay: 0s;
+
+                #bolaMenuOpciones {
+                    transform: scale(1);
+                }
+
+                ul {
+                    left: 0;
+                }
+            }
+        }
+    }
+}

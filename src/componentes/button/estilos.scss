@@ -7,8 +7,9 @@
     color: var(--color6);
     border-radius: 0.5em;
     transition:0.5s;
-}
 
-.boton:hover {
-    background-color: var(--color1);
+    &:hover {
+        background-color: var(--color1);
+    }
+    
 }

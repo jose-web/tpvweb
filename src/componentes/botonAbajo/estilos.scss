@@ -10,17 +10,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    svg {
+        width: 2em;
+        height: 2em;
+        color: var(--color6);
+    }
 }
 
 .botonAbajoDerecha {
     right: 0;
-}
-
-.botonAbajo svg {
-    width: 2em;
-    height: 2em
-}
-
-.botonAbajo svg {
-    color: var(--color6);
 }

@@ -1,0 +1,23 @@
+.administraProducto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+        margin: .5em;
+    }
+
+    .fa-trash-alt, .fa-pencil-alt {
+        width: 1.5em;
+        height: auto;
+        transition: 0.5s;
+    }
+
+    .fa-trash-alt:hover {
+        color: var(--color7);
+    }
+
+    .fa-pencil-alt:hover {
+        color: var(--color8);
+    }
+}

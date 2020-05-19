@@ -1,5 +1,5 @@
 import React from 'react'
-import './estilos.css'
+import './estilos.scss'
 import { ReactComponent as Izquierda } from "./chevron-left-solid.svg"
 import { ReactComponent as Derecha } from "./plus-solid.svg"
 

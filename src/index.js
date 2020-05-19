@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
-import './comunes/estilosComunes.css'
+import './comunes/estilosComunes.scss'
 import './comunes/global.js'
 import Login from "./paginas/login"
 import Locales from "./paginas/locales"

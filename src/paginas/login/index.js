@@ -1,5 +1,5 @@
 import React from 'react'
-import './estilos.css'
+import './estilos.scss'
 import Input from "../../componentes/input"
 import Button from "../../componentes/button"
 import { Redirect } from "react-router-dom"

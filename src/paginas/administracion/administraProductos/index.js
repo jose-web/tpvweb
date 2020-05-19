@@ -1,5 +1,5 @@
 import React from 'react'
-import "./estilos.css"
+import "./estilos.scss"
 import Menu from '../../../componentes/menu'
 import BotonAbajo from '../../../componentes/botonAbajo'
 import { ReactComponent as Lapiz } from '../../../comunes/svg/pencil-alt-solid.svg'

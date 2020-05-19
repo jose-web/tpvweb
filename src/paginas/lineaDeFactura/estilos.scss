@@ -1,0 +1,30 @@
+#seccionLineaDeFactura {
+    
+    h1 {
+        padding: 1em;
+        text-align: center;
+        color: var(--color1)
+    }
+
+    #titulo {
+        display: flex;
+        padding: 1em;
+        background-color: var(--color6);
+        margin-bottom: 1em;
+        align-items: center;
+        color: var(--color1)
+    }
+
+    .derecha {
+        margin-left: auto;
+    }
+
+    svg {
+        height: 2em;
+        width: auto;
+        margin-left: 1em;
+        color: var(--color1)
+    }
+
+}
+

@@ -1,5 +1,5 @@
 import React from 'react'
-import './estilos.css'
+import './estilos.scss'
 import { ReactComponent as Lupa } from "./search-solid.svg"
 
 export default class Buscar extends React.Component {
@@ -28,7 +28,7 @@ export default class Buscar extends React.Component {
     render() {
         return (
             <form id="botonBuscar" onSubmit={this.onSubmit}>
-                <input type="text" value={this.state.value} onChange={this.cambiaValor} />
+                <input type="text" value={this.state.value} onChange={this.cambiaValor} placeholder="Buscar"/>
                 <div></div>
                 <button type="submit" className="busca"><Lupa /></button>
             </form>

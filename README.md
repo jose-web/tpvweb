@@ -1,4 +1,4 @@
 # TPVWEB
-| Bibliotecas | Frameworks | Iconos |
-| -- | -- | -- |
-| React | Slim | Font Awesome |
+| Bibliotecas | Frameworks | Iconos | Estilos |
+| -- | -- | -- | -- |
+| React | Slim | Font Awesome | Sass |

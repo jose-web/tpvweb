@@ -1,5 +1,6 @@
 .contieneTabla {
-    width: 100vw;
+    flex:1 100%;
+    width: 0;
     overflow-y: auto;
 
     .tabla {

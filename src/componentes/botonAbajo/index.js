@@ -8,9 +8,14 @@ export default class BotonAbajo extends React.Component {
 
     render() {
         return (
-            <div className={this.props.derecha ? "botonAbajo botonAbajoDerecha" : "botonAbajo"} onClick={this.props.onClick}>
-                {this.props.derecha ? <Derecha /> : <Izquierda />}
-            </div>
+            <>
+                <div className={this.props.derecha ? "botonAbajo botonAbajoDerecha" : "botonAbajo"} onClick={this.props.onClick}>
+                    {this.props.derecha ? <Derecha /> : <Izquierda />}
+                </div>
+
+                {this.props.derecha ? "" : <div className="espacioAbajo"></div>}
+
+            </>
         )
     }
 

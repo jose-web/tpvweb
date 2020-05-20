@@ -1,9 +1,7 @@
 #locales{
-    flex: 1 100%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    align-self: flex-start;
 
     article {
         background-color: var(--color4);

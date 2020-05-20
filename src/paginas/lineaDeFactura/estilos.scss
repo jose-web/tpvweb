@@ -1,12 +1,16 @@
 #seccionLineaDeFactura {
-    
+    display: flex;
+    flex-wrap: wrap;
+
     h1 {
+        flex:1 100%;
         padding: 1em;
         text-align: center;
         color: var(--color1)
     }
 
     #titulo {
+        flex:100%;
         display: flex;
         padding: 1em;
         background-color: var(--color6);

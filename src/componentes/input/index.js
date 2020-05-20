@@ -15,8 +15,8 @@ export default class Input extends React.Component {
         let unionClave = this.props.pass ? "PASS" : this.props.label
         return (
             <div className="input">
-                <input type={this.props.pass ? "password" : "text"} className={unionClave} id={unionClave} onChange={this.cambia} required />
-                <label htmlFor={unionClave}>{this.props.label}</label>
+                <input type={this.props.pass ? "password" : "text"} className={unionClave} id={this.props.label} onChange={this.cambia} required />
+                <label htmlFor={this.props.label}>{this.props.label}</label>
             </div>
         )
     }

@@ -1,7 +1,6 @@
 #contieneLogin {
     display: flex;
     min-height: 100vh;
-    min-width: 100vw;
     justify-content: center;
     align-items: center;
 
@@ -18,12 +17,19 @@
             margin-top: 0.5em;
             padding: 0.5em;
             color: var(--color1);
+            text-align: center;
         }
 
         form {
             display: flex;
             flex-direction: column;
             width: 100%;
+        }
+
+        .linkCambio{
+            text-align: center;
+            font-size: .7em;
+            padding: .5em;
         }
         
     }

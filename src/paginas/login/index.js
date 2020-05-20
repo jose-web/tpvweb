@@ -2,7 +2,7 @@ import React from 'react'
 import './estilos.scss'
 import Input from "../../componentes/input"
 import Button from "../../componentes/button"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import md5 from 'md5'
 
 export default class Login extends React.Component {
@@ -78,9 +78,10 @@ export default class Login extends React.Component {
           <h1>TPVWEB</h1>
           {this.state.fallo}
           <form method="post" action="/locales" onSubmit={this.compruebaLogin}>
-            <Input label="USUARIO" cambia={this.cambiaEmail} />
+            <Input label="EMAIL" cambia={this.cambiaEmail} />
             <Input label="CONTRASEÑA" pass cambia={this.cambiaPass} />
             <Button value="INICIAR SESIÓN" submit />
+            <Link to="/registro" className="linkCambio">Registrate ahora</Link>
           </form>
         </div>
       </div>

@@ -3,6 +3,12 @@ import './estilos.scss'
 import { Link } from "react-router-dom"
 
 export default class Menu extends React.Component {
+
+    cerrarSesion() {
+        localStorage.removeItem('usuario')
+        sessionStorage.clear()
+    }
+
     render() {
         return (
             <>
@@ -17,7 +23,7 @@ export default class Menu extends React.Component {
                         <ul>
                             <Link to="/administracion/seleccionLocal" className={this.props.estoyEn === "administracion" ? "activo" : ""}><li>Administración</li></Link>
                             <Link to="/suscripcion" className={this.props.estoyEn === "suscripcion" ? "activo" : ""}><li>Suscripción</li></Link>
-                            <Link to="/cerrarSesion" id="cerrarSesion"><li>cerrar sesión</li></Link>
+                            <Link to="/cerrarSesion" id="cerrarSesion" onClick={this.cerrarSesion}><li>cerrar sesión</li></Link>
                         </ul>
                         <div id="bolaMenuOpciones"></div>
                     </div>

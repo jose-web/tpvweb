@@ -5,7 +5,6 @@ import Button from "../../componentes/button"
 import { Redirect } from "react-router-dom"
 import md5 from 'md5'
 
-
 export default class Login extends React.Component {
 
   constructor(props) {
@@ -26,7 +25,7 @@ export default class Login extends React.Component {
   compruebaLogin(event) {
     event.preventDefault()
 
-    let url = global.url+'login';
+    let url = global.url + 'login';
 
     let data = new FormData();
     data.append('email', this.state.email);
@@ -45,7 +44,6 @@ export default class Login extends React.Component {
             "email": this.state.email,
             "pass": md5(this.state.pass)
           }))
-          this.props.sesion()
           this.setState({
             redireccionar: true
           })

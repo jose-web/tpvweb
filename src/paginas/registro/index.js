@@ -54,13 +54,39 @@ export default class Registro extends React.Component {
         )
 
         if (
-            nombreError !== ""
-            || apellido1Error !== ""
-            || apellido2Error !== ""
-            || emailError !== ""
-            || passError !== ""
+            nombreError === ""
+            && apellido1Error === ""
+            && apellido2Error === ""
+            && emailError === ""
+            && passError === ""
         ) {
-            console.log("error")
+            let url = global.url + 'registro';
+
+            let data = new FormData();
+            data.append('nombre', this.state.nombre);
+            data.append('apellido1', this.state.apellido1);
+            data.append('apellido2', this.state.apellido2);
+            data.append('email', this.state.email);
+            data.append('pass', md5(this.state.pass));
+
+            fetch(url, {
+                method: 'POST',
+                body: data,
+
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(res => {
+                    if (res.usuario) {
+
+                        localStorage.setItem("usuario", JSON.stringify({
+                            "email": this.state.email,
+                            "pass": md5(this.state.pass)
+                        }))
+                        this.setState({
+                            redireccionar: true
+                        })
+                    }
+                });
         }
 
     }
@@ -87,5 +113,4 @@ export default class Registro extends React.Component {
             </div>
         )
     }
-
 }

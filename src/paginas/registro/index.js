@@ -10,13 +10,20 @@ export default class Registro extends React.Component {
         super(props);
         this.state = {
             nombre: "",
+            nombreError: "",
             apellido1: "",
+            apellido1Error: "",
             apellido2: "",
+            apellido2Error: "",
             email: "",
+            emailError: "",
             pass: "",
+            passError: "",
             rpass: "",
             redireccionar: false,
         };
+
+        this.compruebaRegistro = this.compruebaRegistro.bind(this)
     }
 
     cambiaEstado($valor, $nombre) {
@@ -25,6 +32,37 @@ export default class Registro extends React.Component {
         this.setState(
             objaux
         )
+    }
+
+    compruebaRegistro(event) {
+        event.preventDefault()
+
+        let nombreError = this.state.nombre.trim() === "" ? "El nombre está vacío" : ""
+        let apellido1Error = this.state.apellido1.trim() === "" ? "El apellido1 está vacío" : ""
+        let apellido2Error = this.state.apellido2.trim() === "" ? "El apellido2 está vacío" : ""
+        let emailError = this.state.email.trim() === "" ? "El email está vacío" : ""
+        let passError = this.state.pass.trim() === "" ? "La contraseña está vacía" : this.state.pass.trim() !== this.state.rpass.trim() ? "La contraseña no es la misma" : ""
+
+        this.setState(
+            {
+                nombreError,
+                apellido1Error,
+                apellido2Error,
+                emailError,
+                passError
+            }
+        )
+
+        if (
+            nombreError !== ""
+            || apellido1Error !== ""
+            || apellido2Error !== ""
+            || emailError !== ""
+            || passError !== ""
+        ) {
+            console.log("error")
+        }
+
     }
 
     render() {
@@ -36,11 +74,11 @@ export default class Registro extends React.Component {
                     <h1>TPVWEB - REGISTRO</h1>
                     <br />
                     <form method="post" action="/locales" onSubmit={this.compruebaRegistro}>
-                        <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombre")} />
-                        <Input label="APELLIDO 1" cambia={($valor) => this.cambiaEstado($valor, "apellido1")} />
-                        <Input label="APELLIDO 2" cambia={($valor) => this.cambiaEstado($valor, "apellido2")} />
-                        <Input label="EMAIL" email cambia={($valor) => this.cambiaEstado($valor, "email")} />
-                        <Input label="CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "pass")} />
+                        <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombre")} /><p>{this.state.nombreError}</p>
+                        <Input label="APELLIDO 1" cambia={($valor) => this.cambiaEstado($valor, "apellido1")} /><p>{this.state.apellido1Error}</p>
+                        <Input label="APELLIDO 2" cambia={($valor) => this.cambiaEstado($valor, "apellido2")} /><p>{this.state.apellido2Error}</p>
+                        <Input label="EMAIL" email cambia={($valor) => this.cambiaEstado($valor, "email")} /><p>{this.state.emailError}</p>
+                        <Input label="CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "pass")} /><p>{this.state.passError}</p>
                         <Input label="REPITE CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "rpass")} />
                         <Button value="REGISTRARSE" submit />
                         <Link to="/login" className="linkCambio">Ir al Login</Link>

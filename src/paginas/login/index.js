@@ -78,7 +78,7 @@ export default class Login extends React.Component {
           <h1>TPVWEB</h1>
           {this.state.fallo}
           <form method="post" action="/locales" onSubmit={this.compruebaLogin}>
-            <Input label="EMAIL" cambia={this.cambiaEmail} />
+            <Input label="EMAIL" email cambia={this.cambiaEmail} />
             <Input label="CONTRASEÑA" pass cambia={this.cambiaPass} />
             <Button value="INICIAR SESIÓN" submit />
             <Link to="/registro" className="linkCambio">Registrate ahora</Link>

@@ -66,7 +66,7 @@ function buscaLocales($email,$pass){
   return array("locales" => false);
 }
 
-function muestraFacturasLocal($email,$pass,$id){
+function muestraFacturasLocal($email,$pass,$codLocal){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -78,7 +78,7 @@ function muestraFacturasLocal($email,$pass,$id){
     mysqli_set_charset($con,"utf8");
   
     $codUsuario = $sesion["id"];
-    $codLocal = $id;
+    $codLocal = mysqli_real_escape_string($con,$codLocal);
 
     $consulta = "call muestraFacturasLocal($codUsuario,$codLocal)";
     $resultado = mysqli_query($con,$consulta);
@@ -312,6 +312,31 @@ function muestraProductosLocal($email,$pass,$codLocal){
     return array("productos" => $arrayResultados);
   }
   return array("productos" => false);
+}
+
+function registro($nombre,$apellido1,$apellido2,$email,$pass){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $nombre = mysqli_real_escape_string($con,$nombre);
+    $apellido1 = mysqli_real_escape_string($con,$apellido1);
+    $apellido2 = mysqli_real_escape_string($con,$apellido2);
+    $email = mysqli_real_escape_string($con,$email);
+    $pass = mysqli_real_escape_string($con,$pass);
+
+    $consulta = "call registraUsuario('$nombre','$apellido1','$apellido2','$email','$pass')";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("usuario" => false);
+    }
+    return array("usuario" => true);
 }
 
 ?>

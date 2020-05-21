@@ -533,4 +533,11 @@ begin
         and trabajador_local.estado = 1;
 end $$
 
+
+create procedure registraUsuario(nuevoNombre varchar(20),nuevoApellido1 varchar(20),nuevoApellido2 varchar(20),nuevoEmail varchar(50),nuevaPass varchar(32))
+begin
+	insert into usuario (nombre, apellido1, apellido2, email, pass) 
+	values (nuevoNombre, nuevoApellido1, nuevoApellido2, nuevoEmail, nuevaPass);
+end $$
+
 delimiter ;

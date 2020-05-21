@@ -55,6 +55,10 @@ $app->post("/muestraProductosLocal", function(){
   echo json_encode(muestraProductosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/registro", function(){
+  echo json_encode(registro($_POST["nombre"],$_POST["apellido1"],$_POST["apellido2"],$_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

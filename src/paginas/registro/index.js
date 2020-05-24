@@ -91,6 +91,39 @@ export default class Registro extends React.Component {
 
     }
 
+    compruebaEmail(event) {
+        console.log(event)
+
+        this.cambiaEstado(event, "email")
+
+        console.log(event)
+        let url = global.url + 'compruebaEmailRepetido';
+
+        let data = new FormData();
+        data.append('email', event);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.cuentaEmail) {
+                    console.log(res.cuentaEmail)
+                    if (res.cuentaEmail >= 1)
+                        this.setState({
+                            emailError: "Este email ya está registrado"
+                        })
+                    else
+                        this.setState({
+                            emailError: ""
+                        })
+                }
+            });
+
+    }
+
     render() {
         if (this.state.redireccionar)
             return <Redirect to="/locales" />
@@ -103,7 +136,7 @@ export default class Registro extends React.Component {
                         <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombre")} /><p>{this.state.nombreError}</p>
                         <Input label="APELLIDO 1" cambia={($valor) => this.cambiaEstado($valor, "apellido1")} /><p>{this.state.apellido1Error}</p>
                         <Input label="APELLIDO 2" cambia={($valor) => this.cambiaEstado($valor, "apellido2")} /><p>{this.state.apellido2Error}</p>
-                        <Input label="EMAIL" email cambia={($valor) => this.cambiaEstado($valor, "email")} /><p>{this.state.emailError}</p>
+                        <Input label="EMAIL" email cambia={($valor) => this.compruebaEmail($valor)} /><p>{this.state.emailError}</p>
                         <Input label="CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "pass")} /><p>{this.state.passError}</p>
                         <Input label="REPITE CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "rpass")} />
                         <Button value="REGISTRARSE" submit />

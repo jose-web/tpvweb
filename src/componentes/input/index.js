@@ -11,7 +11,7 @@ export default class Input extends React.Component {
     }
 
     cambia(event) {
-        this.props.cambia(event.target.value)
+        this.props.cambia(this.props.file ? event.target.files[0] : event.target.value)
         this.setState({
             value: event.target.value
         })
@@ -22,10 +22,16 @@ export default class Input extends React.Component {
         let unionClave = this.state.value !== "" ? "activo" : ""
         return (
             <div className="input">
-                <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} required />
-                <label htmlFor={this.props.label} className={unionClave}>{this.props.label}</label>
+                {this.props.file ?
+                    <>
+                        <input type="file" id={this.props.label} onChange={this.cambia} accept="image/*" />
+                        <label htmlFor={this.props.label} className="labelImagen">{this.state.value.split("\\")[this.state.value.split("\\").length - 1]}</label>
+                    </>
+                    :
+                    <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} required />
+                }
+                <label htmlFor={this.props.label} className={"animaLabel " + unionClave}>{this.props.label}</label>
             </div>
         )
     }
-
 }

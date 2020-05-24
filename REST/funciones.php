@@ -339,4 +339,29 @@ function registro($nombre,$apellido1,$apellido2,$email,$pass){
     return array("usuario" => true);
 }
 
+function compruebaEmailRepetido($email){
+
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $email = mysqli_real_escape_string($con,$email);
+
+    $consulta = "call compruebaEmailRepetido('$email')";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+
+    $fila = mysqli_fetch_assoc($resultado);
+    return $fila;
+  
+}
+
 ?>

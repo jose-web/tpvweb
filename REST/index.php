@@ -59,6 +59,10 @@ $app->post("/registro", function(){
   echo json_encode(registro($_POST["nombre"],$_POST["apellido1"],$_POST["apellido2"],$_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/compruebaEmailRepetido", function(){
+  echo json_encode(compruebaEmailRepetido($_POST["email"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

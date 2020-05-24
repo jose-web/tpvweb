@@ -53,6 +53,8 @@ export default class Registro extends React.Component {
             }
         )
 
+        this.compruebaEmail(this.state.email)
+
         if (
             nombreError === ""
             && apellido1Error === ""
@@ -77,7 +79,6 @@ export default class Registro extends React.Component {
                 .catch(error => console.error('Error:', error))
                 .then(res => {
                     if (res.usuario) {
-
                         localStorage.setItem("usuario", JSON.stringify({
                             "email": this.state.email,
                             "pass": md5(this.state.pass)
@@ -92,11 +93,9 @@ export default class Registro extends React.Component {
     }
 
     compruebaEmail(event) {
-        console.log(event)
 
         this.cambiaEstado(event, "email")
 
-        console.log(event)
         let url = global.url + 'compruebaEmailRepetido';
 
         let data = new FormData();
@@ -110,15 +109,9 @@ export default class Registro extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
                 if (res.cuentaEmail) {
-                    console.log(res.cuentaEmail)
-                    if (res.cuentaEmail >= 1)
-                        this.setState({
-                            emailError: "Este email ya está registrado"
-                        })
-                    else
-                        this.setState({
-                            emailError: ""
-                        })
+                    this.setState({
+                        emailError: res.cuentaEmail === -1 ? "No es un email correcto" : res.cuentaEmail > 0 ? "Este email ya está registrado" : ""
+                    })
                 }
             });
 

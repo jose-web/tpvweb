@@ -545,7 +545,7 @@ create procedure compruebaEmailRepetido(emailAComprobar varchar(50))
 begin
 	select count(email) as 'cuentaEmail'
     from usuario
-    where email like concat('%',emailAComprobar,'%');
+    where email = emailAComprobar;
 end $$
 
 delimiter ;

@@ -315,6 +315,12 @@ function muestraProductosLocal($email,$pass,$codLocal){
 }
 
 function registro($nombre,$apellido1,$apellido2,$email,$pass){
+
+  $compruebaEmail = compruebaEmailRepetido($email)["cuentaEmail"];
+
+  if($compruebaEmail == -1 || $compruebaEmail > 0)
+      return array("usuario"=>false);
+
     include "conexion.php";
 
     if(!$con){
@@ -340,6 +346,9 @@ function registro($nombre,$apellido1,$apellido2,$email,$pass){
 }
 
 function compruebaEmailRepetido($email){
+
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+      return array("cuentaEmail"=>-1);
 
     include "conexion.php";
 

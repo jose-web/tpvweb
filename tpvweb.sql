@@ -16,7 +16,7 @@ create table usuario (
     apellido2 varchar(20),
     email varchar(50) not null,
     pass varchar(32) not null,
-    img varchar(20) not null
+    img varchar(20) default 'defaultUser.png'
 );
 
 

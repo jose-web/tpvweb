@@ -81,7 +81,8 @@ export default class Registro extends React.Component {
                     if (res.usuario) {
                         localStorage.setItem("usuario", JSON.stringify({
                             "email": this.state.email,
-                            "pass": md5(this.state.pass)
+                            "pass": md5(this.state.pass),
+                            "img": global.url + "img/usuarios/defaultUser.png"
                         }))
                         this.setState({
                             redireccionar: true
@@ -127,8 +128,8 @@ export default class Registro extends React.Component {
                     <br />
                     <form method="post" action="/locales" onSubmit={this.compruebaRegistro}>
                         <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombre")} /><p>{this.state.nombreError}</p>
-                        <Input label="APELLIDO 1" cambia={($valor) => this.cambiaEstado($valor, "apellido1")} /><p>{this.state.apellido1Error}</p>
-                        <Input label="APELLIDO 2" cambia={($valor) => this.cambiaEstado($valor, "apellido2")} /><p>{this.state.apellido2Error}</p>
+                        <Input label="PRIMER APELLIDO" cambia={($valor) => this.cambiaEstado($valor, "apellido1")} /><p>{this.state.apellido1Error}</p>
+                        <Input label="SEGUNDO APELLIDO" cambia={($valor) => this.cambiaEstado($valor, "apellido2")} /><p>{this.state.apellido2Error}</p>
                         <Input label="EMAIL" email cambia={($valor) => this.compruebaEmail($valor)} /><p>{this.state.emailError}</p>
                         <Input label="CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "pass")} /><p>{this.state.passError}</p>
                         <Input label="REPITE CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "rpass")} />

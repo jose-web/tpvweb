@@ -10,6 +10,7 @@ export default class Menu extends React.Component {
     }
 
     render() {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
         return (
             <>
                 <input type="checkbox" id="checkHamburguesa" />
@@ -28,7 +29,7 @@ export default class Menu extends React.Component {
                         <div id="bolaMenuOpciones"></div>
                     </div>
                     <Link to="/locales">TPVWEB</Link>
-                    <Link to="/perfil"><img src={global.url + 'img/usuarios/defaultUser.png'} alt="perfil" /></Link>
+                    <Link to="/perfil"><img src={usuario.img} alt="perfil" /></Link>
                     <label htmlFor="checkHamburguesa" id="fondoMenu" aria-hidden="true"></label>
                 </header>
             </>

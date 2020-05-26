@@ -17,6 +17,10 @@ export default class Input extends React.Component {
         })
     }
 
+    componentDidUpdate() {
+        if (typeof this.props.value !== "undefined" && this.state.value !== this.props.value)
+            this.setState({ value: this.props.value })
+    }
 
     render() {
         let unionClave = this.state.value !== "" ? "activo" : ""
@@ -28,7 +32,7 @@ export default class Input extends React.Component {
                         <label htmlFor={this.props.label} className="labelImagen">{this.state.value.split("\\")[this.state.value.split("\\").length - 1]}</label>
                     </>
                     :
-                    <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} required />
+                    <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} defaultValue={this.state.value} required />
                 }
                 <label htmlFor={this.props.label} className={"animaLabel " + unionClave}>{this.props.label}</label>
             </div>

@@ -8,6 +8,7 @@ import AdministracionLocal from "./paginas/administracion/administraLocal"
 import AdministracionEmpleados from "./paginas/administracion/administraEmpleados"
 import BuscaEmpleado from "./paginas/administracion/buscaEmpleado"
 import Productos from "./paginas/administracion/administraProductos"
+import Perfil from "./paginas/perfil"
 
 export default class CompruebaLogin extends React.Component {
 
@@ -24,6 +25,7 @@ export default class CompruebaLogin extends React.Component {
             <Route exact path="/administracion/empleados" component={AdministracionEmpleados} />
             <Route exact path="/administracion/empleados/buscar" component={BuscaEmpleado} />
             <Route exact path="/administracion/productos" component={Productos} />
+            <Route exact path="/perfil" component={Perfil} />
             <Redirect from="*" to="/locales" />
         </>
     }

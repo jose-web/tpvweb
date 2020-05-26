@@ -568,4 +568,12 @@ begin
     execute ejecutar;
 end $$
 
+
+create procedure ObtenerDatosUsuario(idUsuario int)
+begin
+	select nombre,apellido1,apellido2,email,img 
+    from usuario 
+    where codUsuario = idUsuario;
+end $$
+
 delimiter ;

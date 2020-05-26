@@ -413,4 +413,32 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
   return array("productos" => false);
 }
 
+function ObtenerDatosUsuario($email,$pass){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+
+    $consulta = "call ObtenerDatosUsuario($codUsuario)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    $fila = mysqli_fetch_assoc($resultado);
+    return array("datos" => $fila);
+  }
+  return array("datos" => false);
+}
+
+
+
 ?>

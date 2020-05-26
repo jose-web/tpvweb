@@ -21,7 +21,7 @@ function login($email,$pass){
   }
 
   if($fila = mysqli_fetch_assoc($resultado))
-    return array("login" => true, "id"=>$fila["codUsuario"]);
+    return array("login" => true, "id"=>$fila["codUsuario"], "img"=>$fila["img"]);
   else
     return array("login" => false);
 }
@@ -371,6 +371,46 @@ function compruebaEmailRepetido($email){
     $fila = mysqli_fetch_assoc($resultado);
     return $fila;
   
+}
+
+function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoApellido2,$nuevoEmail,$nuevaPass,$nuevaImagen){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $nuevoNombre = mysqli_real_escape_string($con,$nuevoNombre);
+    $nuevoApellido1 = mysqli_real_escape_string($con,$nuevoApellido1);
+    $nuevoApellido2 = mysqli_real_escape_string($con,$nuevoApellido2);
+    $nuevoEmail = mysqli_real_escape_string($con,$nuevoEmail);
+    $nuevaPass = mysqli_real_escape_string($con,$nuevaPass);
+
+    $nuevoNombreImagen='';
+    if($nuevaImagen["error"] == 0 && strrpos($nuevaImagen["type"],"image").""=="0"){
+      $arrayNombre = explode(".",$nuevaImagen['name']);
+      
+      $nuevoNombreImagen = $codUsuario.".".$arrayNombre[count($arrayNombre)-1];
+      $origen = $nuevaImagen['tmp_name'];
+      move_uploaded_file( $origen, "img/usuarios/$nuevoNombreImagen" );
+    }
+
+    $consulta = "call actualizaDatosUsuario($codUsuario,'$nuevoNombre','$nuevoApellido1','$nuevoApellido2','$nuevoEmail','$nuevaPass','$nuevoNombreImagen')";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+
+    return array("productos" => true);
+  }
+  return array("productos" => false);
 }
 
 ?>

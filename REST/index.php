@@ -63,6 +63,11 @@ $app->post("/compruebaEmailRepetido", function(){
   echo json_encode(compruebaEmailRepetido($_POST["email"]),JSON_FORCE_OBJECT);
 });
 
+$app->put("/actualizaDatosUsuario", function()use ($app){
+  $datos=$app->request->put();
+  echo json_encode(actualizaDatosUsuario($datos["email"],$datos["pass"],$datos["nuevoNombre"],$datos["nuevoApellido1"],$datos["nuevoApellido2"],$datos["nuevoEmail"],$datos["nuevaPass"],$datos["nuevaImagen"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

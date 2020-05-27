@@ -398,7 +398,8 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
       $resultado = mysqli_query($con,$consulta);
       $fila = mysqli_fetch_assoc($resultado);
 
-      $antiguaFoto = "img/usuarios/".$fila["img"];
+      $nombreAntiguaFoto = $fila["img"];
+      $antiguaFoto = "img/usuarios/".$nombreAntiguaFoto;
       if($fila["img"] != "defaultUser.png" && file_exists($antiguaFoto))
          unlink($antiguaFoto);
 
@@ -407,6 +408,7 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
       $arrayNombre = explode(".",$nuevaImagen['name']);
       
       $nuevoNombreImagen = $codUsuario.".".$arrayNombre[count($arrayNombre)-1];
+      if($nuevoNombreImagen == $nombreAntiguaFoto) $nuevoNombreImagen="nueva".$nuevoNombreImagen;
       $origen = $nuevaImagen['tmp_name'];
       move_uploaded_file( $origen, "img/usuarios/$nuevoNombreImagen" );
     }

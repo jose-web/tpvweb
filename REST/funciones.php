@@ -408,7 +408,7 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
       return array("mensaje_error" => "Error al realizar la consulta");
     }
 
-    return array("usuario" => true);
+    return array("usuario" => true,"nuevaImagen"=>$nuevoNombreImagen);
   }
   return array("usuario" => false);
 }

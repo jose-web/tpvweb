@@ -20,6 +20,7 @@ export default class Login extends React.Component {
             antiguaPass: "",
             nuevaPass: "",
             rNuevaPass: "",
+            nuevaImagen: "",
             datos: "",
             redireccionar: false,
             fallo: ""
@@ -58,6 +59,7 @@ export default class Login extends React.Component {
         data.append("nuevoApellido1", this.state.nuevoApellido1);
         data.append("nuevoApellido2", this.state.nuevoApellido2);
         data.append("nuevoEmail", this.state.nuevoEmail);
+        data.append("nuevaImagen", this.state.nuevaImagen);
 
         fetch(url, {
             method: 'POST',
@@ -66,8 +68,17 @@ export default class Login extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                if (res.usuario)
+                if (res.usuario) {
+                    if (this.state.nuevaImagen !== "")
+                        localStorage.setItem("usuario", JSON.stringify({
+                            "email": usuario.email,
+                            "pass": usuario.pass,
+                            "img": global.url + "img/usuarios/" + res.nuevaImagen
+                        }))
                     this.atras()
+                }
+
+
             });
     }
 
@@ -137,11 +148,12 @@ export default class Login extends React.Component {
                 <Menu />
                 <div id="miPerfil">
                     <h1>Mi perfil</h1>
-                    <div id="imagen">
-                        <img src={usuario.img} alt="Foto de perfil" />
-                        <span>Cambiar foto de perfil</span>
-                    </div>
                     <form onSubmit={this.cambiaDatos}>
+                        <label id="imagen" htmlFor="FOTO DE PERFIL">
+                            <img src={usuario.img} alt="Foto de perfil" />
+                            <span>Cambiar foto de perfil</span>
+                        </label>
+                        <Input label="FOTO DE PERFIL" file cambia={($valor) => this.cambiaEstado($valor, "nuevaImagen")} />
                         <Input label="NOMBRE" value={this.state.datos.nombre} cambia={($valor) => this.cambiaEstado($valor, "nuevoNombre")} />
                         <Input label="PRIMER APELLIDO" value={this.state.datos.apellido1} cambia={($valor) => this.cambiaEstado($valor, "nuevoApellido1")} />
                         <Input label="SEGUNDO APELLIDO" value={this.state.datos.apellido2} cambia={($valor) => this.cambiaEstado($valor, "nuevoApellido2")} />

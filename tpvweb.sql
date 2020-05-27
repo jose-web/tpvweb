@@ -576,4 +576,12 @@ begin
     where codUsuario = idUsuario;
 end $$
 
+
+create procedure muestraImagenPerfil(idUsuario int)
+begin
+	 select img 
+     from usuario 
+     where codUsuario = idUsuario;
+end $$
+
 delimiter ;

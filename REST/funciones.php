@@ -393,6 +393,17 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
 
     $nuevoNombreImagen='';
     if($nuevaImagen!= "" && $nuevaImagen["error"] == 0 && strrpos($nuevaImagen["type"],"image").""=="0"){
+
+      $consulta = "call muestraImagenPerfil($codUsuario)";
+      $resultado = mysqli_query($con,$consulta);
+      $fila = mysqli_fetch_assoc($resultado);
+
+      $antiguaFoto = "img/usuarios/".$fila["img"];
+      if($fila["img"] != "defaultUser.png" && file_exists($antiguaFoto))
+         unlink($antiguaFoto);
+
+      mysqli_next_result($con);
+
       $arrayNombre = explode(".",$nuevaImagen['name']);
       
       $nuevoNombreImagen = $codUsuario.".".$arrayNombre[count($arrayNombre)-1];

@@ -5,26 +5,28 @@ import BotonAbajo from '../../componentes/botonAbajo'
 import Input from "../../componentes/input"
 import Button from "../../componentes/button"
 import { Redirect } from "react-router-dom"
+import md5 from 'md5'
 
 export default class Login extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            nombre: "",
-            apellido1: "",
-            apellido2: "",
-            email: "",
+            nuevoNombre: "",
+            nuevoApellido1: "",
+            nuevoApellido2: "",
+            nuevoEmail: "",
             pass: "",
             antiguaPass: "",
             nuevaPass: "",
             rNuevaPass: "",
-            datos:"",
+            datos: "",
             redireccionar: false,
             fallo: ""
         };
-        
+
         this.atras = this.atras.bind(this)
+        this.cambiaDatos = this.cambiaDatos.bind(this)
     }
 
     cambiaEstado($valor, $nombre) {
@@ -41,9 +43,31 @@ export default class Login extends React.Component {
         })
     }
 
-    cambiaDatos() {
+    cambiaDatos(event) {
+        event.preventDefault()
 
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
 
+        let url = global.url + 'actualizaDatosUsuario';
+
+        let data = new FormData();
+        data.append("email", usuario.email);
+        data.append("pass", md5(this.state.pass));
+        data.append("nuevoNombre", this.state.nuevoNombre);
+        data.append("nuevoApellido1", this.state.nuevoApellido1);
+        data.append("nuevoApellido2", this.state.nuevoApellido2);
+        data.append("nuevoEmail", this.state.nuevoEmail);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.usuario)
+                    this.atras()
+            });
     }
 
     componentDidMount() {
@@ -67,7 +91,6 @@ export default class Login extends React.Component {
                         datos: res.datos
                     })
             });
-
     }
 
     render() {
@@ -86,11 +109,11 @@ export default class Login extends React.Component {
                         <img src={usuario.img} alt="Foto de perfil" />
                         <span>Cambiar foto de perfil</span>
                     </div>
-                    <form>
-                        <Input label="NOMBRE" value={this.state.datos.nombre} cambia={($valor) => this.cambiaEstado($valor, "nombre")} />
-                        <Input label="PRIMER APELLIDO" value={this.state.datos.apellido1} cambia={($valor) => this.cambiaEstado($valor, "apellido1")} />
-                        <Input label="SEGUNDO APELLIDO" value={this.state.datos.apellido2} cambia={($valor) => this.cambiaEstado($valor, "apellido2")} />
-                        <Input email label="EMAIL" value={this.state.datos.email} cambia={($valor) => this.cambiaEstado($valor, "email")} />
+                    <form onSubmit={this.cambiaDatos}>
+                        <Input label="NOMBRE" value={this.state.datos.nombre} cambia={($valor) => this.cambiaEstado($valor, "nuevoNombre")} />
+                        <Input label="PRIMER APELLIDO" value={this.state.datos.apellido1} cambia={($valor) => this.cambiaEstado($valor, "nuevoApellido1")} />
+                        <Input label="SEGUNDO APELLIDO" value={this.state.datos.apellido2} cambia={($valor) => this.cambiaEstado($valor, "nuevoApellido2")} />
+                        <Input email label="EMAIL" value={this.state.datos.email} cambia={($valor) => this.cambiaEstado($valor, "nuevoEmail")} />
                         <Input pass label="CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "pass")} />
                         <Button submit value="MODIFICAR DATOS" />
                     </form>

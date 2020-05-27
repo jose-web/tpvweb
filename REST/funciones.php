@@ -392,7 +392,7 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
     $nuevaPass = mysqli_real_escape_string($con,$nuevaPass);
 
     $nuevoNombreImagen='';
-    if($nuevaImagen["error"] == 0 && strrpos($nuevaImagen["type"],"image").""=="0"){
+    if($nuevaImagen!= "" && $nuevaImagen["error"] == 0 && strrpos($nuevaImagen["type"],"image").""=="0"){
       $arrayNombre = explode(".",$nuevaImagen['name']);
       
       $nuevoNombreImagen = $codUsuario.".".$arrayNombre[count($arrayNombre)-1];
@@ -408,9 +408,9 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
       return array("mensaje_error" => "Error al realizar la consulta");
     }
 
-    return array("productos" => true);
+    return array("usuario" => true);
   }
-  return array("productos" => false);
+  return array("usuario" => false);
 }
 
 function ObtenerDatosUsuario($email,$pass){

@@ -63,9 +63,8 @@ $app->post("/compruebaEmailRepetido", function(){
   echo json_encode(compruebaEmailRepetido($_POST["email"]),JSON_FORCE_OBJECT);
 });
 
-$app->put("/actualizaDatosUsuario", function()use ($app){
-  $datos=$app->request->put();
-  echo json_encode(actualizaDatosUsuario($datos["email"],$datos["pass"],$datos["nuevoNombre"],$datos["nuevoApellido1"],$datos["nuevoApellido2"],$datos["nuevoEmail"],$datos["nuevaPass"],$datos["nuevaImagen"]),JSON_FORCE_OBJECT);
+$app->post("/actualizaDatosUsuario", function(){
+   echo json_encode(actualizaDatosUsuario($_POST["email"],$_POST["pass"],isset($_POST["nuevoNombre"])?$_POST["nuevoNombre"]:"",isset($_POST["nuevoApellido1"])?$_POST["nuevoApellido1"]:"",isset($_POST["nuevoApellido2"])?$_POST["nuevoApellido2"]:"",isset($_POST["nuevoEmail"])?$_POST["nuevoEmail"]:"",isset($_POST["nuevaPass"])?$_POST["nuevaPass"]:"",isset($_POST["nuevaImagen"])?$_POST["nuevaImagen"]:""),JSON_FORCE_OBJECT);
 });
 
 $app->post("/ObtenerDatosUsuario", function(){

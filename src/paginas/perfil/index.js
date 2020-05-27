@@ -27,6 +27,7 @@ export default class Login extends React.Component {
 
         this.atras = this.atras.bind(this)
         this.cambiaDatos = this.cambiaDatos.bind(this)
+        this.cambiaPass = this.cambiaPass.bind(this)
     }
 
     cambiaEstado($valor, $nombre) {
@@ -70,8 +71,40 @@ export default class Login extends React.Component {
             });
     }
 
-    componentDidMount() {
+    cambiaPass(event) {
+        event.preventDefault()
 
+        if (this.state.nuevaPass === this.state.rNuevaPass) {
+
+            let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+            let url = global.url + 'actualizaDatosUsuario';
+
+            let data = new FormData();
+            data.append("email", usuario.email);
+            data.append("pass", md5(this.state.antiguaPass));
+            data.append("nuevaPass", md5(this.state.nuevaPass));
+
+            fetch(url, {
+                method: 'POST',
+                body: data,
+
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(res => {
+                    if (res.usuario) {
+                        localStorage.setItem("usuario", JSON.stringify({
+                            "email": usuario.email,
+                            "pass": md5(this.state.nuevaPass),
+                            "img": usuario.img
+                        }))
+                        this.atras()
+                    }
+                });
+        }
+    }
+
+    componentDidMount() {
         let usuario = JSON.parse(localStorage.getItem("usuario"))
         let url = global.url + 'ObtenerDatosUsuario'
 
@@ -99,7 +132,6 @@ export default class Login extends React.Component {
         if (this.state.redireccionar)
             return <Redirect to="/locales" />
 
-
         return (
             <>
                 <Menu />
@@ -118,15 +150,16 @@ export default class Login extends React.Component {
                         <Button submit value="MODIFICAR DATOS" />
                     </form>
                     <hr />
-                    <h2>Cambiar contraseña</h2>
-                    <Input pass label="ANTIGUA CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "antiguaPass")} />
-                    <Input pass label="NUEVA CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "nuevaPass")} />
-                    <Input pass label="REPITE NUEVA CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "rNuevaPass")} />
-                    <Button value="MODIFICAR CONTRASEÑA" />
+                    <form onSubmit={this.cambiaPass}>
+                        <h2>Cambiar contraseña</h2>
+                        <Input pass label="ANTIGUA CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "antiguaPass")} />
+                        <Input pass label="NUEVA CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "nuevaPass")} />
+                        <Input pass label="REPITE NUEVA CONTRASEÑA" cambia={($valor) => this.cambiaEstado($valor, "rNuevaPass")} />
+                        <Button submit value="MODIFICAR CONTRASEÑA" />
+                    </form>
                 </div>
                 <BotonAbajo onClick={this.atras} />
             </>
         )
     }
-
 }

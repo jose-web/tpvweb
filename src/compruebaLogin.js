@@ -30,8 +30,12 @@ export default class CompruebaLogin extends React.Component {
             }).then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then(res => {
-                    if (res.datos)
+                    if (res.datos) {
                         sessionStorage.setItem("img", global.url + "img/usuarios/" + res.datos.img)
+                        sessionStorage.setItem("camarero", res.datos.camarero)
+                        sessionStorage.setItem("encargado", res.datos.encargado)
+                        sessionStorage.setItem("cocinero", res.datos.cocinero)
+                    }
                 });
         }
         return <>

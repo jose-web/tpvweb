@@ -577,7 +577,29 @@ end $$
 
 create procedure ObtenerDatosUsuario(idUsuario int)
 begin
-	select nombre,apellido1,apellido2,email,img 
+
+	select count(*) into @camarero
+    from usuario join trabajador
+		on usuario.codUsuario = trabajador.codUsuario
+        join trabajador_local
+			on trabajador_local.codTrabajador = trabajador.codTrabajador
+    where usuario.codUsuario = idUsuario and tipo = "camarero" and estado = 1;
+    
+    select count(*) into @encargado
+    from usuario join trabajador
+		on usuario.codUsuario = trabajador.codUsuario
+        join trabajador_local
+			on trabajador_local.codTrabajador = trabajador.codTrabajador
+    where usuario.codUsuario = idUsuario and tipo = "encargado" and estado = 1;
+    
+    select count(*) into @cocinero
+    from usuario join trabajador
+		on usuario.codUsuario = trabajador.codUsuario
+        join trabajador_local
+			on trabajador_local.codTrabajador = trabajador.codTrabajador
+    where usuario.codUsuario = idUsuario and tipo = "cocinero" and estado = 1;
+	
+	select nombre, apellido1, apellido2, email, img, @camarero as camarero, @encargado as encargado, @cocinero as cocinero
     from usuario 
     where codUsuario = idUsuario;
 end $$

@@ -22,8 +22,9 @@ export default class Menu extends React.Component {
                     </label>
                     <div id="menuOpciones">
                         <ul>
-                            <Link to="/administracion/seleccionLocal" className={this.props.estoyEn === "administracion" ? "activo" : ""}><li>Administración</li></Link>
-                            <Link to="/suscripcion" className={this.props.estoyEn === "suscripcion" ? "activo" : ""}><li>Suscripción</li></Link>
+                            {sessionStorage.getItem("encargado") > 0 ?
+                                <Link to="/administracion/seleccionLocal" className={this.props.estoyEn === "administracion" ? "activo" : ""}><li>Administración</li></Link> : ""
+                            }
                             <Link to="/cerrarSesion" id="cerrarSesion" onClick={this.cerrarSesion}><li>cerrar sesión</li></Link>
                         </ul>
                         <div id="bolaMenuOpciones"></div>

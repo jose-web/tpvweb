@@ -71,6 +71,10 @@ $app->post("/ObtenerDatosUsuario", function(){
   echo json_encode(ObtenerDatosUsuario($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/habilitaTrabajador", function(){
+  echo json_encode(habilitaTrabajador($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

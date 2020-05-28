@@ -584,4 +584,13 @@ begin
      where codUsuario = idUsuario;
 end $$
 
+
+create procedure habilitaTrabajador(idUsuario int)
+begin
+
+	insert into trabajador(codUsuario)
+    values (idUsuario);
+    
+end $$
+
 delimiter ;

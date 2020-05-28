@@ -104,7 +104,8 @@ export default class Facturas extends React.Component {
                     <h1>Facturas</h1>
                     <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} />
                 </section>
-                <BotonAbajo onClick={this.atras} />
+                {sessionStorage.getItem("unLocal") ? "" : <BotonAbajo onClick={this.atras} />}
+
             </>
         )
     }

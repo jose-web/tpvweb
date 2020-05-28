@@ -11,7 +11,7 @@ export default class Locales extends React.Component {
             arrayLocales: [],
             redireccionar: false
         };
-        this.habilitaTrabajador=this.habilitaTrabajador.bind(this)
+        this.habilitaTrabajador = this.habilitaTrabajador.bind(this)
     }
 
     guardaSesionYRedirije(id) {
@@ -63,7 +63,7 @@ export default class Locales extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-
+                let redirijeId = -1
                 if (typeof res.locales[0] !== "undefined" && typeof res.locales[0].FALSE !== "undefined")
                     arrayLocales.push(<article onClick={this.habilitaTrabajador} key="1" tabIndex="0">
                         <p>Habilitar la contratación en empresas</p>
@@ -72,6 +72,7 @@ export default class Locales extends React.Component {
                     for (let i = 0; i < Object.keys(res.locales).length; i++) {
 
                         let id = res.locales[i].id;
+                        redirijeId = id;
                         let nombreEmpresa = res.locales[i].nombreEmpresa;
                         let nombreLocal = res.locales[i].nombreLocal;
                         let direccion = res.locales[i].direccion;
@@ -83,15 +84,20 @@ export default class Locales extends React.Component {
                         </article>)
                     }
 
-                if (arrayLocales.length === 0)
-                    arrayLocales.push(<article key="1" tabIndex="0">
-                        <p>No estás contratado/a en ninguna empresa</p>
-                    </article>)
+                if (arrayLocales.length === 1) {
+                    sessionStorage.setItem("unLocal", true)
+                    this.guardaSesionYRedirije(redirijeId)
+                }
+                else {
+                    if (arrayLocales.length === 0)
+                        arrayLocales.push(<article key="1" tabIndex="0">
+                            <p>No estás contratado/a en ninguna empresa</p>
+                        </article>)
 
-                this.setState({
-                    arrayLocales: arrayLocales
-                })
-
+                    this.setState({
+                        arrayLocales: arrayLocales
+                    })
+                }
             });
         sessionStorage.removeItem("irAtras")
     }

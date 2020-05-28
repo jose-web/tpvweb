@@ -11,6 +11,7 @@ export default class Locales extends React.Component {
             arrayLocales: [],
             redireccionar: false
         };
+        this.habilitaTrabajador=this.habilitaTrabajador.bind(this)
     }
 
     guardaSesionYRedirije(id) {
@@ -18,6 +19,30 @@ export default class Locales extends React.Component {
         this.setState({
             redireccionar: true
         })
+    }
+
+    habilitaTrabajador() {
+        let url = global.url + 'habilitaTrabajador';
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.setState({
+                    arrayLocales: [<article key="1" tabIndex="0">
+                        <p>No estás contratado/a en ninguna empresa</p>
+                    </article>]
+                })
+            });
     }
 
     componentDidMount() {
@@ -39,20 +64,30 @@ export default class Locales extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
 
-                for (let i = 0; i < Object.keys(res.locales).length; i++) {
+                if (typeof res.locales[0] !== "undefined" && typeof res.locales[0].FALSE !== "undefined")
+                    arrayLocales.push(<article onClick={this.habilitaTrabajador} key="1" tabIndex="0">
+                        <p>Habilitar la contratación en empresas</p>
+                    </article>)
+                else
+                    for (let i = 0; i < Object.keys(res.locales).length; i++) {
 
-                    let id = res.locales[i].id;
-                    let nombreEmpresa = res.locales[i].nombreEmpresa;
-                    let nombreLocal = res.locales[i].nombreLocal;
-                    let direccion = res.locales[i].direccion;
+                        let id = res.locales[i].id;
+                        let nombreEmpresa = res.locales[i].nombreEmpresa;
+                        let nombreLocal = res.locales[i].nombreLocal;
+                        let direccion = res.locales[i].direccion;
 
-                    arrayLocales.push(<article onClick={() => this.guardaSesionYRedirije(id)} key={id} tabIndex="0">
-                        <strong>{nombreEmpresa}</strong>
-                        <p>{nombreLocal}</p>
-                        <p>{direccion}</p>
+                        arrayLocales.push(<article onClick={() => this.guardaSesionYRedirije(id)} key={id} tabIndex="0">
+                            <strong>{nombreEmpresa}</strong>
+                            <p>{nombreLocal}</p>
+                            <p>{direccion}</p>
+                        </article>)
+                    }
+
+                if (arrayLocales.length === 0)
+                    arrayLocales.push(<article key="1" tabIndex="0">
+                        <p>No estás contratado/a en ninguna empresa</p>
                     </article>)
 
-                }
                 this.setState({
                     arrayLocales: arrayLocales
                 })
@@ -60,7 +95,6 @@ export default class Locales extends React.Component {
             });
         sessionStorage.removeItem("irAtras")
     }
-
 
     render() {
         if (this.state.redireccionar)

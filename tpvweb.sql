@@ -331,14 +331,20 @@ end $$
 
 create procedure muestraLocales(codigoUsuario int)
 begin
-	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
-    from local join trabajador_local 
-		on local.codLocal = trabajador_local.codLocal 
-        join empresa
-        on local.codEmpresa = empresa.codEmpresa
-			join trabajador
-            on trabajador_local.codTrabajador = trabajador.codTrabajador
-	where trabajador.codUsuario = codigoUsuario and estado = 1;
+	select count(*) into @esTrabajador from trabajador where codUsuario = codigoUsuario;
+
+	if @esTrabajador >0 then
+		select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
+		from local join trabajador_local 
+			on local.codLocal = trabajador_local.codLocal 
+			join empresa
+			on local.codEmpresa = empresa.codEmpresa
+				join trabajador
+				on trabajador_local.codTrabajador = trabajador.codTrabajador
+		where trabajador.codUsuario = codigoUsuario and estado = 1;
+	else
+    select false;
+    end if;
 end $$
 
 

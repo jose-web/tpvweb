@@ -15,6 +15,24 @@ export default class CompruebaLogin extends React.Component {
     render() {
         if (localStorage.getItem("usuario") === null) {
             return <Redirect to="/login" />
+        } else {
+            let usuario = JSON.parse(localStorage.getItem("usuario"))
+            let url = global.url + 'ObtenerDatosUsuario'
+
+            let data = new FormData();
+            data.append('email', usuario.email);
+            data.append('pass', usuario.pass);
+
+            fetch(url, {
+                method: 'POST',
+                body: data,
+
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(res => {
+                    if (res.datos)
+                        sessionStorage.setItem("img", global.url + "img/usuarios/" + res.datos.img)
+                });
         }
         return <>
             <Route exact path="/locales" component={Locales} />

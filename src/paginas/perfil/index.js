@@ -72,9 +72,11 @@ export default class Login extends React.Component {
                     if (this.state.nuevaImagen !== "")
                         localStorage.setItem("usuario", JSON.stringify({
                             "email": usuario.email,
-                            "pass": usuario.pass,
-                            "img": global.url + "img/usuarios/" + res.nuevaImagen
+                            "pass": usuario.pass
                         }))
+
+                    sessionStorage.setItem("img", global.url + "img/usuarios/" + res.nuevaImagen)
+
                     this.atras()
                 }
 
@@ -106,8 +108,7 @@ export default class Login extends React.Component {
                     if (res.usuario) {
                         localStorage.setItem("usuario", JSON.stringify({
                             "email": usuario.email,
-                            "pass": md5(this.state.nuevaPass),
-                            "img": usuario.img
+                            "pass": md5(this.state.nuevaPass)
                         }))
                         this.atras()
                     }
@@ -138,7 +139,7 @@ export default class Login extends React.Component {
     }
 
     render() {
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
+        let fotoUsuario = sessionStorage.getItem("img")
 
         if (this.state.redireccionar)
             return <Redirect to="/locales" />
@@ -150,7 +151,7 @@ export default class Login extends React.Component {
                     <h1>Mi perfil</h1>
                     <form onSubmit={this.cambiaDatos}>
                         <label id="imagen" htmlFor="FOTO DE PERFIL">
-                            <img src={usuario.img} alt="Foto de perfil" />
+                            <img src={fotoUsuario} alt="Foto de perfil" />
                             <span>Cambiar foto de perfil</span>
                         </label>
                         <Input label="FOTO DE PERFIL" file cambia={($valor) => this.cambiaEstado($valor, "nuevaImagen")} />

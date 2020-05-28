@@ -81,9 +81,11 @@ export default class Registro extends React.Component {
                     if (res.usuario) {
                         localStorage.setItem("usuario", JSON.stringify({
                             "email": this.state.email,
-                            "pass": md5(this.state.pass),
-                            "img": global.url + "img/usuarios/defaultUser.png"
+                            "pass": md5(this.state.pass)
                         }))
+
+                        sessionStorage.setItem("img", global.url + "img/usuarios/defaultUser.png")
+
                         this.setState({
                             redireccionar: true
                         })

@@ -43,8 +43,10 @@ export default class Login extends React.Component {
           localStorage.setItem("usuario", JSON.stringify({
             "email": this.state.email,
             "pass": md5(this.state.pass),
-            "img": global.url + "img/usuarios/" + res.img
           }))
+
+          sessionStorage.setItem("img", global.url + "img/usuarios/" + res.img)
+
           this.setState({
             redireccionar: true
           })

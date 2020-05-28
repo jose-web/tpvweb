@@ -63,14 +63,17 @@ export default class Locales extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                let redirijeId = -1
-                if (typeof res.locales[0] !== "undefined" && typeof res.locales[0].FALSE !== "undefined")
+                let camarero = sessionStorage.getItem("camarero")
+                let encargado = sessionStorage.getItem("encargado")
+                let cocinero = sessionStorage.getItem("cocinero")
+
+                if (camarero === "0" && encargado === "0" && cocinero === "0")
                     arrayLocales.push(<article onClick={this.habilitaTrabajador} key="1" tabIndex="0">
                         <p>Habilitar la contratación en empresas</p>
                     </article>)
-                else
+                else {
+                    let redirijeId = -1
                     for (let i = 0; i < Object.keys(res.locales).length; i++) {
-
                         let id = res.locales[i].id;
                         redirijeId = id;
                         let nombreEmpresa = res.locales[i].nombreEmpresa;
@@ -84,20 +87,16 @@ export default class Locales extends React.Component {
                         </article>)
                     }
 
-                if (arrayLocales.length === 1) {
-                    sessionStorage.setItem("unLocal", true)
-                    this.guardaSesionYRedirije(redirijeId)
-                }
-                else {
-                    if (arrayLocales.length === 0)
+                    if (arrayLocales.length === 1) {
+                        this.guardaSesionYRedirije(redirijeId)
+                    } else if (arrayLocales.length === 0)
                         arrayLocales.push(<article key="1" tabIndex="0">
                             <p>No estás contratado/a en ninguna empresa</p>
                         </article>)
-
-                    this.setState({
-                        arrayLocales: arrayLocales
-                    })
                 }
+                this.setState({
+                    arrayLocales: arrayLocales
+                })
             });
         sessionStorage.removeItem("irAtras")
     }
@@ -115,5 +114,4 @@ export default class Locales extends React.Component {
             </>
         )
     }
-
 }

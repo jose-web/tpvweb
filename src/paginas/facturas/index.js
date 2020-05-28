@@ -27,7 +27,7 @@ export default class Facturas extends React.Component {
         this.state = {
             arrayFacturas: [],
             redireccionar: "",
-            data: data,
+            data,
             intervalo: ""
         };
         this.repetir = this.repetir.bind(this)
@@ -71,7 +71,7 @@ export default class Facturas extends React.Component {
     componentDidMount() {
 
         this.repetir()
-        let intervalo = setInterval(this.repetir, 1000)
+        let intervalo = setInterval(this.repetir, 3000)
 
         this.setState({ intervalo })
 
@@ -90,12 +90,19 @@ export default class Facturas extends React.Component {
         })
     }
 
-    render() {
+    componentWillUnmount() {
+        clearInterval(this.state.intervalo)
+    }
 
+    render() {
         if (this.state.redireccionar !== "") {
-            clearInterval(this.state.intervalo)
             return <Redirect to={this.state.redireccionar} />
         }
+
+        let camarero = sessionStorage.getItem("camarero")
+        let encargado = sessionStorage.getItem("encargado")
+        let cocinero = sessionStorage.getItem("cocinero")
+        let sumaLocales = Number(camarero) + Number(encargado) + Number(cocinero)
 
         return (
             <>
@@ -104,8 +111,7 @@ export default class Facturas extends React.Component {
                     <h1>Facturas</h1>
                     <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} />
                 </section>
-                {sessionStorage.getItem("unLocal") ? "" : <BotonAbajo onClick={this.atras} />}
-
+                {sumaLocales === 1 ? "" : <BotonAbajo onClick={this.atras} />}
             </>
         )
     }

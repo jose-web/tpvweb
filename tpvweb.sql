@@ -331,20 +331,14 @@ end $$
 
 create procedure muestraLocales(codigoUsuario int)
 begin
-	select count(*) into @esTrabajador from trabajador where codUsuario = codigoUsuario;
-
-	if @esTrabajador >0 then
-		select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
-		from local join trabajador_local 
-			on local.codLocal = trabajador_local.codLocal 
+	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
+	from local join trabajador_local 
+		on local.codLocal = trabajador_local.codLocal 
 			join empresa
 			on local.codEmpresa = empresa.codEmpresa
 				join trabajador
-				on trabajador_local.codTrabajador = trabajador.codTrabajador
-		where trabajador.codUsuario = codigoUsuario and estado = 1;
-	else
-    select false;
-    end if;
+			on trabajador_local.codTrabajador = trabajador.codTrabajador
+	where trabajador.codUsuario = codigoUsuario and estado = 1;
 end $$
 
 
@@ -577,7 +571,6 @@ end $$
 
 create procedure ObtenerDatosUsuario(idUsuario int)
 begin
-
 	select count(*) into @camarero
     from usuario join trabajador
 		on usuario.codUsuario = trabajador.codUsuario
@@ -615,10 +608,8 @@ end $$
 
 create procedure habilitaTrabajador(idUsuario int)
 begin
-
 	insert into trabajador(codUsuario)
     values (idUsuario);
-    
 end $$
 
 delimiter ;

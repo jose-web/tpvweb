@@ -89,10 +89,13 @@ export default class LineaDeFactura extends React.Component {
     }
 
     atras() {
-        clearInterval(this.state.intervalo)
         this.setState({
             redireccionar: true
         })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalo)
     }
 
     render() {

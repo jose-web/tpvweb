@@ -7,7 +7,7 @@ import Login from "./paginas/login"
 import Registro from "./paginas/registro"
 import CompruebaLogin from "./compruebaLogin"
 
-class Inicia extends React.Component {
+export default class Inicia extends React.Component {
 
   render() {
     return <BrowserRouter>

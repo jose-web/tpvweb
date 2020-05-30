@@ -476,4 +476,31 @@ function habilitaTrabajador($email,$pass){
   }
   return array("trabajador" => false);
 }
+
+function creaFactura($email,$pass,$idMesa,$nombreCliente){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $idMesa = mysqli_real_escape_string($con,$idMesa);
+    $nombreCliente = mysqli_real_escape_string($con,$nombreCliente);
+
+    $consulta = "call creaFactura($codUsuario,$idMesa,'$nombreCliente')";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    return array("creaFactura" => true);
+  }
+  return array("creaFactura" => false);
+}
 ?>

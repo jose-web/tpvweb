@@ -75,6 +75,10 @@ $app->post("/habilitaTrabajador", function(){
   echo json_encode(habilitaTrabajador($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/creaFactura", function(){
+  echo json_encode(creaFactura($_POST["email"],$_POST["pass"],$_POST["idMesa"],$_POST["nombreCliente"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

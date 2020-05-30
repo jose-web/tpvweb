@@ -612,4 +612,15 @@ begin
     values (idUsuario);
 end $$
 
+
+create procedure creaFactura(idUsuario int, idMesa int, nuevoNombreCliente varchar(50))
+begin
+	select codTrabajador into @codTrabajador 
+    from trabajador
+    where codUsuario = idUsuario;
+    
+	insert into factura (codTrabajador,codMesa,nombreCliente) 
+    values(@codTrabajador,idMesa,nuevoNombreCliente);
+end $$
+
 delimiter ;

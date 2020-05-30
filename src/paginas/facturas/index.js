@@ -33,6 +33,7 @@ export default class Facturas extends React.Component {
         this.repetir = this.repetir.bind(this)
         this.irLineaDeFactura = this.irLineaDeFactura.bind(this)
         this.atras = this.atras.bind(this)
+        this.creaFacturaBarra = this.creaFacturaBarra.bind(this)
     }
 
     repetir() {
@@ -90,6 +91,28 @@ export default class Facturas extends React.Component {
         })
     }
 
+    creaFacturaBarra() {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('codLocal', sessionStorage.getItem("idLocal"))
+
+        let url = global.url + 'creaFacturaBarra'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.creaFacturaBarra)
+                    this.irLineaDeFactura(res.codFactura)
+            })
+    }
+
     componentWillUnmount() {
         clearInterval(this.state.intervalo)
     }
@@ -112,6 +135,7 @@ export default class Facturas extends React.Component {
                     <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} />
                 </section>
                 {sumaLocales === 1 ? "" : <BotonAbajo onClick={this.atras} />}
+                <BotonAbajo derecha onClick={this.creaFacturaBarra} />
             </>
         )
     }

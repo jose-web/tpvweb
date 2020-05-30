@@ -166,6 +166,7 @@ create table mesa (
     posicion int not null,
     nombre varchar(20) not null,
     capa int not null,
+    barra boolean default false,
     
     constraint foreign key (codMapa)
         references mapa (codMapa)
@@ -177,7 +178,7 @@ create table factura (
 	codFactura int primary key auto_increment,
     codTrabajador int not null,
     codMesa int not null,
-	nombreCliente varchar(50) not null,
+	nombreCliente varchar(50) not null default 'Cliente sin nombre',
     pagado boolean not null default false,
     fecha datetime not null default now(),
     
@@ -615,12 +616,41 @@ end $$
 
 create procedure creaFactura(idUsuario int, idMesa int, nuevoNombreCliente varchar(50))
 begin
-	select codTrabajador into @codTrabajador 
-    from trabajador
-    where codUsuario = idUsuario;
+    select trabajador.codTrabajador into @codTrabajador 
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+        join mapa
+			on mapa.codLocal = trabajador_local.codLocal
+            join mesa
+				on mesa.codMapa = mapa.codMapa
+    where codUsuario = 1 and mesa.codMapa=1
+    group by trabajador.codTrabajador;
     
 	insert into factura (codTrabajador,codMesa,nombreCliente) 
     values(@codTrabajador,idMesa,nuevoNombreCliente);
+end $$
+
+
+create procedure creaFacturaBarra(idUsuario int, idLocal int)
+begin
+    select trabajador.codTrabajador,codMesa into @codTrabajador, @idMesa
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+        join mapa
+			on mapa.codLocal = trabajador_local.codLocal
+            join mesa
+				on mesa.codMapa = mapa.codMapa
+    where codUsuario = idUsuario
+		and barra = 1 
+        and mapa.codLocal = idLocal
+    group by trabajador.codTrabajador;
+    
+    start transaction;
+	insert into factura (codTrabajador,codMesa) 
+    values(@codTrabajador,@idMesa);
+    
+    select max(codFactura) as codFactura from factura;
+    commit;
 end $$
 
 delimiter ;

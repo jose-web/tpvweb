@@ -503,4 +503,31 @@ function creaFactura($email,$pass,$idMesa,$nombreCliente){
   }
   return array("creaFactura" => false);
 }
+
+function creaFacturaBarra($email,$pass,$codLocal){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $codLocal = mysqli_real_escape_string($con,$codLocal);
+
+    $consulta = "call creaFacturaBarra($codUsuario,$codLocal)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    $fila = mysqli_fetch_assoc($resultado);
+    return array("creaFacturaBarra" => true,"codFactura" =>$fila["codFactura"]);
+  }
+  return array("creaFacturaBarra" => false);
+}
 ?>

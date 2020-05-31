@@ -74,8 +74,8 @@ export default class Login extends React.Component {
                             "email": usuario.email,
                             "pass": usuario.pass
                         }))
-
-                    sessionStorage.setItem("img", global.url + "img/usuarios/" + res.nuevaImagen)
+                    if (res.nuevaImagen !== "")
+                        sessionStorage.setItem("img", global.url + "img/usuarios/" + res.nuevaImagen)
 
                     this.atras()
                 }

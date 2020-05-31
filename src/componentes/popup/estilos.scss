@@ -1,0 +1,80 @@
+#activaPopup{
+    display: none;
+
+    &:checked{
+
+        +#fondoPopup{
+            width: 100vw;
+            transition-delay: .1s;
+
+            &~*{
+                filter: blur(.3em);
+                animation: blur .3s ease-in-out;
+            }
+
+            #popup{
+                transition-delay: .1s;
+                transform: scale(1);
+                opacity:1;
+            }
+            #fondoLabelPopup{
+                display: initial;
+            }
+        }
+    }
+}
+
+#fondoPopup{
+    width: 0;
+    height: 100vh;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index:2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition-delay: .5s;
+
+    #popup{
+        width: 50%;
+        min-height: 2.5em;
+        background-color:var(--color5);
+        box-shadow: 0 0 1em .1em var(--color1);
+        z-index:3;
+        transform: scale(0);
+        opacity:0;
+        transition: .5s;
+        transition-delay: 0s;
+        padding:.5em;
+
+        #arribaPopup{
+            position: relative;
+            height: 1.5em;
+
+            #cierraPopup{
+                width: 1.5em;
+                height: 1.5em;
+                position: absolute;
+                top:0;
+                right:0;
+                color:var(--color7);
+                cursor: pointer;
+            }
+        }
+    }
+
+    #fondoLabelPopup{
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top:0;
+        left:0;
+        display: none;
+    }
+}
+
+@keyframes blur {
+    from {filter: blur(0);}
+    to {filter: blur(.3em);}
+  }

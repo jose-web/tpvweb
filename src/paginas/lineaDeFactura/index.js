@@ -3,7 +3,10 @@ import './estilos.scss'
 import Menu from '../../componentes/menu'
 import Tabla from '../../componentes/tabla'
 import BotonAbajo from '../../componentes/botonAbajo'
+import Popup from '../../componentes/popup'
 import { ReactComponent as IconoPagar } from "./cash-register-solid.svg"
+import Input from "../../componentes/input"
+import Button from "../../componentes/button"
 import { Redirect } from "react-router-dom"
 
 export default class LineaDeFactura extends React.Component {
@@ -30,10 +33,16 @@ export default class LineaDeFactura extends React.Component {
             redireccionar: false,
             data,
             cuentaTotal: 0,
-            intervalo: ""
+            intervalo: "",
+            nombreFactura: "",
+            abierto: false
         };
         this.repetir = this.repetir.bind(this)
         this.atras = this.atras.bind(this)
+        this.cambiaInputNombreFactura = this.cambiaInputNombreFactura.bind(this)
+        this.cambiaNombre = this.cambiaNombre.bind(this)
+        this.cambiaEstadoPopup = this.cambiaEstadoPopup.bind(this)
+
     }
 
     repetir() {
@@ -69,6 +78,47 @@ export default class LineaDeFactura extends React.Component {
 
     }
 
+    cambiaEstadoPopup() {
+        this.setState({
+            abierto: !this.state.abierto
+        })
+    }
+
+    cambiaInputNombreFactura(evento) {
+        this.setState({
+            nombreFactura: evento
+        })
+
+    }
+
+    cambiaNombre(evento) {
+        evento.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('idFactura', sessionStorage.getItem("idFactura"))
+        data.append('nuevoNombreCliente', this.state.nombreFactura)
+        data.append('estadoPagado', 0)
+
+        let url = global.url + 'actualizaFactura'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.actualizaFactura) {
+                    sessionStorage.setItem("nombreFactura", this.state.nombreFactura)
+                    this.cambiaEstadoPopup()
+                }
+            })
+    }
+
     componentDidMount() {
 
         this.repetir()
@@ -91,12 +141,20 @@ export default class LineaDeFactura extends React.Component {
     render() {
         if (this.state.redireccionar)
             return <Redirect to="/facturas" />
+
+        let popup = <form id="formularioCambiaNombre" onSubmit={this.cambiaNombre}>
+            <strong>Cambiar el nombre del cliente</strong>
+            <Input label="NOMBRE CLIENTE" cambia={this.cambiaInputNombreFactura} value={sessionStorage.getItem("nombreFactura")} />
+            <Button submit value="CAMBIAR" />
+        </form>
+
         return (
             <>
+                <Popup contenido={popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
-                    <div id="titulo"><p>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
+                    <div id="titulo"><p onClick={this.cambiaEstadoPopup}>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
                     <Tabla datos={this.state.arrayFacturas} />
                 </section>
                 <BotonAbajo onClick={this.atras} />

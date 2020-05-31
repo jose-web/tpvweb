@@ -530,4 +530,32 @@ function creaFacturaBarra($email,$pass,$codLocal){
   }
   return array("creaFacturaBarra" => false);
 }
+
+function actualizaFactura($email,$pass,$idFactura,$nuevoNombreCliente,$estadoPagado){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $idFactura = mysqli_real_escape_string($con,$idFactura);
+    $nuevoNombreCliente = mysqli_real_escape_string($con,$nuevoNombreCliente);
+    $estadoPagado = mysqli_real_escape_string($con,$estadoPagado);
+
+    $consulta = "call actualizaFactura($codUsuario,$idFactura,'$nuevoNombreCliente',$estadoPagado)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    return array("actualizaFactura" => true);
+  }
+  return array("actualizaFactura" => false);
+}
 ?>

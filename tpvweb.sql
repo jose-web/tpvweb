@@ -653,4 +653,26 @@ begin
     commit;
 end $$
 
+
+create procedure actualizaFactura(idUsuario int, idFactura int, nuevoNombreCliente varchar(50), estadoPagado int)
+begin
+	select count(*) into @permisos
+    from usuario join trabajador
+		on usuario.codUsuario = trabajador.codUsuario
+		join trabajador_local
+			on trabajador_local.codTrabajador = trabajador.codTrabajador
+			join mapa
+				on mapa.codLocal = trabajador_local.codLocal
+                join mesa
+					on mesa.codMapa = mapa.codMapa
+                    join factura
+						on factura.codMesa = mesa.codMesa
+		where trabajador_local.estado = 1 and usuario.codUsuario = idUsuario and codFactura= idFactura;
+
+	if @permisos > 0 then
+		update factura set nombreCliente=nuevoNombreCliente, pagado=estadoPagado
+		where codFactura=idFactura;
+    end if;
+end $$
+
 delimiter ;

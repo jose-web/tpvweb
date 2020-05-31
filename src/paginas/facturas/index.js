@@ -60,7 +60,6 @@ export default class Facturas extends React.Component {
 
                         arrayFacturas.push([[id], [nombre], [cuentaTotal]])
                     }
-                sessionStorage.setItem("arrayFacturas", JSON.stringify(arrayFacturas))
                 this.setState({
                     arrayFacturas: arrayFacturas.slice()
                 })
@@ -83,6 +82,10 @@ export default class Facturas extends React.Component {
         this.setState({
             redireccionar: "/lineaDeFactura"
         })
+    }
+
+    guardaNombre($nombre) {
+        sessionStorage.setItem("nombreFactura", $nombre)
     }
 
     atras() {
@@ -108,8 +111,10 @@ export default class Facturas extends React.Component {
         }).then(res => { if (res.ok) return res.json() })
             .catch(error => console.error('Error:', error))
             .then(res => {
-                if (res.creaFacturaBarra)
+                if (res.creaFacturaBarra) {
+                    this.guardaNombre("Cliente sin nombre")
                     this.irLineaDeFactura(res.codFactura)
+                }
             })
     }
 
@@ -132,7 +137,7 @@ export default class Facturas extends React.Component {
                 <Menu />
                 <section id="seccionFacturas">
                     <h1>Facturas</h1>
-                    <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} />
+                    <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} guardaNombre={this.guardaNombre} />
                 </section>
                 {sumaLocales === 1 ? "" : <BotonAbajo onClick={this.atras} />}
                 <BotonAbajo derecha onClick={this.creaFacturaBarra} />

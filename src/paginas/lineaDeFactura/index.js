@@ -25,20 +25,10 @@ export default class LineaDeFactura extends React.Component {
         data.append('pass', usuario.pass)
         data.append('codFactura', id)
 
-        let nombreCliente = ""
-        let arrayFacturas = JSON.parse(sessionStorage.getItem("arrayFacturas"))
-        for (let i = 1; i < arrayFacturas.length; i++) {
-            if (Number(arrayFacturas[i][0]) === Number(id)) {
-                nombreCliente = arrayFacturas[i][1]
-                break
-            }
-        }
-
         this.state = {
             arrayFacturas: [],
             redireccionar: false,
             data,
-            nombreCliente,
             cuentaTotal: 0,
             intervalo: ""
         };
@@ -106,7 +96,7 @@ export default class LineaDeFactura extends React.Component {
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
-                    <div id="titulo"><p>{this.state.nombreCliente}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
+                    <div id="titulo"><p>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
                     <Tabla datos={this.state.arrayFacturas} />
                 </section>
                 <BotonAbajo onClick={this.atras} />

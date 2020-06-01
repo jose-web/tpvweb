@@ -284,34 +284,54 @@ function contratarEmpleado($email,$pass,$codLocal,$codUsuarioEmpleado,$tipo){
   return array("empleados" => false);
 }
 
-function muestraProductosLocal($email,$pass,$codLocal){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
+function muestraProductosLocal($codLocal){
+   
+  $arrayResultados= creaArrayProductos($codLocal);
 
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
+  return array("categorias" => $arrayResultados);
   
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-    $codLocal = mysqli_real_escape_string($con,$codLocal);
+  return array("categorias" => false);
+}
 
-    $consulta = "call muestraProductosLocal($codUsuario,$codLocal)";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
+function creaArrayProductos($codLocal,$padre = "null"){
+  include "conexion.php";
 
-    while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayResultados[] = $fila;
-    }
-    return array("productos" => $arrayResultados);
+  if(!$con){
+    return array("mensaje_error" => "Error al conectar con la base de datos.");
   }
-  return array("productos" => false);
+
+  mysqli_set_charset($con,"utf8");
+
+  $codLocal = mysqli_real_escape_string($con,$codLocal);
+
+  $consulta = "call muestraProductosLocal($codLocal,$padre)";
+  $resultado = mysqli_query($con,$consulta);
+  mysqli_close($con);
+
+  if(!$resultado){
+    return array("mensaje_error" => "Error al realizar la consulta");
+  }
+  $arrayResultados = [];
+  while($fila = mysqli_fetch_assoc($resultado)){
+    $nuevoArray=[];
+    $nuevoArray["nombre"] = $fila["nombre"];
+
+    if(isset($fila["codCategoria"])){
+      $nuevoArray["codCategoria"] = $fila["codCategoria"];
+      $nuevoArray["dentroCategoria"]=creaArrayProductos($codLocal,$fila["codCategoria"]);
+    }
+
+    if(isset($fila["codProducto"])){
+      $nuevoArray["codProducto"] = $fila["codProducto"];
+      $nuevoArray["precio"] = $fila["precio"];
+      $nuevoArray["disponibilidad"] = $fila["disponibilidad"];
+    }
+
+    
+    $arrayResultados[] = $nuevoArray;
+  }
+
+  return $arrayResultados;
 }
 
 function registro($nombre,$apellido1,$apellido2,$email,$pass){

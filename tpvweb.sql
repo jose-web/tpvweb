@@ -520,18 +520,23 @@ begin
 end $$
 
 
-create procedure muestraProductosLocal(codigoUsuario int, codLocal int)
+create procedure muestraProductosLocal(idLocal int, idCategoriaPadre int)
 begin
-	select producto.*, local_tiene_producto.precio, local_tiene_producto.disponibilidad
-    from producto join local_tiene_producto
-		on producto.codProducto = local_tiene_producto.codProducto
-		join trabajador_local
-			on trabajador_local.codLocal = local_tiene_producto.codLocal
-            join trabajador
-				on trabajador.codTrabajador = trabajador_local.codTrabajador
-	where local_tiene_producto.codLocal = codLocal
-		and trabajador.codUsuario = codigoUsuario
-        and trabajador_local.estado = 1;
+	if idCategoriaPadre is null then
+		select categoria.codCategoria, nombre
+        from categoria join local_tiene_categoria
+			on categoria.codCategoria = local_tiene_categoria.codCategoria
+		where codLocal = idLocal and codCategoriaPadre is null;
+	else
+		select categoria.codCategoria,null as codProducto, nombre, null as precio, null as disponibilidad
+        from categoria
+		where codCategoriaPadre = idCategoriaPadre
+        union
+        select null, producto.codProducto, nombre, precio, disponibilidad
+        from categoria_producto join producto
+			on categoria_producto.codProducto = producto.codProducto
+		where codCategoria = idCategoriaPadre;
+	end if;
 end $$
 
 

@@ -252,25 +252,6 @@ create table producto_ingrediente (
         on update cascade
 );
 
-create table local_tiene_producto(
-	codLocal int not null,
-	codProducto int not null,
-    precio double(6,2) not null,
-    disponibilidad boolean default true,
-    
-    constraint primary key (codLocal , codProducto),
-    
-	constraint foreign key (codLocal)
-        references local (codLocal)
-        on delete no action 
-        on update cascade,
-        
-    constraint foreign key (codProducto)
-        references producto (codProducto)
-        on delete no action 
-        on update cascade
-    );
-
 create table categoria (
     codCategoria int primary key auto_increment,
     nombre varchar(20) not null,
@@ -282,9 +263,28 @@ create table categoria (
         on update cascade
 );
 
+create table local_tiene_categoria(
+	codLocal int not null,
+	codCategoria int not null,
+    
+    constraint primary key (codLocal , codCategoria),
+    
+	constraint foreign key (codLocal)
+        references local (codLocal)
+        on delete no action 
+        on update cascade,
+        
+    constraint foreign key (codCategoria)
+        references categoria (codCategoria)
+        on delete no action 
+        on update cascade
+    );
+
 create table categoria_producto (
     codCategoria int,
     codProducto int,
+	precio double(6,2) not null,
+    disponibilidad boolean default true,
     
     constraint primary key (codCategoria , codProducto),
     
@@ -299,7 +299,7 @@ create table categoria_producto (
         on update cascade
 );
 
-create table lineaDeFactura (
+create table linea_de_factura (
     codLinea int primary key auto_increment,
     codFactura int not null,
     codProducto int not null,
@@ -345,7 +345,7 @@ end $$
 
 create procedure muestraFacturasLocal(codigoUsuario int,codigoLocal int)
 begin
-	select factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(lineadefactura.precio * lineadefactura.cantidad),0) as cuentaTotal
+	select factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(linea_de_factura.precio * linea_de_factura.cantidad),0) as cuentaTotal
     from factura join mesa
 		on factura.codMesa = mesa.codMesa
 			join mapa
@@ -354,8 +354,8 @@ begin
 					on trabajador_local.codLocal = mapa.codLocal
 					join trabajador
 						on trabajador_local.codTrabajador = trabajador.codTrabajador
-                        left join lineadefactura
-							on lineadefactura.codFactura = factura.codFactura
+                        left join linea_de_factura
+							on linea_de_factura.codFactura = factura.codFactura
 	where mapa.codLocal = codigoLocal
 		and trabajador.codUsuario = codigoUsuario
 		and factura.pagado = 0
@@ -366,9 +366,9 @@ end $$
 
 create procedure muestraProductosFactura(codigoUsuario int,codigoFactura int)
 begin
-	select lineadefactura.codLinea, producto.nombre, lineadefactura.precio, lineadefactura.cantidad, lineadefactura.comentario
-    from lineadefactura join factura
-		on lineadefactura.codFactura = factura.codFactura
+	select linea_de_factura.codLinea, producto.nombre, linea_de_factura.precio, linea_de_factura.cantidad, linea_de_factura.comentario
+    from linea_de_factura join factura
+		on linea_de_factura.codFactura = factura.codFactura
 		join mesa
 			on factura.codMesa = mesa.codMesa
 			join mapa
@@ -378,7 +378,7 @@ begin
 					join trabajador
 						on trabajador_local.codTrabajador = trabajador.codTrabajador
                         join producto
-							on lineadefactura.codProducto = producto.codProducto
+							on linea_de_factura.codProducto = producto.codProducto
 	where trabajador.codUsuario = codigoUsuario 
     and trabajador_local.estado = 1 
     and factura.codFactura = codigoFactura;

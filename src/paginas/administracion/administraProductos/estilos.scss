@@ -1,23 +1,28 @@
-.administraProducto {
+#menuProductos{
+    flex:100%;
     display: flex;
-    justify-content: space-between;
+    background-color: var(--color6);
+    padding:.5em;
+
+    li{
+        padding:1em 2em;
+        list-style: none;
+        border-right:.1em solid var(--color1);
+        color:var(--color1);
+        cursor: pointer;
+
+        &:last-child{
+            border:none
+        }
+    }
+}
+
+.administraCategoriaProducto{
+    display: flex;
+    justify-content: center;
     align-items: center;
+}
 
-    div {
-        margin: .5em;
-    }
-
-    .fa-trash-alt, .fa-pencil-alt {
-        width: 1.5em;
-        height: auto;
-        transition: 0.5s;
-    }
-
-    .fa-trash-alt:hover {
-        color: var(--color7);
-    }
-
-    .fa-pencil-alt:hover {
-        color: var(--color8);
-    }
+.opacidadAdministraCategoriaProducto{
+    opacity:.5
 }

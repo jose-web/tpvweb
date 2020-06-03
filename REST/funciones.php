@@ -578,4 +578,32 @@ function actualizaFactura($email,$pass,$idFactura,$nuevoNombreCliente,$estadoPag
   }
   return array("actualizaFactura" => false);
 }
+
+function crearCategoria($email,$pass,$codLocal,$nombre,$padre){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $codLocal = mysqli_real_escape_string($con,$codLocal);
+    $nombre = mysqli_real_escape_string($con,$nombre);
+    $padre = mysqli_real_escape_string($con,$padre);
+
+    $consulta = "call crearCategoria($codUsuario,$codLocal,'$nombre',$padre)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    return array("crearCategoria" => true);
+  }
+  return array("crearCategoria" => false);
+}
 ?>

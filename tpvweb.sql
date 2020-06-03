@@ -680,4 +680,27 @@ begin
     end if;
 end $$
 
+
+create procedure crearCategoria(idUsuario int, idLocal int, nombreCategoria varchar(50), idCategoriaPadre int)
+begin
+	
+	select trabajador.codTrabajador into @trabajador
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+	where codLocal = idLocal and estado = 1 and tipo = 'encargado';
+    
+    start transaction;
+    
+    insert into categoria(nombre, codCategoriaPadre)
+		value (nombreCategoria,idCategoriaPadre);
+        
+	select max(codCategoria) into @categoria from categoria;
+        
+	insert into local_tiene_categoria(codLocal, codCategoria)
+		value(idLocal, @categoria);
+        
+	commit;
+    
+end $$
+
 delimiter ;

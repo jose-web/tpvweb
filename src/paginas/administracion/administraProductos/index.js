@@ -4,6 +4,9 @@ import Menu from '../../../componentes/menu'
 import BotonAbajo from '../../../componentes/botonAbajo'
 // import { ReactComponent as Lapiz } from '../../../comunes/svg/pencil-alt-solid.svg'
 // import { ReactComponent as Basura } from '../../../comunes/svg/trash-alt-regular.svg'
+import Popup from '../../../componentes/popup'
+import Input from "../../../componentes/input"
+import Button from "../../../componentes/button"
 import { Redirect } from "react-router-dom"
 
 export default class AdministracionLocal extends React.Component {
@@ -13,13 +16,18 @@ export default class AdministracionLocal extends React.Component {
         this.state = {
             redireccionar: "",
             arrayMenuProductos: "",
-            arrayProductos: ""
+            arrayProductos: "",
+            nombreCategoria: "",
+            abierto: false
         };
         this.irA = this.irA.bind(this)
+        this.cambiaEstadoPopup = this.cambiaEstadoPopup.bind(this)
+        this.cambiaInputNombreCategoria = this.cambiaInputNombreCategoria.bind(this)
+        this.nuevaCategoria = this.nuevaCategoria.bind(this)
     }
 
     componentDidMount() {
-        let url = global.url + 'muestraProductosLocal/' + sessionStorage.getItem("idLocal");
+        let url = global.url + 'muestraProductosLocal/' + sessionStorage.getItem("idLocal")
 
         fetch(url, {
             method: 'GET',
@@ -39,19 +47,19 @@ export default class AdministracionLocal extends React.Component {
                     let categoria = res.categorias[i].codCategoria
                     menuProductos.push(<li key={categoria + nombre} onClick={() => this.muestraCategoria(res.categorias[i].dentroCategoria)}>{nombre}</li>)
                 }
-                menuProductos.push(<li key="mas">+</li>)
+                menuProductos.push(<li key="mas" onClick={this.cambiaEstadoPopup}>+</li>)
 
                 this.setState({ arrayMenuProductos })
 
                 this.muestraCategoria(res.categorias[0].dentroCategoria)
 
-            });
+            })
     }
 
     muestraCategoria($array) {
         let arrayProductos = []
 
-        arrayProductos.push(<article><strong><p>Añadir una categoría</p><p>+</p></strong></article>)
+        // arrayProductos.push(<article><strong><p>Añadir una categoría</p><p>+</p></strong></article>)
 
         for (let o = 0; o < Object.keys($array).length; o++) {
             let identificador = ""
@@ -89,13 +97,59 @@ export default class AdministracionLocal extends React.Component {
         })
     }
 
+    cambiaEstadoPopup() {
+        this.setState({
+            abierto: !this.state.abierto
+        })
+    }
+
+    nuevaCategoria(evento) {
+        evento.preventDefault()
+
+        let url = global.url + 'crearCategoria'
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('codLocal', sessionStorage.getItem("idLocal"))
+        data.append('nombre', this.state.nombreCategoria)
+        data.append('padre', null)
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.componentDidMount()
+                this.cambiaEstadoPopup()
+            })
+    }
+
+    cambiaInputNombreCategoria(evento) {
+        this.setState({
+            nombreCategoria: evento
+        })
+
+    }
+
     render() {
         if (this.state.redireccionar !== "") {
             return <Redirect to={this.state.redireccionar} />
         }
 
+        let popup = <form id="formularioCambiaNombre" onSubmit={this.nuevaCategoria}>
+            <strong>Añadir una nueva categoría</strong>
+            <Input label="NOMBRE CATEGORÍA" cambia={this.cambiaInputNombreCategoria} />
+            <Button submit value="AÑADIR" />
+        </form>
+
         return (
             <>
+                <Popup contenido={popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración de productos</h1>

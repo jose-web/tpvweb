@@ -1,18 +1,28 @@
 #menuProductos{
-    flex:100%;
     display: flex;
     background-color: var(--color6);
     padding:.5em;
+    width: min-content;
 
     li{
+        display: flex;
         padding:1em 2em;
         list-style: none;
         border-right:.1em solid var(--color1);
         color:var(--color1);
         cursor: pointer;
+        align-items: center;
 
         &:last-child{
-            border:none
+            border:none;
+            position:sticky;
+            right:.3em;
+            background-color: var(--color2);
+            color:var(--color6);
+            font-size: 2em;
+            padding:1em;
+            border-radius: .5em;
+            margin-left:.5em
         }
     }
 }

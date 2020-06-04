@@ -8,6 +8,7 @@ import Popup from '../../../componentes/popup'
 import Input from "../../../componentes/input"
 import Button from "../../../componentes/button"
 import { Redirect } from "react-router-dom"
+import ScrollContainer from "react-indiana-drag-scroll"
 
 export default class AdministracionLocal extends React.Component {
 
@@ -153,7 +154,7 @@ export default class AdministracionLocal extends React.Component {
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración de productos</h1>
-                    {this.state.arrayMenuProductos}
+                    <ScrollContainer>{this.state.arrayMenuProductos}</ScrollContainer>
                     {this.state.arrayProductos}
                 </section>
                 <BotonAbajo onClick={() => this.irA("/administracion")} />

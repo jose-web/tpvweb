@@ -91,6 +91,10 @@ $app->post("/crearCategoria", function(){
   echo json_encode(crearCategoria($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["nombre"],$_POST["padre"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/crearProducto", function(){
+  echo json_encode(crearProducto($_POST["email"],$_POST["pass"], $_POST["codLocal"] ,$_POST["codCategoria"], $_POST["nombreProducto"], $_POST["descripcionProducto"], "null", $_POST["precioProducto"], $_POST["disponibilidadProducto"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

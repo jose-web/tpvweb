@@ -703,4 +703,36 @@ begin
     
 end $$
 
+
+create procedure crearProducto(
+	idUsuario int, 
+	idLocal int, 
+	idCategoria int, 
+	nombreProducto varchar(50), 
+	descripcionProducto text, 
+    imagen varchar(30),
+    precioProducto double,
+    disponibilidadProducto boolean
+)
+begin
+	
+	select trabajador.codTrabajador into @trabajador
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+	where codLocal = idLocal and estado = 1 and tipo = 'encargado';
+    
+    start transaction;
+    
+    insert into producto(nombre, descripcion, img)
+		values(nombreProducto, descripcionProducto, imagen);
+
+	select max(codProducto) into @producto from producto;
+        
+	insert into categoria_producto(codCategoria, codProducto, precio, disponibilidad)
+	values(idCategoria, @producto, precioProducto, disponibilidadProducto);
+        
+	commit;
+    
+end $$
+
 delimiter ;

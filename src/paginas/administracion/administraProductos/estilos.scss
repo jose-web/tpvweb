@@ -12,6 +12,7 @@
         color:var(--color1);
         cursor: pointer;
         align-items: center;
+        width: max-content;
 
         &:last-child{
             border:none;
@@ -20,7 +21,7 @@
             background-color: var(--color2);
             color:var(--color6);
             font-size: 2em;
-            padding:1em;
+            padding:.5em;
             border-radius: .5em;
             margin-left:.5em
         }

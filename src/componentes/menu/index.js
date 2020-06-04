@@ -25,6 +25,7 @@ export default class Menu extends React.Component {
                             {sessionStorage.getItem("encargado") > 0 ?
                                 <Link to="/administracion/seleccionLocal" className={this.props.estoyEn === "administracion" ? "activo" : ""}><li>Administración</li></Link> : ""
                             }
+                            <Link to="/temas" id="temas"><li>Temas</li></Link>
                             <Link to="/cerrarSesion" id="cerrarSesion" onClick={this.cerrarSesion}><li>cerrar sesión</li></Link>
                         </ul>
                         <div id="bolaMenuOpciones"></div>

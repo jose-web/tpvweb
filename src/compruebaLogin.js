@@ -10,6 +10,7 @@ import BuscaEmpleado from "./paginas/administracion/buscaEmpleado"
 import Productos from "./paginas/administracion/administraProductos"
 import Perfil from "./paginas/perfil"
 import Index from "./index"
+import Temas from "./paginas/temas"
 
 export default class CompruebaLogin extends React.Component {
 
@@ -54,6 +55,7 @@ export default class CompruebaLogin extends React.Component {
                 <Route exact path="/administracion/empleados/buscar" component={BuscaEmpleado} />
                 <Route exact path="/administracion/productos" component={Productos} />
                 <Route exact path="/perfil" component={Perfil} />
+                <Route exact path="/temas" component={Temas} />
                 <Redirect from="*" to="/locales" />
             </Switch>
         </BrowserRouter>

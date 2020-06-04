@@ -31,3 +31,6 @@ export default class Inicia extends React.Component {
 ReactDOM.render(
   <Inicia />, document.getElementById('main')
 )
+
+
+document.body.style = localStorage.getItem("tema")

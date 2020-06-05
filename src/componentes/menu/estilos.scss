@@ -245,11 +245,14 @@
                 display: none;
             }
         }
-
-        #checkHamburguesa:checked+#menu{
-            &~*{
-                filter: blur(0);
-            }
+        #fondoMenu{
+            display: none !important;
+        }
+    }
+    
+    #checkHamburguesa:checked+#menu{
+        &~*{
+            filter: blur(0);
         }
     }
 }

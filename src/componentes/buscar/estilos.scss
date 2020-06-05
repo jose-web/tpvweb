@@ -1,3 +1,5 @@
+@import "../../comunes/variables";
+
 #botonBuscar {
     flex: 1 100%;
     margin: 1em 3em;
@@ -12,6 +14,7 @@
         background-color: var(--color6);
         position: relative;
         padding-right: 3em;
+        outline: none 
     }
 
     div {
@@ -40,11 +43,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        outline: none;
 
         svg {
             width: 1em;
             height: 1em;
             color: var(--color6)
         }
+    }
+}
+
+@media (min-width: $escritorio) {
+    #botonBuscar {
+        flex: 0 60%;
     }
 }

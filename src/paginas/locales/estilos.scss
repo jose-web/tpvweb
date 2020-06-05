@@ -1,12 +1,14 @@
+@import "../../comunes/variables";
+
 #locales{
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-wrap: wrap;
 
     article {
         background-color: var(--color4);
-        flex: 1 40%;
-        margin: 1em;
+        flex: 1 100%;
+        margin: 1%;
         padding: 1em;
         text-align: center;
         text-decoration: none;
@@ -28,5 +30,14 @@
 
 }
 
- 
+@media (min-width: $tablet) {
+    #locales article{
+        flex: 0 48%;
+    }
+}
 
+@media (min-width: $escritorio) {
+    #locales article{
+        flex: 0 31.3%;
+    }
+}

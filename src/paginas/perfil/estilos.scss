@@ -1,3 +1,5 @@
+@import "../../comunes/variables";
+
 #miPerfil{
     display: flex;
     flex-direction: column;
@@ -56,4 +58,44 @@
         display:flex;
         flex-direction: column;
     }
+}
+
+@media (min-width: $tablet) {
+    #miPerfil{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        h1,#margenImagen{
+            flex:100%
+        }
+
+        form{
+            flex:0 45%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: auto;
+
+            #imagen{
+                margin-left:auto;
+                margin-right:auto;
+               
+            }
+            h2{
+                flex:100%;
+
+                &+.input{
+                    flex:100%
+                }
+            }
+
+            .input{
+                flex:1 45%;
+            }
+            .boton{
+                flex:100%
+            }
+            
+        }
+    }    
 }

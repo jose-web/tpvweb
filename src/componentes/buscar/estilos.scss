@@ -2,7 +2,7 @@
 
 #botonBuscar {
     flex: 1 100%;
-    margin: 1em 3em;
+    margin: 1em 1.5em;
     position: relative;
     z-index: 0;
 
@@ -55,6 +55,6 @@
 
 @media (min-width: $escritorio) {
     #botonBuscar {
-        flex: 0 60%;
+        margin:1em calc(100%/5);
     }
 }

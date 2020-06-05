@@ -43,6 +43,7 @@
         color: var(--color4);
         transition: 0.5s;
         cursor: text;
+        text-align: center;
 
         &.activo {
             @include animacionLabel;

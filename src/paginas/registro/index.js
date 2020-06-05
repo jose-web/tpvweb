@@ -136,7 +136,7 @@ export default class Registro extends React.Component {
                         <Input label="CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "pass")} /><p>{this.state.passError}</p>
                         <Input label="REPITE CONTRASEÑA" pass cambia={($valor) => this.cambiaEstado($valor, "rpass")} />
                         <Button value="REGISTRARSE" submit />
-                        <Link to="/login" className="linkCambio">Ir al Login</Link>
+                        <Link to="/login" className="linkCambio"><Button value="IR AL LOGIN" submit /></Link>
                     </form>
                 </div>
             </div>

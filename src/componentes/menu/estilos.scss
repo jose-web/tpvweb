@@ -1,3 +1,5 @@
+@import "../../comunes/variables";
+
 #menu {
     background-color: var(--color1);
     color: var(--color6);
@@ -172,6 +174,81 @@
                 ul {
                     left: 0;
                 }
+            }
+        }
+    }
+}
+
+@media (min-width: $escritorio) {
+    #menu{
+        padding: 1em 2em !important;
+    
+        #menuHamburguesa{
+            display: none;
+        }
+
+        #menuOpciones{
+            overflow:visible !important;
+            position: initial !important;
+            height: max-content !important;
+            flex:1;
+            margin:0 1em;
+            transition-delay: 0s;
+
+            ul{
+                position: initial !important;
+                height: min-content !important;
+                flex-direction: row !important;
+
+                a{
+                    background-color: transparent !important;
+                    color:var(--color6) !important;
+                    position: relative;
+                    margin:0 .5em;
+    
+                    &:before{
+                        position: absolute;
+                        content:"";
+                        background-color:var(--color6);
+                        width:0%;
+                        height:.1em;
+                        display: block;
+                        bottom:0;
+                        left:50%;
+                        transition: .5s;
+                    }
+    
+                    &:hover:before{
+                        width:100%;
+                        left:0;
+                    }
+                }
+
+                .activo{
+                    &:before{
+                        width:100%;
+                        left:0;
+                    } 
+                }
+            }
+
+            &+a{
+                order:-1;
+                padding:0 .5em;
+            }
+
+            #cerrarSesion{
+                margin-left:auto;
+            }
+
+            #bolaMenuOpciones{
+                display: none;
+            }
+        }
+
+        #checkHamburguesa:checked+#menu{
+            &~*{
+                filter: blur(0);
             }
         }
     }

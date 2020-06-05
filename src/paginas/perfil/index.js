@@ -154,6 +154,7 @@ export default class Login extends React.Component {
                             <img src={fotoUsuario} alt="Foto de perfil" />
                             <span>Cambiar foto de perfil</span>
                         </label>
+                        <span id="margenImagen"></span>
                         <Input label="FOTO DE PERFIL" file cambia={($valor) => this.cambiaEstado($valor, "nuevaImagen")} />
                         <Input label="NOMBRE" value={this.state.datos.nombre} cambia={($valor) => this.cambiaEstado($valor, "nuevoNombre")} />
                         <Input label="PRIMER APELLIDO" value={this.state.datos.apellido1} cambia={($valor) => this.cambiaEstado($valor, "nuevoApellido1")} />

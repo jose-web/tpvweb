@@ -1,12 +1,15 @@
+@import "../../../comunes/variables";
+
 #seccionLocalAdministracion{
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-wrap: wrap;
+    padding:1em;
+    gap:1em;
 
     article {
         background-color: var(--color4);
-        flex: 1 40%;
-        margin: 1em;
+        width:100%;
         padding: 1em;
         text-align: center;
         text-decoration: none;
@@ -26,4 +29,16 @@
         padding: 1em;
     }
 
+}
+
+@media (min-width: $tablet) {
+    #seccionLocalAdministracion article{
+        width: calc((100% / 2) - (1em / 2));
+    }
+}
+
+@media (min-width: $escritorio) {
+    #seccionLocalAdministracion article{
+        width: calc((100% / 3) - (2em / 3));
+    }
 }

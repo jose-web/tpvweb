@@ -2,6 +2,7 @@ import React from 'react'
 import Menu from '../../../componentes/menu'
 import BotonAbajo from '../../../componentes/botonAbajo'
 import { Redirect } from "react-router-dom"
+import "./estilos.scss"
 
 export default class AdministracionLocal extends React.Component {
 
@@ -42,16 +43,16 @@ export default class AdministracionLocal extends React.Component {
                         let apellido2 = res.empleados[i].apellido2
                         let tipo = res.empleados[i].tipo
 
-                        arrayEmpleados.push(<article key={id} tabIndex="0">
-                            <img src={img} alt="Perfil" />
-                            <br />
-                            <strong>{nombre}  {apellido1} {apellido2}</strong>
-                            <br />
-                            <select defaultValue={tipo} onChange={(value) => this.cambiaTipoEmpleado(value.target.value, id)}>
-                                <option value="encargado">encargado/a</option>
-                                <option value="camarero">camarero/a</option>
-                                <option value="cocinero">cocinero/a</option>
-                            </select>
+                        arrayEmpleados.push(<article key={id} tabIndex="0" className="administraEmpleado">
+                            <img src={global.url + "img/usuarios/" + img} alt="Perfil" />
+                            <div>
+                                <strong>{nombre}  {apellido1} {apellido2}</strong>
+                                <select defaultValue={tipo} onChange={(value) => this.cambiaTipoEmpleado(value.target.value, id)}>
+                                    <option value="encargado">encargado/a</option>
+                                    <option value="camarero">camarero/a</option>
+                                    <option value="cocinero">cocinero/a</option>
+                                </select>
+                            </div>
                         </article>)
                     }
                 this.setState({

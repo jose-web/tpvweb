@@ -1,0 +1,46 @@
+.administraEmpleado{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    cursor: auto !important;
+
+    img{
+        width: 8em;
+        height: 8em;
+        border-radius: 100%;
+    } 
+
+    div{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        padding:1em;
+        justify-content: center;
+
+        select{
+            height:4em;
+            padding:1em;
+            margin-top:1em;
+            background-color: var(--color1);
+            border:.1em solid var(--color1);
+            color:var(--color6);
+            cursor: pointer;
+        }
+
+        button{
+            margin-top:1em;
+            width:100%;
+            padding:.5em;
+            background-color: var(--color1);
+            border:.1em solid var(--color1);
+            color:var(--color6);
+            cursor: pointer;
+        }
+
+        p{
+            margin-top:.5em
+        }
+    }
+}

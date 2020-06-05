@@ -55,16 +55,17 @@ export default class BuscaEmpleado extends React.Component {
                         let apellido2 = res.empleados[i].apellido2
                         let tipo = res.empleados[i].tipo
 
-                        arrayEmpleados.push(<article key={id} tabIndex="0">
-                            <img src={img} alt="Perfil" />
-                            <br />
-                            <strong>{nombre}  {apellido1} {apellido2}</strong>
-                            <br />
-                            <p>{tipo !== "" ? `Ya es ${tipo}/a` : <>
-                                <button onClick={() => this.contratar(id, "encargado")}>Contratar Encargado/a</button>
-                                <button onClick={() => this.contratar(id, "camarero")}>Contratar Camarero/a</button>
-                                <button onClick={() => this.contratar(id, "cocinero")}>Contratar Cocinero/a</button>
-                            </>}</p>
+                        arrayEmpleados.push(<article key={id} tabIndex="0" className="administraEmpleado">
+                            <img src={global.url + "img/usuarios/" + img} alt="Perfil" />
+
+                            <div>
+                                <strong>{nombre}  {apellido1} {apellido2}</strong>
+                                <p>{tipo !== "" ? `Ya es ${tipo}/a` : <>
+                                    <button onClick={() => this.contratar(id, "encargado")}>Contratar Encargado/a</button>
+                                    <button onClick={() => this.contratar(id, "camarero")}>Contratar Camarero/a</button>
+                                    <button onClick={() => this.contratar(id, "cocinero")}>Contratar Cocinero/a</button>
+                                </>}</p>
+                            </div>
                         </article>)
                     }
                 this.setState({

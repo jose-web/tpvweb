@@ -4,11 +4,12 @@
     display: flex;
     justify-content: start;
     flex-wrap: wrap;
+    padding:1em;
+    gap:1em;
 
     article {
         background-color: var(--color4);
-        flex: 1 100%;
-        margin: 1%;
+        width:100%;
         padding: 1em;
         text-align: center;
         text-decoration: none;
@@ -32,12 +33,12 @@
 
 @media (min-width: $tablet) {
     #locales article{
-        flex: 0 48%;
+        width: calc((100% / 2) - (1em / 2));
     }
 }
 
 @media (min-width: $escritorio) {
     #locales article{
-        flex: 0 31.3%;
+        width: calc((100% / 3) - (2em / 3));
     }
 }

@@ -65,7 +65,7 @@ export default class Locales extends React.Component {
             return <Redirect to="/facturas" />
         return (
             <>
-                <Menu />
+                <Menu estoyEn="temas"/>
                 <section id="locales">
                     <h1>Temas</h1>
                     <article onClick={() => this.cambiarTema("azul")} tabIndex="0">

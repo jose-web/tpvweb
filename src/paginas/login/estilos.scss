@@ -1,3 +1,5 @@
+@import "../../comunes/variables";
+
 #contieneLogin {
     display: flex;
     min-height: 100vh;
@@ -35,5 +37,17 @@
         p{
             text-align: center;
         }
+    }
+}
+
+@media (min-width: $tablet) {
+    #login {
+        width: 50% !important;
+    }
+}
+
+@media (min-width: $escritorio) {
+    #login {
+        width: 30% !important;
     }
 }

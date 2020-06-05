@@ -84,7 +84,7 @@ export default class Login extends React.Component {
             <Input label="EMAIL" email cambia={this.cambiaEmail} />
             <Input label="CONTRASEÑA" pass cambia={this.cambiaPass} />
             <Button value="INICIAR SESIÓN" submit />
-            <Link to="/registro" className="linkCambio">Registrate ahora</Link>
+            <Link to="/registro" className="linkCambio"><Button value="REGISTRATE" /></Link>
           </form>
         </div>
       </div>

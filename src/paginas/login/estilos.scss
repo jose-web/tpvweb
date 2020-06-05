@@ -24,14 +24,28 @@
 
         form {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: wrap;
             width: 100%;
+
+            .input{
+                flex:1 100%;
+            }
+            .boton{
+                flex:1;
+            }
         }
 
         .linkCambio{
-            text-align: center;
-            font-size: .7em;
-            padding: .5em;
+            flex:100%;
+            display: flex;
+            text-decoration: none;
+            margin:.5rem;
+
+            input{
+                flex:1;
+                margin:0;
+            }
         }
         
         p{
@@ -43,6 +57,14 @@
 @media (min-width: $tablet) {
     #login {
         width: 50% !important;
+
+        .linkCambio{
+            flex:1 !important;
+        }
+
+        .boton{
+            order:1
+        }
     }
 }
 

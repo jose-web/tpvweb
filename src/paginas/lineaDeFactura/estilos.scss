@@ -1,22 +1,25 @@
+@import "../../comunes/variables";
+
 #seccionLineaDeFactura {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 
     h1 {
-        flex:1 100%;
+        flex: 1 100%;
         padding: 1em;
         text-align: center;
-        color: var(--color1)
+        color: var(--color1);
     }
 
     #titulo {
-        flex:100%;
+        flex: 100%;
         display: flex;
         padding: 1em;
         background-color: var(--color6);
         margin-bottom: 1em;
         align-items: center;
-        color: var(--color1)
+        color: var(--color1);
     }
 
     .derecha {
@@ -27,18 +30,57 @@
         height: 2em;
         width: auto;
         margin-left: 1em;
-        color: var(--color1)
+        color: var(--color1);
     }
 
+    > article {
+        width: 100%;
+    }
+    #agregarProductos {
+        display: none;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 1em;
+
+        article {
+            width: calc((100% / 3) - (2em / 3)) !important;
+            background-color: var(--color4);
+            width: 100%;
+            padding: 1em;
+            text-align: center;
+            text-decoration: none;
+            color: var(--color1);
+            transition: 0.5s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--color2);
+                color: var(--color6);
+            }
+        }
+    }
 }
 
-#formularioCambiaNombre{
+#formularioCambiaNombre {
     display: flex;
     flex-direction: column;
 
-    strong{
+    strong {
         text-align: center;
-        padding:.5em 0
+        padding: 0.5em 0;
     }
 }
 
+@media (min-width: $escritorio) {
+    #seccionLineaDeFactura {
+        article {
+            width: 49% !important;
+        }
+        #agregarProductos {
+            display: flex !important;
+        }
+        & ~ .botonAbajoDerecha {
+            display: none;
+        }
+    }
+}

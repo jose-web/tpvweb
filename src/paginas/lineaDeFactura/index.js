@@ -8,6 +8,7 @@ import { ReactComponent as IconoPagar } from "./cash-register-solid.svg"
 import Input from "../../componentes/input"
 import Button from "../../componentes/button"
 import { Redirect } from "react-router-dom"
+import ScrollContainer from "react-indiana-drag-scroll"
 
 export default class LineaDeFactura extends React.Component {
 
@@ -124,8 +125,73 @@ export default class LineaDeFactura extends React.Component {
         this.repetir()
         let intervalo = setInterval(this.repetir, 3000)
 
+        let url = global.url + 'muestraProductosLocal/' + sessionStorage.getItem("idLocal")
+
+        fetch(url, {
+            method: 'GET',
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+
+                sessionStorage.setItem("productosLocal", JSON.stringify(res))
+
+                let menuProductos = []
+                let arrayMenuProductos = <ul key="menuProductos" id="menuProductos">{menuProductos}</ul>
+
+                for (let i = 0; i < Object.keys(res.categorias).length; i++) {
+                    let id = res.categorias[i].codCategoria
+                    let nombre = res.categorias[i].nombre
+                    let categoria = res.categorias[i].codCategoria
+                    if (Object.keys(res.categorias[i].dentroCategoria).length > 0)
+                        menuProductos.push(<li key={categoria + nombre} onClick={() => this.muestraCategoria(id, res.categorias[i].dentroCategoria)}>{nombre}</li>)
+                }
+
+                this.setState({ arrayMenuProductos })
+
+                this.muestraCategoria(res.categorias[0].codCategoria, res.categorias[0].dentroCategoria)
+
+            })
+
         this.setState({ intervalo })
 
+    }
+
+    muestraCategoria($codCategoria, $array) {
+        let arrayProductos = []
+
+        for (let o = 0; o < Object.keys($array).length; o++) {
+            let identificador = ""
+            let esCategoria = typeof $array[o].codCategoria !== "undefined"
+            if (esCategoria)
+                identificador = $array[o].codCategoria
+            else
+                identificador = $array[o].codProducto
+
+            let contenido = <>
+                <strong>{$array[o].nombre}</strong>
+                {esCategoria ? "" : <>
+                    <p>{$array[o].precio} €</p>
+                </>}
+            </>
+
+            if ($array[o].disponibilidad !== "0")
+                arrayProductos.push(<article
+                    className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto"}
+                    key={identificador}
+                    tabIndex="0"
+                    onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : ""}
+                >
+                    <div>
+                        {contenido}
+                    </div>
+                </article>)
+        }
+
+        this.setState({
+            arrayProductos,
+            codCategoria: $codCategoria
+        })
     }
 
     atras() {
@@ -154,8 +220,14 @@ export default class LineaDeFactura extends React.Component {
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
-                    <div id="titulo"><p onClick={this.cambiaEstadoPopup}>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
-                    <Tabla datos={this.state.arrayFacturas} />
+                    <article>
+                        <div id="titulo"><p onClick={this.cambiaEstadoPopup}>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
+                        <Tabla datos={this.state.arrayFacturas} />
+                    </article>
+                    <article id="agregarProductos">
+                        <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>
+                        {this.state.arrayProductos}
+                    </article>
                 </section>
                 <BotonAbajo onClick={this.atras} />
                 <BotonAbajo derecha />

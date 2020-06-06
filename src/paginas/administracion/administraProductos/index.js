@@ -57,7 +57,7 @@ export default class AdministracionLocal extends React.Component {
                     let categoria = res.categorias[i].codCategoria
                     menuProductos.push(<li key={categoria + nombre} onClick={() => this.muestraCategoria(id, res.categorias[i].dentroCategoria)}>{nombre}</li>)
                 }
-                menuProductos.push(<li key="mas" onClick={this.popupNuevaCategoria}>+</li>)
+                menuProductos.push(<li id="mas" key="mas" onClick={this.popupNuevaCategoria}>+</li>)
 
                 this.setState({ arrayMenuProductos })
 
@@ -219,7 +219,7 @@ export default class AdministracionLocal extends React.Component {
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración de productos</h1>
-                    <ScrollContainer>{this.state.arrayMenuProductos}</ScrollContainer>
+                    <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>
                     {this.state.arrayProductos}
                 </section>
                 <BotonAbajo onClick={() => this.irA("/administracion")} />

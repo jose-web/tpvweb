@@ -1,7 +1,6 @@
 .contieneTabla {
-    flex:1 100%;
-    width: 0;
-    overflow-y: auto;
+    flex: 1 100%;
+    white-space: nowrap;
 
     .tabla {
         width: 100%;
@@ -9,27 +8,25 @@
         text-align: center;
         margin-bottom: 1em;
         color: var(--color1);
-    
+
         th {
             background: var(--color2);
             color: var(--color6);
             padding: 1em;
         }
-    
+
         tbody tr:hover {
             box-shadow: 0 0 0.5em 0.2em var(--color1);
             position: relative;
         }
-    
+
         td {
             padding: 1em;
             cursor: pointer;
         }
-    
+
         .diferente {
             background-color: var(--color4);
         }
-    
     }
-
 }

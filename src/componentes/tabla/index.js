@@ -1,5 +1,6 @@
 import React from 'react'
 import './estilos.scss'
+import ScrollContainer from "react-indiana-drag-scroll"
 
 export default class Tabla extends React.Component {
 
@@ -48,7 +49,7 @@ export default class Tabla extends React.Component {
 
     render() {
         return (
-            <article className="contieneTabla">
+            <ScrollContainer className="contieneTabla">
                 <table className="tabla">
                     <thead>
                         {this.state.arrayTitulo}
@@ -57,7 +58,7 @@ export default class Tabla extends React.Component {
                         {this.state.arrayFilas}
                     </tbody>
                 </table>
-            </article>
+            </ScrollContainer>
         )
     }
 

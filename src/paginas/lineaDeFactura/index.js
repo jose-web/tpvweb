@@ -36,14 +36,15 @@ export default class LineaDeFactura extends React.Component {
             cuentaTotal: 0,
             intervalo: "",
             nombreFactura: "",
-            abierto: false
+            abierto: false,
+            mostrarProductos: false
         };
         this.repetir = this.repetir.bind(this)
         this.atras = this.atras.bind(this)
         this.cambiaInputNombreFactura = this.cambiaInputNombreFactura.bind(this)
         this.cambiaNombre = this.cambiaNombre.bind(this)
         this.cambiaEstadoPopup = this.cambiaEstadoPopup.bind(this)
-
+        this.mostrarProductos = this.mostrarProductos.bind(this)
     }
 
     repetir() {
@@ -195,8 +196,17 @@ export default class LineaDeFactura extends React.Component {
     }
 
     atras() {
+        if (this.state.mostrarProductos)
+            this.mostrarProductos()
+        else
+            this.setState({
+                redireccionar: true
+            })
+    }
+
+    mostrarProductos() {
         this.setState({
-            redireccionar: true
+            mostrarProductos: !this.state.mostrarProductos
         })
     }
 
@@ -220,17 +230,19 @@ export default class LineaDeFactura extends React.Component {
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
-                    <article>
+                    <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
                         <div id="titulo"><p onClick={this.cambiaEstadoPopup}>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
                         <Tabla datos={this.state.arrayFacturas} />
                     </article>
-                    <article id="agregarProductos">
+                    <article id="agregarProductos" className={this.state.mostrarProductos ? "" : "oculto"}>
                         <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>
                         {this.state.arrayProductos}
                     </article>
                 </section>
                 <BotonAbajo onClick={this.atras} />
-                <BotonAbajo derecha />
+                <div className={this.state.mostrarProductos ? "oculto" : ""}>
+                    <BotonAbajo derecha onClick={this.mostrarProductos} />
+                </div>
             </>
         )
     }

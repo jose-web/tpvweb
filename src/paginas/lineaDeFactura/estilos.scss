@@ -37,7 +37,7 @@
         width: 100%;
     }
     #agregarProductos {
-        display: none;
+        display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
         gap: 1em;
@@ -60,6 +60,9 @@
         }
     }
 }
+.oculto {
+    display: none !important;
+}
 
 #formularioCambiaNombre {
     display: flex;
@@ -79,7 +82,10 @@
         #agregarProductos {
             display: flex !important;
         }
-        & ~ .botonAbajoDerecha {
+        #contieneFactura {
+            display: initial !important;
+        }
+        & ~ div .botonAbajoDerecha {
             display: none;
         }
     }

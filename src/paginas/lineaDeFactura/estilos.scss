@@ -41,6 +41,7 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         gap: 1em;
+        margin-bottom: auto;
 
         article {
             width: calc((100% / 3) - (2em / 3)) !important;

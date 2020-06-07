@@ -169,22 +169,18 @@ export default class LineaDeFactura extends React.Component {
             else
                 identificador = $array[o].codProducto
 
-            let contenido = <>
-                <strong>{$array[o].nombre}</strong>
-                {esCategoria ? "" : <>
-                    <p>{$array[o].precio} €</p>
-                </>}
-            </>
-
             if ($array[o].disponibilidad !== "0")
                 arrayProductos.push(<article
                     className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto"}
                     key={identificador}
                     tabIndex="0"
-                    onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : ""}
+                    onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.addProductoFactura($array[o])}
                 >
                     <div>
-                        {contenido}
+                        <strong>{$array[o].nombre}</strong>
+                        {esCategoria ? "" : <>
+                            <p>{$array[o].precio} €</p>
+                        </>}
                     </div>
                 </article>)
         }
@@ -193,6 +189,32 @@ export default class LineaDeFactura extends React.Component {
             arrayProductos,
             codCategoria: $codCategoria
         })
+    }
+
+    addProductoFactura($array) {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('idFactura', sessionStorage.getItem("idFactura"))
+        data.append('idProducto', $array["codProducto"])
+        data.append('precio', $array["precio"])
+        data.append('cantidad', 1)
+        data.append('comentario', "")
+
+        let url = global.url + 'addProductoFactura'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.addProductoFactura)
+                    this.repetir()
+            })
     }
 
     atras() {

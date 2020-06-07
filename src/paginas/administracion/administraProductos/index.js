@@ -24,7 +24,8 @@ export default class AdministracionLocal extends React.Component {
             precioProducto: "",
             descripcionProducto: "",
             disponibilidadProducto: "",
-            codCategoria: ""
+            codCategoria: "",
+            popup: ""
         }
 
         this.irA = this.irA.bind(this)
@@ -67,23 +68,28 @@ export default class AdministracionLocal extends React.Component {
     }
 
     popupNuevaCategoria() {
-        this.popup = <form id="formularioCambiaNombre" onSubmit={this.nuevaCategoria}>
-            <strong>Añadir una nueva categoría</strong>
-            <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreCategoria")} />
-            <Button submit value="AÑADIR" />
-        </form>
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={this.nuevaCategoria}>
+                <strong>Añadir una nueva categoría</strong>
+                <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreCategoria")} />
+                <Button submit value="AÑADIR" />
+            </form>
+        })
         this.cambiaEstadoPopup()
     }
 
     popupNuevoProducto() {
-        this.popup = <form id="formularioCambiaNombre" onSubmit={this.nuevoProducto}>
-            <strong>Añadir una nuevo producto</strong>
-            <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreProducto")} />
-            <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} />
-            <Input label="DESCRIPCIÓN" cambia={($valor) => this.cambiaEstado($valor, "descripcionProducto")} />
-            <Input label="DISPONIBILIDAD" cambia={($valor) => this.cambiaEstado($valor, "disponibilidadProducto")} />
-            <Button submit value="AÑADIR" />
-        </form>
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={this.nuevoProducto}>
+                <strong>Añadir un nuevo producto</strong>
+                <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreProducto")} />
+                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} />
+                <Input label="DESCRIPCIÓN" cambia={($valor) => this.cambiaEstado($valor, "descripcionProducto")} />
+                <Input label="DISPONIBILIDAD" cambia={($valor) => this.cambiaEstado($valor, "disponibilidadProducto")} />
+                <Button submit value="AÑADIR" />
+            </form>
+        })
+
         this.cambiaEstadoPopup()
     }
 
@@ -149,6 +155,11 @@ export default class AdministracionLocal extends React.Component {
         this.setState({
             abierto: !this.state.abierto
         })
+
+        if (this.state.abierto)
+            setTimeout(function () {
+                this.setState({ popup: "" })
+            }.bind(this), 500)
     }
 
     nuevaCategoria(evento) {
@@ -206,8 +217,6 @@ export default class AdministracionLocal extends React.Component {
             })
     }
 
-    popup = ''
-
     render() {
         if (this.state.redireccionar !== "") {
             return <Redirect to={this.state.redireccionar} />
@@ -215,7 +224,7 @@ export default class AdministracionLocal extends React.Component {
 
         return (
             <>
-                <Popup contenido={this.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
+                <Popup contenido={this.state.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración de productos</h1>

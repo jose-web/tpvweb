@@ -719,7 +719,7 @@ begin
 	select trabajador.codTrabajador into @trabajador
     from trabajador join trabajador_local
 		on trabajador.codTrabajador = trabajador_local.codTrabajador
-	where codLocal = idLocal and estado = 1 and tipo = 'encargado';
+	where codLocal = idLocal and estado = 1 and tipo = 'encargado' and codUsuario = idUsuario;
     
     start transaction;
     

@@ -61,8 +61,8 @@ export default class AdministracionLocal extends React.Component {
                 menuProductos.push(<li id="mas" key="mas" onClick={this.popupNuevaCategoria}>+</li>)
 
                 this.setState({ arrayMenuProductos })
-
-                this.muestraCategoria(res.categorias[0].codCategoria, res.categorias[0].dentroCategoria)
+                if (typeof res.categorias[0] !== "undefined")
+                    this.muestraCategoria(res.categorias[0].codCategoria, res.categorias[0].dentroCategoria)
 
             })
     }

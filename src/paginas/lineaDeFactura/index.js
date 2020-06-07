@@ -149,8 +149,8 @@ export default class LineaDeFactura extends React.Component {
                 }
 
                 this.setState({ arrayMenuProductos })
-
-                this.muestraCategoria(res.categorias[0].codCategoria, res.categorias[0].dentroCategoria)
+                if (typeof res.categorias[0] !== "undefined")
+                    this.muestraCategoria(res.categorias[0].codCategoria, res.categorias[0].dentroCategoria)
 
             })
 

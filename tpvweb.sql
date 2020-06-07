@@ -345,7 +345,7 @@ end $$
 
 create procedure muestraFacturasLocal(codigoUsuario int,codigoLocal int)
 begin
-	select factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(linea_de_factura.precio * linea_de_factura.cantidad),0) as cuentaTotal
+	select factura.fecha, factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(linea_de_factura.precio * linea_de_factura.cantidad),0) as cuentaTotal
     from factura join mesa
 		on factura.codMesa = mesa.codMesa
 			join mapa
@@ -360,7 +360,7 @@ begin
 		and trabajador.codUsuario = codigoUsuario
 		and factura.pagado = 0
 	group by factura.codFactura
-    order by nombre;
+    order by factura.fecha desc;
 end $$
 
 

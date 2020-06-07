@@ -49,16 +49,17 @@ export default class Facturas extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
 
-                arrayFacturas.push([["Cliente"], ["Cuenta total"]])
+                arrayFacturas.push([["Fecha"], ["Cliente"], ["Cuenta total"]])
 
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.facturas).length; i++) {
 
                         let id = res.facturas[i].id
+                        let fecha = res.facturas[i].fecha
                         let nombre = res.facturas[i].nombre
                         let cuentaTotal = res.facturas[i].cuentaTotal
 
-                        arrayFacturas.push([[id], [nombre], [cuentaTotal]])
+                        arrayFacturas.push([[id], [fecha], [nombre], [cuentaTotal]])
                     }
                 this.setState({
                     arrayFacturas: arrayFacturas.slice()

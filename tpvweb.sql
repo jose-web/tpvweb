@@ -601,7 +601,7 @@ begin
 			on trabajador_local.codTrabajador = trabajador.codTrabajador
     where usuario.codUsuario = idUsuario and tipo = "cocinero" and estado = 1;
 	
-	select nombre, apellido1, apellido2, email, img, @camarero as camarero, @encargado as encargado, @cocinero as cocinero
+	select nombre, apellido1, apellido2, email, img, @camarero as camarero, @encargado as encargado, @cocinero as cocinero, tema
     from usuario 
     where codUsuario = idUsuario;
 end $$

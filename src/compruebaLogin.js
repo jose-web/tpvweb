@@ -37,6 +37,7 @@ export default class CompruebaLogin extends React.Component {
                         sessionStorage.setItem("camarero", res.datos.camarero)
                         sessionStorage.setItem("encargado", res.datos.encargado)
                         sessionStorage.setItem("cocinero", res.datos.cocinero)
+                        document.body.style = res.datos.tema
                     }
                 });
         }

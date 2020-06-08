@@ -7,6 +7,7 @@ export default class Menu extends React.Component {
     cerrarSesion() {
         localStorage.removeItem('usuario')
         sessionStorage.clear()
+        document.body.style=""
     }
 
     render() {

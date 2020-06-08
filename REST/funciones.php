@@ -667,4 +667,34 @@ function addProductoFactura($email, $pass, $idFactura, $idProducto, $precio, $ca
   }
   return array("addProductoFactura" => false);
 }
+
+function editaProducto($email, $pass, $idLocal, $idCategoria, $idProducto, $precio, $disponibilidad){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $idLocal = mysqli_real_escape_string($con,$idLocal);
+    $idCategoria = mysqli_real_escape_string($con,$idCategoria);
+    $idProducto = mysqli_real_escape_string($con,$idProducto);
+    $precio = mysqli_real_escape_string($con,$precio);
+    $disponibilidad = mysqli_real_escape_string($con,$disponibilidad);
+
+    $consulta = "call editaProducto($codUsuario,$idLocal,$idCategoria,$idProducto,$precio,$disponibilidad)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    return array("editaProducto" => true);
+  }
+  return array("editaProducto" => false);
+}
 ?>

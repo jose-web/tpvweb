@@ -773,4 +773,34 @@ begin
     
 end $$
 
+
+create procedure editaProducto(
+	idUsuario int, 
+	idLocal int, 
+	idCategoria int, 
+    idProducto int,
+    precioProducto double,
+    disponibilidadProducto boolean
+)
+begin
+	
+	select count(trabajador.codTrabajador) into @trabajador
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+        join local_tiene_categoria
+			on local_tiene_categoria.codLocal = trabajador_local.codLocal
+	where trabajador_local.codLocal = idLocal 
+		and estado = 1 
+		and tipo = 'encargado' 
+		and codUsuario = idUsuario
+        and local_tiene_categoria.codCategoria = idCategoria;
+    
+    if(@trabajador >0) then
+		update categoria_producto 
+		set precio = precioProducto, disponibilidad = disponibilidadProducto
+		where codCategoria = idCategoria and codProducto = idProducto;
+    end if;
+    
+end $$
+
 delimiter ;

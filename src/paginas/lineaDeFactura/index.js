@@ -262,7 +262,7 @@ export default class LineaDeFactura extends React.Component {
                     </article>
                 </section>
                 <BotonAbajo onClick={this.atras} />
-                <div className={this.state.mostrarProductos ? "oculto" : ""}>
+                <div id="divBotonOculto" className={this.state.mostrarProductos ? "oculto" : ""}>
                     <BotonAbajo derecha onClick={this.mostrarProductos} />
                 </div>
             </>

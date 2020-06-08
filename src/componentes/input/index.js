@@ -5,7 +5,7 @@ export default class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ""
+            value: this.props.value ? this.props.value : ""
         }
         this.cambia = this.cambia.bind(this)
     }

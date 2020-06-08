@@ -25,7 +25,9 @@ export default class AdministracionLocal extends React.Component {
             descripcionProducto: "",
             disponibilidadProducto: "",
             codCategoria: "",
-            popup: ""
+            popup: "",
+            nuevoPrecio: "",
+            nuevaDisponibilidad: ""
         }
 
         this.irA = this.irA.bind(this)
@@ -35,6 +37,7 @@ export default class AdministracionLocal extends React.Component {
         this.popupNuevoProducto = this.popupNuevoProducto.bind(this)
         this.cambiaEstado = this.cambiaEstado.bind(this)
         this.nuevoProducto = this.nuevoProducto.bind(this)
+        this.editaProducto = this.editaProducto.bind(this)
     }
 
     componentDidMount() {
@@ -93,6 +96,21 @@ export default class AdministracionLocal extends React.Component {
         this.cambiaEstadoPopup()
     }
 
+    popupEditaProducto($idProducto, $nombre, $precio, $disponibilidad) {
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={this.editaProducto}>
+                <strong>Editar el producto "{$nombre}"</strong>
+                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "nuevoPrecio")} value={$precio} />
+                <Input label="DISPONIBILIDAD" cambia={($valor) => this.cambiaEstado($valor, "nuevaDisponibilidad")} value={$disponibilidad} />
+                <Button submit value="EDITAR" />
+            </form>,
+            idProducto: $idProducto,
+            nuevoPrecio: $precio,
+            nuevaDisponibilidad: $disponibilidad
+        })
+        this.cambiaEstadoPopup()
+    }
+
     cambiaEstado($valor, $nombre) {
         let objaux = {}
         objaux[$nombre] = $valor
@@ -125,7 +143,7 @@ export default class AdministracionLocal extends React.Component {
                 className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto"}
                 key={identificador}
                 tabIndex="0"
-                onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : ""}
+                onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.popupEditaProducto(identificador, $array[o].nombre, $array[o].precio, $array[o].disponibilidad)}
             >
                 <div>
                     {$array[o].disponibilidad === "0" ? <del>{contenido}</del> : contenido}
@@ -134,7 +152,7 @@ export default class AdministracionLocal extends React.Component {
         }
 
         if (Object.keys($array).length === 0) {
-            arrayProductos.push(<article>
+            arrayProductos.push(<article key="sinProductos">
                 <div>No hay productos</div>
             </article>)
         }
@@ -145,6 +163,34 @@ export default class AdministracionLocal extends React.Component {
         })
     }
 
+    editaProducto(evento) {
+        evento.preventDefault()
+
+        let url = global.url + 'editaProducto'
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('idLocal', sessionStorage.getItem("idLocal"))
+        data.append('idCategoria', this.state.codCategoria)
+        data.append('idProducto', this.state.idProducto)
+        data.append('precio', this.state.nuevoPrecio)
+        data.append('disponibilidad', this.state.nuevaDisponibilidad)
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.cambiaEstadoPopup()
+                this.componentDidMount()
+            })
+    }
+
     irA($sitio) {
         this.setState({
             redireccionar: $sitio
@@ -152,14 +198,15 @@ export default class AdministracionLocal extends React.Component {
     }
 
     cambiaEstadoPopup() {
-        this.setState({
-            abierto: !this.state.abierto
-        })
 
         if (this.state.abierto)
             setTimeout(function () {
                 this.setState({ popup: "" })
             }.bind(this), 500)
+
+        this.setState({
+            abierto: !this.state.abierto
+        })
     }
 
     nuevaCategoria(evento) {

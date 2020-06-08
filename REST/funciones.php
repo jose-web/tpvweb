@@ -393,7 +393,7 @@ function compruebaEmailRepetido($email){
   
 }
 
-function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoApellido2,$nuevoEmail,$nuevaPass,$nuevaImagen){
+function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoApellido2,$nuevoEmail,$nuevaPass,$nuevaImagen,$tema){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -410,6 +410,7 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
     $nuevoApellido2 = mysqli_real_escape_string($con,$nuevoApellido2);
     $nuevoEmail = mysqli_real_escape_string($con,$nuevoEmail);
     $nuevaPass = mysqli_real_escape_string($con,$nuevaPass);
+    $tema = mysqli_real_escape_string($con,$tema);
 
     $nuevoNombreImagen='';
     if($nuevaImagen!= "" && $nuevaImagen["error"] == 0 && strrpos($nuevaImagen["type"],"image").""=="0"){
@@ -433,7 +434,7 @@ function actualizaDatosUsuario($email,$pass,$nuevoNombre,$nuevoApellido1,$nuevoA
       move_uploaded_file( $origen, "img/usuarios/$nuevoNombreImagen" );
     }
 
-    $consulta = "call actualizaDatosUsuario($codUsuario,'$nuevoNombre','$nuevoApellido1','$nuevoApellido2','$nuevoEmail','$nuevaPass','$nuevoNombreImagen')";
+    $consulta = "call actualizaDatosUsuario($codUsuario,'$nuevoNombre','$nuevoApellido1','$nuevoApellido2','$nuevoEmail','$nuevaPass','$nuevoNombreImagen','$tema')";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

@@ -94,9 +94,10 @@ export default class Locales extends React.Component {
                             <p>No estás contratado/a en ninguna empresa</p>
                         </article>)
                 }
-                this.setState({
-                    arrayLocales: arrayLocales
-                })
+                if (!this.state.redireccionar)
+                    this.setState({
+                        arrayLocales: arrayLocales
+                    })
             });
         sessionStorage.removeItem("irAtras")
     }

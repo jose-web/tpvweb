@@ -95,8 +95,12 @@ export default class BuscaEmpleado extends React.Component {
 
         }).then(res => { if (res.ok) return res.json() })
             .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.empleados)
+                    this.irA("/administracion/empleados")
+            })
 
-        this.irA("/administracion/empleados")
+
     }
 
     render() {

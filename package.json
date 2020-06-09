@@ -1,6 +1,6 @@
 {
   "name": "tpvweb",
-  "homepage": "http://localhost/tpvweb",
+  "homepage": "http://localhost",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

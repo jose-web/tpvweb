@@ -6,6 +6,7 @@ import './comunes/global.js'
 import Login from "./paginas/login"
 import Registro from "./paginas/registro"
 import CompruebaLogin from "./compruebaLogin"
+import * as serviceWorker from './serviceWorker';
 
 export default class Inicia extends React.Component {
 
@@ -31,3 +32,4 @@ export default class Inicia extends React.Component {
 ReactDOM.render(
   <Inicia />, document.getElementById('main')
 )
+serviceWorker.register()

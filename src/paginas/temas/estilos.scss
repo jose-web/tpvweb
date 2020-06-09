@@ -1,0 +1,71 @@
+@import "../../comunes/variables";
+
+#personalizacionColores {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 100%;
+
+    h3 {
+        flex: 100%;
+        text-align: center;
+        padding: 1em;
+        border-top: 0.1em solid var(--color1);
+        margin-top: 1em;
+        color: var(--color1);
+    }
+
+    label {
+        padding: 1em;
+        flex: 100%;
+        text-align: center;
+
+        span {
+            height: 2em;
+            width: 100%;
+            display: block;
+        }
+    }
+
+    #contieneColor1 span {
+        background-color: var(--color1);
+    }
+    #contieneColor2 span {
+        background-color: var(--color2);
+    }
+    #contieneColor3 span {
+        background-color: var(--color3);
+    }
+    #contieneColor4 span {
+        background-color: var(--color4);
+    }
+    #contieneColor5 span {
+        background-color: var(--color5);
+    }
+    #contieneColor6 span {
+        background-color: var(--color6);
+    }
+    #contieneColor7 span {
+        background-color: var(--color7);
+    }
+    #contieneColor8 span {
+        background-color: var(--color8);
+    }
+    input[type="color"] {
+        display: none;
+    }
+    .boton {
+        flex: 100%;
+    }
+}
+
+@media (min-width: $tablet) {
+    #personalizacionColores label {
+        flex: 1 25%;
+    }
+}
+
+@media (min-width: $escritorio) {
+    #personalizacionColores label {
+        flex: 1 10%;
+    }
+}

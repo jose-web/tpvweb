@@ -8,37 +8,96 @@ export default class Locales extends React.Component {
 
     constructor(props) {
         super(props);
+        let tema = document.body.style.cssText.split(";")
+        if (typeof tema[1] !== "undefined")
+            for (let i = 0; i < tema.length; i++) {
+                tema[i] = tema[i].split(":")
+            }
+        else {
+            for (let i = 0; i < 8; i++) {
+                tema[i] = []
+            }
+            tema[0][1] = "#262626";
+            tema[1][1] = "#5E5E5E";
+            tema[2][1] = "#B5B5B5";
+            tema[3][1] = "#C4C4C4";
+            tema[4][1] = "#EEEEEE";
+            tema[5][1] = "#FFFFFF";
+            tema[6][1] = "#aa3838";
+            tema[7][1] = "#88BA69";
+        }
+
         this.state = {
             arrayLocales: [],
             redireccionar: false,
-            color1: '#262626',
-            color2: '#5E5E5E',
-            color3: '#B5B5B5',
-            color4: '#C4C4C4',
-            color5: '#EEEEEE',
-            color6: '#FFFFFF',
-            color7: '#AA3838',
-            color8: '#88BA69'
-        };
+            color1: tema[0][1],
+            color2: tema[1][1],
+            color3: tema[2][1],
+            color4: tema[3][1],
+            color5: tema[4][1],
+            color6: tema[5][1],
+            color7: tema[6][1],
+            color8: tema[7][1]
+        }
     }
 
     cambiarTema($tema) {
         let tema = ""
         switch ($tema) {
             case "azul":
-                tema = `--color1: #18116f;--color2: #2B3777;--color3: #4C56EA;--color4: #4E76F0;--color5: #C1C7FB;`
+                this.setState({
+                    color1: "#18116f",
+                    color2: "#2B3777",
+                    color3: "#4C56EA",
+                    color4: "#4E76F0",
+                    color5: "#C1C7FB",
+                    color6: "#FFFFFF",
+                    color7: "#aa3838",
+                    color8: "#88BA69"
+                })
+                tema = `--color1: #18116f;--color2: #2B3777;--color3: #4C56EA;--color4: #4E76F0;--color5: #C1C7FB;--color6: #FFFFFF;--color7: #aa3838;--color8: #88BA69;`
                 break
 
             case "rojo":
-                tema = `--color1: #b31414;--color2: #BD4545;--color3: #E85555;--color4: #F56969;--color5: #FBD3D3;`
+                this.setState({
+                    color1: "#b31414",
+                    color2: "#BD4545",
+                    color3: "#E85555",
+                    color4: "#F56969",
+                    color5: "#FBD3D3",
+                    color6: "#FFFFFF",
+                    color7: "#aa3838",
+                    color8: "#88BA69"
+                })
+                tema = `--color1: #b31414;--color2: #BD4545;--color3: #E85555;--color4: #F56969;--color5: #FBD3D3;--color6: #FFFFFF;--color7: #aa3838;--color8: #88BA69;`
                 break
 
             case "rosa":
-                tema = `--color1: #b30097;--color2: #D63CB7;--color3: #F255E8;--color4: #F5AEED;--color5: #FDE5FF;`
+                this.setState({
+                    color1: "#b30097",
+                    color2: "#D63CB7",
+                    color3: "#F255E8",
+                    color4: "#F5AEED",
+                    color5: "#FDE5FF",
+                    color6: "#FFFFFF",
+                    color7: "#aa3838",
+                    color8: "#88BA69"
+                })
+                tema = `--color1: #b30097;--color2: #D63CB7;--color3: #F255E8;--color4: #F5AEED;--color5: #FDE5FF;--color6: #FFFFFF;--color7: #aa3838;--color8: #88BA69;`
                 break
 
             case "verde":
-                tema = `--color1: #177a03;--color2: #369B1A;--color3: #58AA3A;--color4: #8FEB65;--color5: #DEF9D4;`
+                this.setState({
+                    color1: "#177a03",
+                    color2: "#369B1A",
+                    color3: "#58AA3A",
+                    color4: "#8FEB65",
+                    color5: "#DEF9D4",
+                    color6: "#FFFFFF",
+                    color7: "#aa3838",
+                    color8: "#88BA69"
+                })
+                tema = `--color1: #177a03;--color2: #369B1A;--color3: #58AA3A;--color4: #8FEB65;--color5: #DEF9D4;--color6: #FFFFFF;--color7: #aa3838;--color8: #88BA69;`
                 break
 
             case "personalizado":
@@ -46,6 +105,16 @@ export default class Locales extends React.Component {
                 break
 
             default:
+                this.setState({
+                    color1: "#262626",
+                    color2: "#5E5E5E",
+                    color3: "#B5B5B5",
+                    color4: "#C4C4C4",
+                    color5: "#EEEEEE",
+                    color6: "#FFFFFF",
+                    color7: "#aa3838",
+                    color8: "#88BA69"
+                })
                 tema = "porDefecto"
         }
 

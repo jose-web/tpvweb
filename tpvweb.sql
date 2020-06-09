@@ -17,7 +17,7 @@ create table usuario (
     email varchar(50) not null,
     pass varchar(32) not null,
     img varchar(20) default 'defaultUser.png',
-    tema varchar(100) default ''
+    tema varchar(200) default ''
 );
 
 
@@ -556,7 +556,7 @@ begin
 end $$
 
 
-create procedure actualizaDatosUsuario(idUsuario int,nuevoNombre varchar(20),nuevoApellido1 varchar(20),nuevoApellido2 varchar(20),nuevoEmail varchar(50),nuevaPass varchar(32),img varchar(20), tema varchar(100))
+create procedure actualizaDatosUsuario(idUsuario int,nuevoNombre varchar(20),nuevoApellido1 varchar(20),nuevoApellido2 varchar(20),nuevoEmail varchar(50),nuevaPass varchar(32),img varchar(20), tema varchar(200))
 begin
 	set @sentencia = concat('update usuario set',
 		if(nuevoNombre !='',concat(' nombre = \'',nuevoNombre,'\''),''),

@@ -15,14 +15,13 @@
             padding: 1em;
         }
 
-        tbody tr:hover {
-            box-shadow: 0 0 0.5em 0.2em var(--color1);
-            position: relative;
-        }
-
         td {
             padding: 1em;
             cursor: pointer;
+        }
+
+        td,th {
+            width: calc(100% / 5);
         }
 
         .diferente {

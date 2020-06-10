@@ -46,6 +46,7 @@ export default class LineaDeFactura extends React.Component {
         this.mostrarProductos = this.mostrarProductos.bind(this)
         this.muestraPopUpPagar = this.muestraPopUpPagar.bind(this)
         this.muestraPopUpCambiaNombre = this.muestraPopUpCambiaNombre.bind(this)
+        this.pagar = this.pagar.bind(this)
     }
 
     repetir() {
@@ -124,6 +125,35 @@ export default class LineaDeFactura extends React.Component {
                 if (res.actualizaFactura) {
                     sessionStorage.setItem("nombreFactura", this.state.nombreFactura)
                     this.cambiaEstadoPopup()
+                }
+            })
+    }
+
+    pagar(evento) {
+        evento.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('idFactura', sessionStorage.getItem("idFactura"))
+        data.append('nuevoNombreCliente', sessionStorage.getItem("nombreFactura"))
+        data.append('estadoPagado', 1)
+
+        let url = global.url + 'actualizaFactura'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.actualizaFactura) {
+                    this.setState({
+                        redireccionar: true
+                    })
                 }
             })
     }
@@ -251,16 +281,19 @@ export default class LineaDeFactura extends React.Component {
         )
     }
 
-    muestraPopUpPagar() {
+    muestraPopUpPagar($valor = null) {
+        let resta = this.state.cuentaTotal - $valor
         this.setState({
-            popup: <form id="formularioCambiaNombre" onSubmit={this.editaProducto}>
+            popup: <form id="formularioCambiaNombre" onSubmit={this.pagar}>
                 <strong>TOTAL A PAGAR</strong>
                 <strong>{this.state.cuentaTotal.toFixed(2) + " €"}</strong>
-                <Input label="DINERO" cambia={($valor) => this.cambiaEstado($valor, "nuevoPrecio")} />
+                <p>{(resta > 0 ? "Faltan: " : "Devolver: ") + Math.abs(resta).toFixed(2) + " €"}</p>
+                <Input label="DINERO" cambia={($valor) => this.muestraPopUpPagar($valor)} />
                 <Button submit value="PAGAR" />
             </form>
         })
-        this.cambiaEstadoPopup()
+        if ($valor === null)
+            this.cambiaEstadoPopup()
     }
 
     muestraPopUpCambiaNombre() {
@@ -284,7 +317,7 @@ export default class LineaDeFactura extends React.Component {
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
-                        <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={this.muestraPopUpPagar} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={this.muestraPopUpPagar} /></div>
+                        <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={() => this.muestraPopUpPagar()} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={() => this.muestraPopUpPagar()} /></div>
                         <Tabla datos={this.state.arrayFacturas} />
                     </article>
                     <article id="agregarProductos" className={this.state.mostrarProductos ? "" : "oculto"}>

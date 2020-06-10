@@ -5,7 +5,6 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     padding:1em;
-    gap:1em;
 
     article {
         background-color: var(--color4);
@@ -16,6 +15,7 @@
         color: var(--color1);
         transition: 0.5s;
         cursor: pointer;
+        margin:1em;
 
         &:hover {
             background-color: var(--color2);
@@ -33,12 +33,12 @@
 
 @media (min-width: $tablet) {
     #locales article{
-        width: calc((100% / 2) - (1em / 2));
+        width: calc((100% / 2) - (1em / 0.5));
     }
 }
 
 @media (min-width: $escritorio) {
     #locales article{
-        width: calc((100% / 3) - (2em / 3));
+        width: calc((100% / 3) - (2em / 1));
     }
 }

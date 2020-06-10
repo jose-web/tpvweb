@@ -40,19 +40,18 @@
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        gap: 1em;
         margin-bottom: auto;
 
         article {
-            width: calc((100% / 3) - (2em / 3)) !important;
+            width: calc((100% / 3) - (2em / 1)) !important;
             background-color: var(--color4);
-            width: 100%;
             padding: 1em;
             text-align: center;
             text-decoration: none;
             color: var(--color1);
             transition: 0.5s;
             cursor: pointer;
+            margin: 1em;
 
             &:hover {
                 background-color: var(--color2);

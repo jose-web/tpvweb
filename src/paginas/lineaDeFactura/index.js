@@ -41,10 +41,11 @@ export default class LineaDeFactura extends React.Component {
         };
         this.repetir = this.repetir.bind(this)
         this.atras = this.atras.bind(this)
-        this.cambiaInputNombreFactura = this.cambiaInputNombreFactura.bind(this)
         this.cambiaNombre = this.cambiaNombre.bind(this)
         this.cambiaEstadoPopup = this.cambiaEstadoPopup.bind(this)
         this.mostrarProductos = this.mostrarProductos.bind(this)
+        this.muestraPopUpPagar = this.muestraPopUpPagar.bind(this)
+        this.muestraPopUpCambiaNombre = this.muestraPopUpCambiaNombre.bind(this)
     }
 
     repetir() {
@@ -81,6 +82,12 @@ export default class LineaDeFactura extends React.Component {
     }
 
     cambiaEstadoPopup() {
+
+        if (this.state.abierto)
+            setTimeout(function () {
+                this.setState({ popup: "" })
+            }.bind(this), 500)
+
         this.setState({
             abierto: !this.state.abierto
         })
@@ -236,24 +243,48 @@ export default class LineaDeFactura extends React.Component {
         clearInterval(this.state.intervalo)
     }
 
+    cambiaEstado($valor, $nombre) {
+        let objaux = {}
+        objaux[$nombre] = $valor
+        this.setState(
+            objaux
+        )
+    }
+
+    muestraPopUpPagar() {
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={this.editaProducto}>
+                <strong>TOTAL A PAGAR</strong>
+                <strong>{this.state.cuentaTotal.toFixed(2) + " €"}</strong>
+                <Input label="DINERO" cambia={($valor) => this.cambiaEstado($valor, "nuevoPrecio")} />
+                <Button submit value="PAGAR" />
+            </form>
+        })
+        this.cambiaEstadoPopup()
+    }
+
+    muestraPopUpCambiaNombre() {
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={this.cambiaNombre}>
+                <strong>Cambiar el nombre del cliente</strong>
+                <Input label="NOMBRE CLIENTE" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={sessionStorage.getItem("nombreFactura")} />
+                <Button submit value="CAMBIAR" />
+            </form>
+        })
+        this.cambiaEstadoPopup()
+    }
+
     render() {
         if (this.state.redireccionar)
             return <Redirect to="/facturas" />
-
-        let popup = <form id="formularioCambiaNombre" onSubmit={this.cambiaNombre}>
-            <strong>Cambiar el nombre del cliente</strong>
-            <Input label="NOMBRE CLIENTE" cambia={this.cambiaInputNombreFactura} value={sessionStorage.getItem("nombreFactura")} />
-            <Button submit value="CAMBIAR" />
-        </form>
-
         return (
             <>
-                <Popup contenido={popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
+                <Popup contenido={this.state.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu />
                 <section id="seccionLineaDeFactura">
                     <h1>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
-                        <div id="titulo"><p onClick={this.cambiaEstadoPopup}>{sessionStorage.getItem("nombreFactura")}</p><p className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar /></div>
+                        <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={this.muestraPopUpPagar} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={this.muestraPopUpPagar} /></div>
                         <Tabla datos={this.state.arrayFacturas} />
                     </article>
                     <article id="agregarProductos" className={this.state.mostrarProductos ? "" : "oculto"}>

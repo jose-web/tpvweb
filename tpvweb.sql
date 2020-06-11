@@ -558,20 +558,14 @@ end $$
 
 create procedure actualizaDatosUsuario(idUsuario int,nuevoNombre varchar(20),nuevoApellido1 varchar(20),nuevoApellido2 varchar(20),nuevoEmail varchar(50),nuevaPass varchar(32),img varchar(20), tema varchar(200))
 begin
-	set @sentencia = concat('update usuario set',
-		if(nuevoNombre !='',concat(' nombre = \'',nuevoNombre,'\''),''),
-		if(nuevoNombre !='' && nuevoApellido1!='',' , ',''),
-        if(nuevoApellido1 !='',concat(' apellido1 = \'',nuevoApellido1,'\''),''),
-		if(nuevoApellido1 !='' && nuevoApellido2!='',' , ',''),
-        if(nuevoApellido2 !='',concat(' apellido2 = \'',nuevoApellido2,'\''),''),
-		if(nuevoApellido2 !='' && nuevoEmail!='',' , ',''),
-        if(nuevoEmail !='',concat(' email = \'',nuevoEmail,'\''),''),
-		if(nuevoEmail !='' && nuevaPass!='',' , ',''),
-        if(nuevaPass !='',concat(' pass = \'',nuevaPass,'\''),''),
-		if(nuevaPass !='' && img!='',' , ',''),
-		if(img !='',concat(' img = \'',img,'\''),''),
-        if(img !='' && tema!='',' , ',''),
-		if(tema !='',concat(' tema = \'',tema,'\''),''),
+	set @sentencia = concat('update usuario set codUsuario=codUsuario',
+		if(nuevoNombre !='',concat(', nombre = \'',nuevoNombre,'\''),''),
+        if(nuevoApellido1 !='',concat(', apellido1 = \'',nuevoApellido1,'\''),''),
+        if(nuevoApellido2 !='',concat(', apellido2 = \'',nuevoApellido2,'\''),''),
+        if(nuevoEmail !='',concat(', email = \'',nuevoEmail,'\''),''),
+        if(nuevaPass !='',concat(', pass = \'',nuevaPass,'\''),''),
+		if(img !='',concat(', img = \'',img,'\''),''),
+		if(tema !='',concat(', tema = \'',tema,'\''),''),
 		' where codUsuario = ',idUsuario);
     prepare ejecutar from @sentencia;
     execute ejecutar;

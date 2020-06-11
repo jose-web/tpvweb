@@ -830,4 +830,29 @@ begin
     end if;
 end $$
 
+
+create procedure borraProductoFactura(idUsuario int, idLineaDeFactura int)
+begin
+
+	select count(*) into @acceso
+    from trabajador join trabajador_local
+		on trabajador.codTrabajador = trabajador_local.codTrabajador
+        join mapa
+			on mapa.codLocal = trabajador_local.codLocal
+            join mesa
+				on mesa.codMapa = mapa.codMapa
+                join factura
+                on factura.codMesa = mesa.codMesa
+					join linea_de_factura
+						on linea_de_factura.codFactura = factura.codFactura
+    where codUsuario = idUsuario
+    and linea_de_factura.codLinea = idLineaDeFactura
+    and trabajador_local.estado = 1
+    and trabajador_local.tipo = 'encargado';
+
+	if @acceso = 1 then
+		delete from linea_de_factura  where codLinea = idLineaDeFactura;
+    end if;
+end $$
+
 delimiter ;

@@ -716,6 +716,8 @@ function actualizaProductoFactura($email, $pass, $idLineaDeFactura, $nuevoPrecio
     $nuevaCantidad = mysqli_real_escape_string($con,$nuevaCantidad);
     $nuevoComentario = mysqli_real_escape_string($con,$nuevoComentario);
 
+    $nuevaCantidad = $nuevaCantidad >0?$nuevaCantidad:"";
+
     $consulta = "call actualizaProductoFactura($codUsuario,$idLineaDeFactura,'$nuevoPrecio','$nuevaCantidad','$nuevoComentario')";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
@@ -726,6 +728,32 @@ function actualizaProductoFactura($email, $pass, $idLineaDeFactura, $nuevoPrecio
     return array("actualizaProductoFactura" => true);
   }
   return array("actualizaProductoFactura" => false);
+}
+
+function borraProductoFactura($email, $pass, $idLineaDeFactura){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $idLineaDeFactura = mysqli_real_escape_string($con,$idLineaDeFactura);
+
+    $consulta = "call borraProductoFactura($codUsuario,$idLineaDeFactura)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    return array("borraProductoFactura" => true);
+  }
+  return array("borraProductoFactura" => false);
 }
 
 ?>

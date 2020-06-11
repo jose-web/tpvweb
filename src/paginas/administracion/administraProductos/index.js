@@ -27,7 +27,8 @@ export default class AdministracionLocal extends React.Component {
             codCategoria: "",
             popup: "",
             nuevoPrecio: "",
-            nuevaDisponibilidad: ""
+            disponibilidadProducto: false,
+            nuevaDisponibilidad: false
         }
 
         this.irA = this.irA.bind(this)
@@ -88,7 +89,8 @@ export default class AdministracionLocal extends React.Component {
                 <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreProducto")} />
                 <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} />
                 <Input label="DESCRIPCIÓN" cambia={($valor) => this.cambiaEstado($valor, "descripcionProducto")} />
-                <Input label="DISPONIBILIDAD" cambia={($valor) => this.cambiaEstado($valor, "disponibilidadProducto")} />
+                <input type="checkbox" id="disponibilidadNuevoProducto" onChange={() => this.cambiaEstado(this.state.disponibilidadProducto === false, "disponibilidadProducto")} />
+                <div><label htmlFor="disponibilidadNuevoProducto" className="labelSwitch" /></div>
                 <Button submit value="AÑADIR" />
             </form>
         })
@@ -101,12 +103,16 @@ export default class AdministracionLocal extends React.Component {
             popup: <form id="formularioCambiaNombre" onSubmit={this.editaProducto}>
                 <strong>Editar el producto "{$nombre}"</strong>
                 <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "nuevoPrecio")} value={$precio} />
-                <Input label="DISPONIBILIDAD" cambia={($valor) => this.cambiaEstado($valor, "nuevaDisponibilidad")} value={$disponibilidad} />
+                <input type="checkbox" id="disponibilidadNuevoProducto" defaultChecked={$disponibilidad === "1"} onChange={(evento) => {
+                    this.cambiaEstado($disponibilidad !== "1", "nuevaDisponibilidad")
+                    $disponibilidad = $disponibilidad !== "1" ? "1" : "0"
+                }} />
+                <div><label htmlFor="disponibilidadNuevoProducto" className="labelSwitch" /></div>
                 <Button submit value="EDITAR" />
             </form>,
             idProducto: $idProducto,
             nuevoPrecio: $precio,
-            nuevaDisponibilidad: $disponibilidad
+            nuevaDisponibilidad: $disponibilidad === "1"
         })
         this.cambiaEstadoPopup()
     }
@@ -205,7 +211,8 @@ export default class AdministracionLocal extends React.Component {
             }.bind(this), 500)
 
         this.setState({
-            abierto: !this.state.abierto
+            abierto: !this.state.abierto,
+            disponibilidadProducto: false
         })
     }
 

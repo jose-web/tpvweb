@@ -42,3 +42,41 @@
 .opacidadAdministraCategoriaProducto {
     opacity: 0.5;
 }
+
+#popup {
+    div {
+        display: flex;
+        justify-content: space-around;
+        .labelSwitch {
+            margin: 1em;
+            display: flex;
+            width: 4em;
+            height: 2em;
+            background-color: var(--color7);
+            border-radius: 1em;
+            transition: 0.5s;
+            cursor: pointer;
+
+            &::before {
+                content: "";
+                width: 2em;
+                height: 2em;
+                background-color: var(--color1);
+                border-radius: 1em;
+                margin-left: 0;
+                transition: 0.5s;
+            }
+        }
+    }
+
+    input[type="checkbox"] {
+        display: none;
+
+        &:checked + div .labelSwitch {
+            background-color: var(--color8);
+            &::before {
+                margin-left: 2em;
+            }
+        }
+    }
+}

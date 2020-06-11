@@ -37,6 +37,10 @@
         }
     }
 
+    #nombreLocalImpresion {
+        display: none;
+    }
+
     > article {
         width: 100%;
     }
@@ -76,6 +80,9 @@
         text-align: center;
         padding: 0.5em 0;
     }
+    p {
+        margin-left: 1em;
+    }
 }
 
 #divBotonOculto {
@@ -98,5 +105,37 @@
         & ~ div .botonAbajoDerecha {
             display: none;
         }
+    }
+}
+
+@media print {
+    body {
+        --color1: #262626 !important;
+        --color2: #5e5e5e !important;
+        --color3: #b5b5b5 !important;
+        --color4: #c4c4c4 !important;
+        --color5: #ffffff !important;
+        --color6: #ffffff !important;
+        --color7: #aa3838 !important;
+        --color8: #88ba69 !important;
+    }
+    header,
+    .botonAbajo,
+    #popup {
+        display: none !important;
+    }
+
+    #seccionLineaDeFactura {
+        svg,
+        table tr td:last-child,
+        table tr th:last-child {
+            display: none !important;
+        }
+        #nombreLocalImpresion {
+            display: initial;
+        }
+    }
+    * {
+        filter: blur(0) !important;
     }
 }

@@ -310,6 +310,9 @@ export default class LineaDeFactura extends React.Component {
             objaux
         )
     }
+    imprimir() {
+        window.print()
+    }
 
     muestraPopUpPagar($valor = null) {
         let resta = this.state.cuentaTotal - $valor
@@ -320,6 +323,7 @@ export default class LineaDeFactura extends React.Component {
                 <p>{(resta > 0 ? "Faltan: " : "Devolver: ") + Math.abs(resta).toFixed(2) + " €"}</p>
                 <Input label="DINERO" cambia={($valor) => this.muestraPopUpPagar($valor)} />
                 <Button submit value="PAGAR" />
+                <button className="boton" onClick={this.imprimir}>IMPRIMIR FACTURA</button>
             </form>
         })
         if ($valor === null)
@@ -370,7 +374,7 @@ export default class LineaDeFactura extends React.Component {
                 <Popup contenido={this.state.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu />
                 <section id="seccionLineaDeFactura">
-                    <h1>Línea de factura</h1>
+                    <h1><span id="nombreLocalImpresion">{sessionStorage.getItem("nombreLocal")} - </span>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
                         <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={() => this.muestraPopUpPagar()} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={() => this.muestraPopUpPagar()} /></div>
                         <Tabla datos={this.state.arrayFacturas} onClick={($valor) => this.muestraPopUpCambiaPoducto($valor)} />

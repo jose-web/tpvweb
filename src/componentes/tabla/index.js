@@ -34,7 +34,8 @@ export default class Tabla extends React.Component {
                 arrayFilas.push(
                     <tr tabIndex="0" key={datos[i][0]} className={i % 2 ? "" : "diferente"} onClick={() => {
                         this.props.onClick(datos[i][0])
-                        this.props.guardaNombre(datos[i][2][0])
+                        if (this.props.guardaNombre)
+                            this.props.guardaNombre(datos[i][2][0])
                     }}>{fila}</tr>
                 )
 

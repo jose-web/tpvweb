@@ -47,6 +47,7 @@ export default class LineaDeFactura extends React.Component {
         this.muestraPopUpPagar = this.muestraPopUpPagar.bind(this)
         this.muestraPopUpCambiaNombre = this.muestraPopUpCambiaNombre.bind(this)
         this.pagar = this.pagar.bind(this)
+        this.muestraPopUpCambiaPoducto = this.muestraPopUpCambiaPoducto.bind(this)
     }
 
     repetir() {
@@ -307,6 +308,33 @@ export default class LineaDeFactura extends React.Component {
         this.cambiaEstadoPopup()
     }
 
+    muestraPopUpCambiaPoducto($valor) {
+        let nombre = ""
+        let precio = ""
+        let cantidad = ""
+        let comentario = ""
+        for (let i = 1; i < this.state.arrayFacturas.length; i++) {
+            console.log(this.state.arrayFacturas[i][0], $valor[0])
+            if (this.state.arrayFacturas[i][0][0] === $valor[0]) {
+                nombre = this.state.arrayFacturas[i][1][0]
+                precio = this.state.arrayFacturas[i][2][0]
+                cantidad = this.state.arrayFacturas[i][3][0]
+                comentario = this.state.arrayFacturas[i][5][0]
+            }
+        }
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={this.cambiaNombre}>
+                <strong>Actualizar producto</strong>
+                <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={nombre} />
+                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={precio} />
+                <Input label="CANTIDAD" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={cantidad} />
+                <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={comentario} />
+                <Button submit value="ACTUALIZAR" />
+            </form>
+        })
+        this.cambiaEstadoPopup()
+    }
+
     render() {
         if (this.state.redireccionar)
             return <Redirect to="/facturas" />
@@ -318,7 +346,7 @@ export default class LineaDeFactura extends React.Component {
                     <h1>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
                         <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={() => this.muestraPopUpPagar()} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={() => this.muestraPopUpPagar()} /></div>
-                        <Tabla datos={this.state.arrayFacturas} />
+                        <Tabla datos={this.state.arrayFacturas} onClick={($valor) => this.muestraPopUpCambiaPoducto($valor)} />
                     </article>
                     <article id="agregarProductos" className={this.state.mostrarProductos ? "" : "oculto"}>
                         <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>

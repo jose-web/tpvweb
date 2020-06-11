@@ -91,7 +91,10 @@ export default class LineaDeFactura extends React.Component {
             }.bind(this), 500)
 
         this.setState({
-            abierto: !this.state.abierto
+            abierto: !this.state.abierto,
+            precioProducto: "",
+            cantidadProducto: "",
+            comentarioProducto: ""
         })
     }
 

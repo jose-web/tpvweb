@@ -344,6 +344,30 @@ export default class LineaDeFactura extends React.Component {
         this.cambiaEstadoPopup()
     }
 
+    borraProductoFactura($valor) {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('idLineaDeFactura', $valor)
+
+        let url = global.url + 'borraProductoFactura'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.actualizaProductoFactura) {
+                    this.repetir()
+                    this.cambiaEstadoPopup()
+                }
+            })
+    }
+
     muestraPopUpCambiaPoducto($valor) {
         let nombre = ""
         let precio = ""
@@ -364,6 +388,9 @@ export default class LineaDeFactura extends React.Component {
                 <Input label="CANTIDAD" cambia={($valor) => this.cambiaEstado($valor, "cantidadProducto")} value={cantidad} />
                 <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "comentarioProducto")} value={comentario === "" ? "Sin comentario" : comentario} />
                 <Button submit value="ACTUALIZAR" />
+                {sessionStorage.getItem("encargado") > 0 ?
+                    <button className="boton" onClick={() => this.borraProductoFactura($valor)}>BORRAR PRODUCTO</button>
+                    : ""}
             </form>
         })
         this.cambiaEstadoPopup()

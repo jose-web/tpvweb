@@ -87,6 +87,11 @@ export default class Login extends React.Component {
             <Link to="/registro" className="linkCambio"><Button value="REGISTRATE" /></Link>
           </form>
         </div>
+        <span/>
+        <span/>
+        <span/>
+        <span/>
+        <span/>
       </div>
     )
   }

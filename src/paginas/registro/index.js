@@ -139,6 +139,11 @@ export default class Registro extends React.Component {
                         <Link to="/login" className="linkCambio"><Button value="IR AL LOGIN" submit /></Link>
                     </form>
                 </div>
+                <span />
+                <span />
+                <span />
+                <span />
+                <span />
             </div>
         )
     }

@@ -699,7 +699,7 @@ function editaProducto($email, $pass, $idLocal, $idCategoria, $idProducto, $prec
   return array("editaProducto" => false);
 }
 
-function actualizaProductoFactura($email, $pass, $idLineaDeFactura, $nuevoPrecio, $nuevaCantidad){
+function actualizaProductoFactura($email, $pass, $idLineaDeFactura, $nuevoPrecio, $nuevaCantidad,$nuevoComentario){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -714,8 +714,9 @@ function actualizaProductoFactura($email, $pass, $idLineaDeFactura, $nuevoPrecio
     $idLineaDeFactura = mysqli_real_escape_string($con,$idLineaDeFactura);
     $nuevoPrecio = mysqli_real_escape_string($con,$nuevoPrecio);
     $nuevaCantidad = mysqli_real_escape_string($con,$nuevaCantidad);
+    $nuevoComentario = mysqli_real_escape_string($con,$nuevoComentario);
 
-    $consulta = "call actualizaProductoFactura($codUsuario,$idLineaDeFactura,'$nuevoPrecio','$nuevaCantidad')";
+    $consulta = "call actualizaProductoFactura($codUsuario,$idLineaDeFactura,'$nuevoPrecio','$nuevaCantidad','$nuevoComentario')";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

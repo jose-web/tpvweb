@@ -255,6 +255,35 @@ export default class LineaDeFactura extends React.Component {
             })
     }
 
+    actualizaProducto(evento, $valor) {
+        evento.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData();
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('idLineaDeFactura', $valor)
+        data.append('nuevoPrecio', this.state.precioProducto)
+        data.append('nuevaCantidad', this.state.cantidadProducto)
+        data.append('nuevoComentario', this.state.comentarioProducto)
+
+        let url = global.url + 'actualizaProductoFactura'
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => { if (res.ok) return res.json() })
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                if (res.actualizaProductoFactura) {
+                    this.repetir()
+                    this.cambiaEstadoPopup()
+                }
+            })
+    }
+
     atras() {
         if (this.state.mostrarProductos)
             this.mostrarProductos()
@@ -314,7 +343,6 @@ export default class LineaDeFactura extends React.Component {
         let cantidad = ""
         let comentario = ""
         for (let i = 1; i < this.state.arrayFacturas.length; i++) {
-            console.log(this.state.arrayFacturas[i][0], $valor[0])
             if (this.state.arrayFacturas[i][0][0] === $valor[0]) {
                 nombre = this.state.arrayFacturas[i][1][0]
                 precio = this.state.arrayFacturas[i][2][0]
@@ -323,12 +351,11 @@ export default class LineaDeFactura extends React.Component {
             }
         }
         this.setState({
-            popup: <form id="formularioCambiaNombre" onSubmit={this.cambiaNombre}>
-                <strong>Actualizar producto</strong>
-                <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={nombre} />
-                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={precio} />
-                <Input label="CANTIDAD" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={cantidad} />
-                <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={comentario} />
+            popup: <form id="formularioCambiaNombre" onSubmit={(evento) => this.actualizaProducto(evento, $valor)}>
+                <strong>Actualizar producto: {nombre}</strong>
+                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} value={precio.substr(0, precio.length - 2)} />
+                <Input label="CANTIDAD" cambia={($valor) => this.cambiaEstado($valor, "cantidadProducto")} value={cantidad} />
+                <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "comentarioProducto")} value={comentario === "" ? "Sin comentario" : comentario} />
                 <Button submit value="ACTUALIZAR" />
             </form>
         })

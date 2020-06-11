@@ -801,7 +801,7 @@ begin
 end $$
 
 
-create procedure actualizaProductoFactura(idUsuario int, idLineaDeFactura int, nuevoPrecio double, nuevaCantidad int)
+create procedure actualizaProductoFactura(idUsuario int, idLineaDeFactura int, nuevoPrecio double, nuevaCantidad int, nuevoComentario text)
 begin
 
 	select count(*) into @acceso
@@ -823,6 +823,7 @@ begin
 		set @sentencia = concat('update linea_de_factura set codLinea=codLinea ',
 			if(nuevoPrecio !='',concat(', precio = ',nuevoPrecio),''),
 			if(nuevaCantidad !='',concat(', cantidad = ',nuevaCantidad),''),
+            if(nuevoComentario !='',concat(', comentario = \'',nuevoComentario,'\''),''),
 			' where codLinea = ',idLineaDeFactura);
 		prepare ejecutar from @sentencia;
 		execute ejecutar;

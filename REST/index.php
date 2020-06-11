@@ -104,7 +104,7 @@ $app->post("/editaProducto", function(){
 });
 
 $app->post("/actualizaProductoFactura", function(){
-  echo json_encode(actualizaProductoFactura($_POST["email"], $_POST["pass"], $_POST["idLineaDeFactura"], isset($_POST["nuevoPrecio"])?$_POST["nuevoPrecio"]:"", isset($_POST["nuevaCantidad"])?$_POST["nuevaCantidad"]:""),JSON_FORCE_OBJECT);
+  echo json_encode(actualizaProductoFactura($_POST["email"], $_POST["pass"], $_POST["idLineaDeFactura"], isset($_POST["nuevoPrecio"])?$_POST["nuevoPrecio"]:"", isset($_POST["nuevaCantidad"])?$_POST["nuevaCantidad"]:"",isset($_POST["nuevoComentario"])?$_POST["nuevoComentario"]:""),JSON_FORCE_OBJECT);
 });
 
 $app->notFound(function (){

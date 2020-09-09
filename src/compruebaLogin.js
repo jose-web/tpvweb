@@ -6,6 +6,7 @@ import LineaDeFactura from "./paginas/lineaDeFactura"
 import EligeLocalAdministracion from "./paginas/administracion/eligeLocalAdministracion"
 import AdministracionLocal from "./paginas/administracion/administraLocal"
 import AdministracionEmpleados from "./paginas/administracion/administraEmpleados"
+import AdministracionEmpresas from "./paginas/administracion/administraEmpresas"
 import BuscaEmpleado from "./paginas/administracion/buscaEmpleado"
 import Productos from "./paginas/administracion/administraProductos"
 import Perfil from "./paginas/perfil"
@@ -55,6 +56,7 @@ export default class CompruebaLogin extends React.Component {
                 <Route exact path="/administracion/empleados" component={AdministracionEmpleados} />
                 <Route exact path="/administracion/empleados/buscar" component={BuscaEmpleado} />
                 <Route exact path="/administracion/productos" component={Productos} />
+                <Route exact path="/administracion/empresas" component={AdministracionEmpresas} />
                 <Route exact path="/perfil" component={Perfil} />
                 <Route exact path="/temas" component={Temas} />
                 <Redirect from="*" to="/locales" />

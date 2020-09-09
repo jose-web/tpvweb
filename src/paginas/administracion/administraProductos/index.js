@@ -23,7 +23,6 @@ export default class AdministracionLocal extends React.Component {
             nombreProducto: "",
             precioProducto: "",
             descripcionProducto: "",
-            disponibilidadProducto: "",
             codCategoria: "",
             popup: "",
             nuevoPrecio: "",

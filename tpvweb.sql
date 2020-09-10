@@ -855,4 +855,15 @@ begin
     end if;
 end $$
 
+
+create procedure muestraMisEmpresas(codigoUsuario int)
+begin
+	select empresa.*
+	from empresario join empresario_empresa
+		on empresario.codEmpresario = empresario_empresa.codEmpresario
+		join empresa
+			on empresa.codEmpresa = empresario_empresa.codEmpresa
+	where codUsuario = codigoUsuario;
+end $$
+
 delimiter ;

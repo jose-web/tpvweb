@@ -111,6 +111,10 @@ $app->post("/borraProductoFactura", function(){
   echo json_encode(borraProductoFactura($_POST["email"], $_POST["pass"], $_POST["idLineaDeFactura"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/muestraMisEmpresas", function(){
+  echo json_encode(muestraMisEmpresas($_POST["email"], $_POST["pass"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

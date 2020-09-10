@@ -27,7 +27,6 @@ export default class Empresas extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
                 let arrayEmpresas = []
-                console.log(res.empresas);
                 for (let i = 0; i < Object.keys(res.empresas).length; i++) {
                     let empresa = res.empresas[i]
                     arrayEmpresas.push(
@@ -41,6 +40,10 @@ export default class Empresas extends React.Component {
             })
     }
 
+    creaEmpresa(){
+        console.log("crea empresa")
+    }
+
     render() {
         return (
             <>
@@ -48,7 +51,7 @@ export default class Empresas extends React.Component {
                 <section id="locales">
                     <h1>Empresas</h1>
                     <article>
-                        <p>Crear una empresa</p>
+                        <p onClick={this.creaEmpresa}>Crear una empresa</p>
                     </article>
                     {this.state.arrayEmpresas}
                 </section>

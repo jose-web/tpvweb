@@ -866,4 +866,31 @@ begin
 	where codUsuario = codigoUsuario;
 end $$
 
+
+create procedure creaUnaEmpresa(codigoUsuario int,nombre varchar(20))
+begin
+	select count(codEmpresario),codEmpresario into @existe, @codEmpresario
+	from empresario
+	where codUsuario = codigoUsuario;
+    
+    start transaction;
+    if @existe = 0 then
+		insert into empresario(codUsuario)
+        values(codigoUsuario);
+        select max(codEmpresario) into @codEmpresario
+		from empresario;
+    end if;
+    
+    insert into empresa(nombre)
+	value (nombre);
+    
+    select max(codEmpresa) into @codEmpresa
+    from empresa;
+    
+    insert into empresario_empresa(codEmpresario,codEmpresa)
+	values(@codEmpresario,@codEmpresa);
+    
+    commit;
+end $$
+
 delimiter ;

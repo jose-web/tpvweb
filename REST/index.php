@@ -119,6 +119,10 @@ $app->post("/creaUnaEmpresa", function(){
   echo json_encode(creaUnaEmpresa($_POST["email"], $_POST["pass"], $_POST["nombre"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/editaEmpresa", function(){
+  echo json_encode(editaEmpresa($_POST["email"], $_POST["pass"],$_POST["codEmpresa"], $_POST["nombre"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

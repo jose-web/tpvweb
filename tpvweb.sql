@@ -893,4 +893,19 @@ begin
     commit;
 end $$
 
+create procedure editaEmpresa(codigoUsuario int,codigoEmpresa int,nombre varchar(20))
+begin
+	select count(*) into @creador
+	from empresario join empresario_empresa
+		on empresario.codEmpresario = empresario_empresa.codEmpresario
+	where codUsuario = codigoUsuario and codEmpresa = codigoEmpresa;
+    
+    if @creador = 1 then
+		update empresa 
+        set nombre = nombre
+        where codEmpresa = codigoEmpresa;
+    end if;
+    
+end $$
+
 delimiter ;

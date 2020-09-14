@@ -814,4 +814,32 @@ function creaUnaEmpresa($email,$pass,$nombre){
   return array("empresa" => false);
 }
 
+function editaEmpresa($email,$pass,$codEmpresa,$nombre){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $nombre = mysqli_real_escape_string($con,$nombre);
+    $codEmpresa = mysqli_real_escape_string($con,$codEmpresa);
+
+    $consulta = "call editaEmpresa($codUsuario,$codEmpresa,'$nombre')";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+
+    return array("empresa" => true);
+  }
+  return array("empresa" => false);
+}
+
 ?>

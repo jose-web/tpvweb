@@ -14,6 +14,7 @@ export default class Empresas extends React.Component {
         this.creaEmpresa = this.creaEmpresa.bind(this)
         this.popupCreaEmpresa = this.popupCreaEmpresa.bind(this)
         this.cambiaEstadoPopup = this.cambiaEstadoPopup.bind(this)
+        this.popupModificaEmpresa = this.popupModificaEmpresa.bind(this)
     }
 
     componentDidMount() {
@@ -38,7 +39,7 @@ export default class Empresas extends React.Component {
                     arrayEmpresas.push(
                         <article key={empresa.codEmpresa}>
                             <p>{empresa.nombre}</p>
-                            <p>{empresa.nif}</p>
+                            <div onClick={() => this.popupModificaEmpresa(empresa.codEmpresa, empresa.nombre)}>Edita</div>
                         </article>
                     )
                 }
@@ -78,6 +79,17 @@ export default class Empresas extends React.Component {
         this.cambiaEstadoPopup()
     }
 
+    popupModificaEmpresa($codEmpresa, $nombre) {
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={(evento) => this.editaEmpresa(evento, $codEmpresa)}>
+                <strong>Modifica empresa</strong>
+                <Input label="NOMBRE" value={$nombre} cambia={($valor) => this.cambiaEstado($valor, "editaEmpresa")} />
+                <Button submit value="MODIFICAR" />
+            </form>
+        })
+        this.cambiaEstadoPopup()
+    }
+
     creaEmpresa(evento) {
         evento.preventDefault()
 
@@ -102,6 +114,30 @@ export default class Empresas extends React.Component {
             })
     }
 
+    editaEmpresa(evento, $codEmpresa) {
+        evento.preventDefault()
+
+        let url = global.url + 'editaEmpresa'
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let data = new FormData()
+        data.append('email', usuario.email)
+        data.append('pass', usuario.pass)
+        data.append('nombre', this.state.editaEmpresa)
+        data.append('codEmpresa', $codEmpresa)
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.cambiaEstadoPopup()
+                this.componentDidMount()
+            })
+    }
 
     render() {
         return (

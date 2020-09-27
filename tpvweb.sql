@@ -17,129 +17,17 @@ create table usuario (
     email varchar(50) not null,
     pass varchar(32) not null,
     img varchar(20) default 'defaultUser.png',
-    tema varchar(200) default ''
+    tema varchar(200) default '',
+    encargado boolean default false,
+    camarero boolean default false,
+    cocinero boolean default false
 );
-
-
-create table admin (
-	codAdmin int primary key auto_increment,
-    codUsuario int not null,
-        
-    constraint foreign key (codUsuario)
-        references usuario (codUsuario)
-        on delete no action 
-        on update cascade
-);
-
-
-create table empresa (
-    codEmpresa int primary key auto_increment,
-    nombre varchar(20) not null,
-    nif varchar(20) not null
-);
-
-
-create table empresario (
-	codEmpresario int primary key auto_increment,
-    codUsuario int not null,
-        
-    constraint foreign key (codUsuario)
-        references usuario (codUsuario)
-        on delete no action 
-        on update cascade
-);
-
-
-create table empresario_empresa (
-    codEmpresario int,
-    codEmpresa int,
-    
-    constraint primary key (codEmpresario , codEmpresa),
-    
-    constraint foreign key (codEmpresario)
-        references empresario (codEmpresario)
-        on delete no action 
-        on update cascade,
-        
-    constraint foreign key (codEmpresa)
-        references empresa (codEmpresa)
-        on delete no action 
-        on update cascade
-);
-
-
-create table suscripcion (
-    codSuscripcion int primary key auto_increment,
-    codEmpresa int not null,
-    plan varchar(50) not null,
-    fechaInicioSuscripcion date not null,
-    fechaFinSuscripcion date not null,
-    estado boolean not null,
-    
-    constraint foreign key (codEmpresa)
-        references empresa (codEmpresa)
-        on delete no action 
-        on update cascade
-);
-
-
-create table local (
-    codLocal int primary key auto_increment,
-    codEmpresa int not null,
-    nombre varchar(20) not null,
-    direccion varchar(100) not null,
-    telefono int(9) not null,
-    
-    constraint foreign key (codEmpresa)
-        references empresa (codEmpresa)
-        on delete no action 
-        on update cascade
-);
-
-
-create table trabajador (
-	codTrabajador int primary key auto_increment,
-    codUsuario int not null,
-        
-    constraint foreign key (codUsuario)
-        references usuario (codUsuario)
-        on delete no action 
-        on update cascade
-);
-
-
-create table trabajador_local (
-    codTrabajador int,
-    codLocal int,
-    tipo enum('encargado', 'camarero','cocinero')  not null,
-    estado boolean not null default 1,
-    fechaDespido date,
-    
-    constraint primary key (codTrabajador , codLocal),
-    
-    constraint foreign key (codTrabajador)
-        references trabajador (codTrabajador)
-        on delete no action 
-        on update cascade,
-        
-    constraint foreign key (codLocal)
-        references local (codLocal)
-        on delete no action 
-        on update cascade
-);
-
 
 create table mapa (
     codMapa int primary key auto_increment,
-    codLocal int not null,
     tamanioV int not null,
     tamanioH int not null,
-    color varchar(6) not null,
-    
-    constraint foreign key (codLocal)
-        references local (codLocal)
-        on delete no action 
-        on update cascade
+    color varchar(6) not null
 );
 
 create table objeto (
@@ -177,14 +65,14 @@ create table mesa (
 
 create table factura (
 	codFactura int primary key auto_increment,
-    codTrabajador int not null,
+    codUsuario int not null,
     codMesa int not null,
 	nombreCliente varchar(50) not null default 'Cliente sin nombre',
     pagado boolean not null default false,
     fecha datetime not null default now(),
     
-     constraint foreign key (codTrabajador)
-        references trabajador (codTrabajador)
+     constraint foreign key (codUsuario)
+        references Usuario (codUsuario)
         on delete no action 
         on update cascade,
         
@@ -263,23 +151,6 @@ create table categoria (
         on delete no action 
         on update cascade
 );
-
-create table local_tiene_categoria(
-	codLocal int not null,
-	codCategoria int not null,
-    
-    constraint primary key (codLocal , codCategoria),
-    
-	constraint foreign key (codLocal)
-        references local (codLocal)
-        on delete no action 
-        on update cascade,
-        
-    constraint foreign key (codCategoria)
-        references categoria (codCategoria)
-        on delete no action 
-        on update cascade
-    );
 
 create table categoria_producto (
     codCategoria int,
@@ -574,26 +445,9 @@ end $$
 
 create procedure ObtenerDatosUsuario(idUsuario int)
 begin
-	select count(*) into @camarero
-    from usuario join trabajador
-		on usuario.codUsuario = trabajador.codUsuario
-        join trabajador_local
-			on trabajador_local.codTrabajador = trabajador.codTrabajador
-    where usuario.codUsuario = idUsuario and tipo = "camarero" and estado = 1;
-    
-    select count(*) into @encargado
-    from usuario join trabajador
-		on usuario.codUsuario = trabajador.codUsuario
-        join trabajador_local
-			on trabajador_local.codTrabajador = trabajador.codTrabajador
-    where usuario.codUsuario = idUsuario and tipo = "encargado" and estado = 1;
-    
-    select count(*) into @cocinero
-    from usuario join trabajador
-		on usuario.codUsuario = trabajador.codUsuario
-        join trabajador_local
-			on trabajador_local.codTrabajador = trabajador.codTrabajador
-    where usuario.codUsuario = idUsuario and tipo = "cocinero" and estado = 1;
+    select encargado, camarero, cocinero into @encargado ,@camarero ,@cocinero 
+    from Usuario
+    where codUsuario= idUsuario;
 	
 	select nombre, apellido1, apellido2, email, img, @camarero as camarero, @encargado as encargado, @cocinero as cocinero, tema
     from usuario 

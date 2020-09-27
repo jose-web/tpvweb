@@ -31,7 +31,7 @@ export default class Menu extends React.Component {
                         </ul>
                         <div id="bolaMenuOpciones"></div>
                     </div>
-                    <Link to="/locales">TPVWEB</Link>
+                    <Link to="/facturas">TPVWEB</Link>
                     <Link to="/perfil"><img src={fotoUsuario} alt="perfil" /></Link>
                     <label htmlFor="checkHamburguesa" id="fondoMenu" aria-hidden="true"></label>
                 </header>

@@ -215,24 +215,13 @@ begin
 end $$
 
 
-create procedure muestraFacturasLocal(codigoUsuario int,codigoLocal int)
+create procedure muestraFacturas()
 begin
 	select factura.fecha, factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(linea_de_factura.precio * linea_de_factura.cantidad),0) as cuentaTotal
-    from factura join mesa
-		on factura.codMesa = mesa.codMesa
-			join mapa
-				on mapa.codMapa = mesa.codMapa
-				join trabajador_local
-					on trabajador_local.codLocal = mapa.codLocal
-					join trabajador
-						on trabajador_local.codTrabajador = trabajador.codTrabajador
-                        left join linea_de_factura
-							on linea_de_factura.codFactura = factura.codFactura
-	where mapa.codLocal = codigoLocal
-		and trabajador.codUsuario = codigoUsuario
-		and factura.pagado = 0
-	group by factura.codFactura
-    order by factura.fecha desc;
+    from factura 
+	where pagado = 0
+	group by codFactura
+    order by fecha desc;
 end $$
 
 

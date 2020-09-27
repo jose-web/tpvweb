@@ -23,7 +23,6 @@ export default class Menu extends React.Component {
                     </label>
                     <div id="menuOpciones">
                         <ul>
-                            <Link to="/administracion/empresas" className={this.props.estoyEn === "empresas" ? "activo" : ""}><li>Empresas</li></Link>
                             {sessionStorage.getItem("encargado") > 0 ?
                                 <Link to="/administracion/seleccionLocal" className={this.props.estoyEn === "administracion" ? "activo" : ""}><li>Administración</li></Link> : ""
                             }

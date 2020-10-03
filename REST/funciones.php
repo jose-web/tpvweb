@@ -35,36 +35,6 @@ function compruebaSesion($email,$pass){
       return array("respuesta" => false);
 }
 
-function buscaLocales($email,$pass){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
-
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
-  
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-
-    $consulta = "call muestraLocales($codUsuario)";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
-    
-    $arrayResultados = array();
-
-    while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayResultados[] = $fila;
-    }
-    return array("locales" => $arrayResultados);
-  }
-  return array("locales" => false);
-}
 
 function muestraFacturas($email,$pass){
   $sesion = compruebaSesion($email,$pass);
@@ -127,37 +97,6 @@ function muestraProductosFactura($email,$pass,$codFactura){
     return array("productos" => $arrayResultados);
   }
   return array("productos" => false);
-}
-
-function muestraLocalesEncargado($email,$pass){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
-
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
-  
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-
-    $consulta = "call muestraLocalesEncargado($codUsuario)";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
-    
-    $arrayResultados = array();
-
-    while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayResultados[] = $fila;
-    }
-    return array("locales" => $arrayResultados);
-  }
-  return array("locales" => false);
 }
 
 function muestraEmpleadosLocal($email,$pass,$codLocal){
@@ -242,35 +181,6 @@ function cambiaTipoEmpleado($email,$pass,$codigousuario,$tipo,$codLocal){
     $tipo = mysqli_real_escape_string($con,$tipo);
 
     $consulta = "call cambiaTipoEmpleado($codUsuario,$codLocal,$codigousuario,'$tipo')";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
-
-    return array("empleados" => $resultado);
-  }
-  return array("empleados" => false);
-}
-
-function contratarEmpleado($email,$pass,$codLocal,$codUsuarioEmpleado,$tipo){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
-
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
-  
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-    $codLocal = mysqli_real_escape_string($con,$codLocal);
-    $codUsuarioEmpleado = mysqli_real_escape_string($con,$codUsuarioEmpleado);
-    $tipo = mysqli_real_escape_string($con,$tipo);
-
-    $consulta = "call contratarEmpleado($codUsuario,$codLocal,$codUsuarioEmpleado,'$tipo')";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   
@@ -753,92 +663,6 @@ function borraProductoFactura($email, $pass, $idLineaDeFactura){
     return array("borraProductoFactura" => true);
   }
   return array("borraProductoFactura" => false);
-}
-
-function muestraMisEmpresas($email,$pass){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
-
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
-  
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-
-    $consulta = "call muestraMisEmpresas($codUsuario)";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
-    
-    $arrayResultados = array();
-
-    while($fila = mysqli_fetch_assoc($resultado)){
-      $arrayResultados[] = $fila;
-    }
-    return array("empresas" => $arrayResultados);
-  }
-  return array("empresas" => false);
-}
-
-function creaUnaEmpresa($email,$pass,$nombre){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
-
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
-  
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-    $nombre = mysqli_real_escape_string($con,$nombre);
-
-    $consulta = "call creaUnaEmpresa($codUsuario,'$nombre')";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
-
-    return array("empresa" => true);
-  }
-  return array("empresa" => false);
-}
-
-function editaEmpresa($email,$pass,$codEmpresa,$nombre){
-  $sesion = compruebaSesion($email,$pass);
-  if($sesion["respuesta"]){
-    include "conexion.php";
-
-    if(!$con){
-      return array("mensaje_error" => "Error al conectar con la base de datos.");
-    }
-  
-    mysqli_set_charset($con,"utf8");
-  
-    $codUsuario = $sesion["id"];
-    $nombre = mysqli_real_escape_string($con,$nombre);
-    $codEmpresa = mysqli_real_escape_string($con,$codEmpresa);
-
-    $consulta = "call editaEmpresa($codUsuario,$codEmpresa,'$nombre')";
-    $resultado = mysqli_query($con,$consulta);
-    mysqli_close($con);
-  
-    if(!$resultado){
-      return array("mensaje_error" => "Error al realizar la consulta");
-    }
-
-    return array("empresa" => true);
-  }
-  return array("empresa" => false);
 }
 
 ?>

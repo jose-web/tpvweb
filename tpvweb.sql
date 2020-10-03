@@ -202,19 +202,6 @@ begin
 end $$
 
 
-create procedure muestraLocales(codigoUsuario int)
-begin
-	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
-	from local join trabajador_local 
-		on local.codLocal = trabajador_local.codLocal 
-			join empresa
-			on local.codEmpresa = empresa.codEmpresa
-				join trabajador
-			on trabajador_local.codTrabajador = trabajador.codTrabajador
-	where trabajador.codUsuario = codigoUsuario and estado = 1;
-end $$
-
-
 create procedure muestraFacturas()
 begin
 	select factura.fecha, factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(linea_de_factura.precio * linea_de_factura.cantidad),0) as cuentaTotal
@@ -358,26 +345,6 @@ begin
 				or usuario.apellido1 like concat('%',busqueda,'%')
 				or usuario.apellido2 like concat('%',busqueda,'%')
 			  );
-end $$
-
-
-create procedure contratarEmpleado(codigoUsuario int, codLocal int, codUsuarioTrabajador int, tipoEmpleado varchar(20))
-begin
-	select count(*) into @empresario
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-	where trabajador.codUsuario = codigoUsuario
-		and trabajador_local.codLocal = codLocal
-        and trabajador_local.tipo = "encargado";
-        
-	select codTrabajador into @codTrabajador
-    from trabajador
-    where codUsuario = codUsuarioTrabajador;
-    
-	if @empresario = 1 then
-		insert into trabajador_local(codTrabajador,codLocal,tipo,estado)
-        values (@codTrabajador,codLocal,tipoEmpleado,1);
-	end if;
 end $$
 
 
@@ -696,59 +663,6 @@ begin
 	if @acceso = 1 then
 		delete from linea_de_factura  where codLinea = idLineaDeFactura;
     end if;
-end $$
-
-
-create procedure muestraMisEmpresas(codigoUsuario int)
-begin
-	select empresa.*
-	from empresario join empresario_empresa
-		on empresario.codEmpresario = empresario_empresa.codEmpresario
-		join empresa
-			on empresa.codEmpresa = empresario_empresa.codEmpresa
-	where codUsuario = codigoUsuario;
-end $$
-
-
-create procedure creaUnaEmpresa(codigoUsuario int,nombre varchar(20))
-begin
-	select count(codEmpresario),codEmpresario into @existe, @codEmpresario
-	from empresario
-	where codUsuario = codigoUsuario;
-    
-    start transaction;
-    if @existe = 0 then
-		insert into empresario(codUsuario)
-        values(codigoUsuario);
-        select max(codEmpresario) into @codEmpresario
-		from empresario;
-    end if;
-    
-    insert into empresa(nombre)
-	value (nombre);
-    
-    select max(codEmpresa) into @codEmpresa
-    from empresa;
-    
-    insert into empresario_empresa(codEmpresario,codEmpresa)
-	values(@codEmpresario,@codEmpresa);
-    
-    commit;
-end $$
-
-create procedure editaEmpresa(codigoUsuario int,codigoEmpresa int,nombre varchar(20))
-begin
-	select count(*) into @creador
-	from empresario join empresario_empresa
-		on empresario.codEmpresario = empresario_empresa.codEmpresario
-	where codUsuario = codigoUsuario and codEmpresa = codigoEmpresa;
-    
-    if @creador = 1 then
-		update empresa 
-        set nombre = nombre
-        where codEmpresa = codigoEmpresa;
-    end if;
-    
 end $$
 
 delimiter ;

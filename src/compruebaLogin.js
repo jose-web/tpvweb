@@ -1,12 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
-import Locales from "./paginas/locales"
 import Facturas from "./paginas/facturas"
 import LineaDeFactura from "./paginas/lineaDeFactura"
 import EligeLocalAdministracion from "./paginas/administracion/eligeLocalAdministracion"
 import AdministracionLocal from "./paginas/administracion/administraLocal"
 import AdministracionEmpleados from "./paginas/administracion/administraEmpleados"
-import AdministracionEmpresas from "./paginas/administracion/administraEmpresas"
 import BuscaEmpleado from "./paginas/administracion/buscaEmpleado"
 import Productos from "./paginas/administracion/administraProductos"
 import Perfil from "./paginas/perfil"
@@ -44,22 +42,20 @@ export default class CompruebaLogin extends React.Component {
         }
         return <BrowserRouter>
             <Switch>
-                <Route exact path="/locales" component={() => {
+                <Route exact path="/facturas" component={() => {
                     if (localStorage.getItem("usuario") === null)
                         return <Route path="/" component={Index} />
-                    return <Locales />
+                    return <Facturas />
                 }} />
-                <Route exact path="/facturas" component={Facturas} />
                 <Route exact path="/lineaDeFactura" from="/facturas" component={LineaDeFactura} />
                 <Route exact path="/administracion/seleccionLocal" component={EligeLocalAdministracion} />
                 <Route exact path="/administracion" component={AdministracionLocal} />
                 <Route exact path="/administracion/empleados" component={AdministracionEmpleados} />
                 <Route exact path="/administracion/empleados/buscar" component={BuscaEmpleado} />
                 <Route exact path="/administracion/productos" component={Productos} />
-                <Route exact path="/administracion/empresas" component={AdministracionEmpresas} />
                 <Route exact path="/perfil" component={Perfil} />
                 <Route exact path="/temas" component={Temas} />
-                <Redirect from="*" to="/locales" />
+                <Redirect from="*" to="/facturas" />
             </Switch>
         </BrowserRouter>
     }

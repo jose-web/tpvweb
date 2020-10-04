@@ -12,11 +12,6 @@ export default class Facturas extends React.Component {
 
         let id = sessionStorage.getItem("idLocal")
 
-        if (id == null)
-            this.setState({
-                redireccionar: "/locales"
-            })
-
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let data = new FormData()
@@ -37,7 +32,7 @@ export default class Facturas extends React.Component {
     }
 
     repetir() {
-        let url = global.url + 'muestraFacturasLocal'
+        let url = global.url + 'muestraFacturas'
 
         let arrayFacturas = []
 
@@ -45,7 +40,7 @@ export default class Facturas extends React.Component {
             method: 'POST',
             body: this.state.data,
 
-        }).then(res => { if (res.ok) return res.json() })
+        }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
 
@@ -59,7 +54,7 @@ export default class Facturas extends React.Component {
                         let nombre = res.facturas[i].nombre
                         let cuentaTotal = res.facturas[i].cuentaTotal
 
-                        arrayFacturas.push([[id], [fecha], [nombre], [cuentaTotal]+" €"])
+                        arrayFacturas.push([[id], [fecha], [nombre], [cuentaTotal] + " €"])
                     }
                 this.setState({
                     arrayFacturas: arrayFacturas.slice()
@@ -128,11 +123,6 @@ export default class Facturas extends React.Component {
             return <Redirect to={this.state.redireccionar} />
         }
 
-        let camarero = sessionStorage.getItem("camarero")
-        let encargado = sessionStorage.getItem("encargado")
-        let cocinero = sessionStorage.getItem("cocinero")
-        let sumaLocales = Number(camarero) + Number(encargado) + Number(cocinero)
-
         return (
             <>
                 <Menu />
@@ -140,7 +130,6 @@ export default class Facturas extends React.Component {
                     <h1>Facturas</h1>
                     <Tabla datos={this.state.arrayFacturas} onClick={this.irLineaDeFactura} guardaNombre={this.guardaNombre} />
                 </section>
-                {sumaLocales === 1 ? "" : <BotonAbajo onClick={this.atras} />}
                 <BotonAbajo derecha onClick={this.creaFacturaBarra} />
             </>
         )

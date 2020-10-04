@@ -19,20 +19,12 @@ $app->post("/compruebaSesion", function(){
   echo json_encode(compruebaSesion($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
-$app->post("/buscaLocales", function(){
-  echo json_encode(buscaLocales($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
-});
-
-$app->post("/muestraFacturasLocal", function(){
-  echo json_encode(muestraFacturasLocal($_POST["email"],$_POST["pass"],$_POST["id"]),JSON_FORCE_OBJECT);
+$app->post("/muestraFacturas", function(){
+  echo json_encode(muestraFacturas($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/muestraProductosFactura", function(){
   echo json_encode(muestraProductosFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
-});
-
-$app->post("/muestraLocalesEncargado", function(){
-  echo json_encode(muestraLocalesEncargado($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/muestraEmpleadosLocal", function(){
@@ -45,10 +37,6 @@ $app->post("/cambiaTipoEmpleado", function(){
 
 $app->post("/buscarEmpleadosLocal", function(){
   echo json_encode(buscarEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["busqueda"]),JSON_FORCE_OBJECT);
-});
-
-$app->post("/contratarEmpleado", function(){
-  echo json_encode(contratarEmpleado($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["codUsuarioEmpleado"],$_POST["tipo"]),JSON_FORCE_OBJECT);
 });
 
 $app->get("/muestraProductosLocal/:codLocal", function($codLocal){
@@ -109,18 +97,6 @@ $app->post("/actualizaProductoFactura", function(){
 
 $app->post("/borraProductoFactura", function(){
   echo json_encode(borraProductoFactura($_POST["email"], $_POST["pass"], $_POST["idLineaDeFactura"]),JSON_FORCE_OBJECT);
-});
-
-$app->post("/muestraMisEmpresas", function(){
-  echo json_encode(muestraMisEmpresas($_POST["email"], $_POST["pass"]),JSON_FORCE_OBJECT);
-});
-
-$app->post("/creaUnaEmpresa", function(){
-  echo json_encode(creaUnaEmpresa($_POST["email"], $_POST["pass"], $_POST["nombre"]),JSON_FORCE_OBJECT);
-});
-
-$app->post("/editaEmpresa", function(){
-  echo json_encode(editaEmpresa($_POST["email"], $_POST["pass"],$_POST["codEmpresa"], $_POST["nombre"]),JSON_FORCE_OBJECT);
 });
 
 $app->notFound(function (){

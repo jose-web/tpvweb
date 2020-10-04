@@ -193,16 +193,16 @@ function cambiaTipoEmpleado($email,$pass,$codigousuario,$tipo,$codLocal){
   return array("empleados" => false);
 }
 
-function muestraProductosLocal($codLocal){
+function muestraProductosLocal(){
    
-  $arrayResultados= creaArrayProductos($codLocal);
+  $arrayResultados= creaArrayProductos();
 
   return array("categorias" => $arrayResultados);
   
   return array("categorias" => false);
 }
 
-function creaArrayProductos($codLocal,$padre = "null"){
+function creaArrayProductos($padre = "null"){
   include "conexion.php";
 
   if(!$con){
@@ -211,9 +211,7 @@ function creaArrayProductos($codLocal,$padre = "null"){
 
   mysqli_set_charset($con,"utf8");
 
-  $codLocal = mysqli_real_escape_string($con,$codLocal);
-
-  $consulta = "call muestraProductosLocal($codLocal,$padre)";
+  $consulta = "call muestraProductosLocal($padre)";
   $resultado = mysqli_query($con,$consulta);
   mysqli_close($con);
 
@@ -227,7 +225,7 @@ function creaArrayProductos($codLocal,$padre = "null"){
 
     if(isset($fila["codCategoria"])){
       $nuevoArray["codCategoria"] = $fila["codCategoria"];
-      $nuevoArray["dentroCategoria"]=creaArrayProductos($codLocal,$fila["codCategoria"]);
+      $nuevoArray["dentroCategoria"]=creaArrayProductos($fila["codCategoria"]);
     }
 
     if(isset($fila["codProducto"])){
@@ -434,7 +432,7 @@ function creaFactura($email,$pass,$idMesa,$nombreCliente){
   return array("creaFactura" => false);
 }
 
-function creaFacturaBarra($email,$pass,$codLocal){
+function creaFacturaBarra($email,$pass){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -446,9 +444,8 @@ function creaFacturaBarra($email,$pass,$codLocal){
     mysqli_set_charset($con,"utf8");
   
     $codUsuario = $sesion["id"];
-    $codLocal = mysqli_real_escape_string($con,$codLocal);
 
-    $consulta = "call creaFacturaBarra($codUsuario,$codLocal)";
+    $consulta = "call creaFacturaBarra($codUsuario)";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

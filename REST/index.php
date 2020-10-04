@@ -39,8 +39,8 @@ $app->post("/buscarEmpleadosLocal", function(){
   echo json_encode(buscarEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["busqueda"]),JSON_FORCE_OBJECT);
 });
 
-$app->get("/muestraProductosLocal/:codLocal", function($codLocal){
-  echo json_encode(muestraProductosLocal($codLocal),JSON_FORCE_OBJECT);
+$app->get("/muestraProductosLocal", function(){
+  echo json_encode(muestraProductosLocal(),JSON_FORCE_OBJECT);
 });
 
 $app->post("/registro", function(){
@@ -68,7 +68,7 @@ $app->post("/creaFactura", function(){
 });
 
 $app->post("/creaFacturaBarra", function(){
-  echo json_encode(creaFacturaBarra($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
+  echo json_encode(creaFacturaBarra($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/actualizaFactura", function(){

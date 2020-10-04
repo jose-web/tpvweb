@@ -167,7 +167,7 @@ export default class LineaDeFactura extends React.Component {
         this.repetir()
         let intervalo = setInterval(this.repetir, 3000)
 
-        let url = global.url + 'muestraProductosLocal/' + sessionStorage.getItem("idLocal")
+        let url = global.url + 'muestraProductosLocal'
 
         fetch(url, {
             method: 'GET',

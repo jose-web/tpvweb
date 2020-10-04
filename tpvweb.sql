@@ -66,7 +66,7 @@ create table mesa (
 create table factura (
 	codFactura int primary key auto_increment,
     codUsuario int not null,
-    codMesa int not null,
+    codMesa int null,
 	nombreCliente varchar(50) not null default 'Cliente sin nombre',
     pagado boolean not null default false,
     fecha datetime not null default now(),
@@ -205,9 +205,10 @@ end $$
 create procedure muestraFacturas()
 begin
 	select factura.fecha, factura.codFactura as id, factura.nombreCliente as nombre, ifnull(sum(linea_de_factura.precio * linea_de_factura.cantidad),0) as cuentaTotal
-    from factura 
+    from factura left join linea_de_factura
+			on factura.codFactura = linea_de_factura.codFactura
 	where pagado = 0
-	group by codFactura
+	group by factura.codFactura
     order by fecha desc;
 end $$
 
@@ -217,19 +218,9 @@ begin
 	select linea_de_factura.codLinea, producto.nombre, linea_de_factura.precio, linea_de_factura.cantidad, linea_de_factura.comentario
     from linea_de_factura join factura
 		on linea_de_factura.codFactura = factura.codFactura
-		join mesa
-			on factura.codMesa = mesa.codMesa
-			join mapa
-				on mapa.codMapa = mesa.codMapa
-				join trabajador_local
-					on trabajador_local.codLocal = mapa.codLocal
-					join trabajador
-						on trabajador_local.codTrabajador = trabajador.codTrabajador
-                        join producto
-							on linea_de_factura.codProducto = producto.codProducto
-	where trabajador.codUsuario = codigoUsuario 
-    and trabajador_local.estado = 1 
-    and factura.codFactura = codigoFactura;
+			join producto
+				on linea_de_factura.codProducto = producto.codProducto
+	where factura.codFactura = codigoFactura;
 end $$
 
 
@@ -348,13 +339,12 @@ begin
 end $$
 
 
-create procedure muestraProductosLocal(idLocal int, idCategoriaPadre int)
+create procedure muestraProductosLocal(idCategoriaPadre int)
 begin
 	if idCategoriaPadre is null then
 		select categoria.codCategoria, nombre
-        from categoria join local_tiene_categoria
-			on categoria.codCategoria = local_tiene_categoria.codCategoria
-		where codLocal = idLocal and codCategoriaPadre is null;
+        from categoria 
+		where codCategoriaPadre is null;
 	else
 		select categoria.codCategoria,null as codProducto, nombre, null as precio, null as disponibilidad
         from categoria
@@ -443,26 +433,12 @@ begin
 end $$
 
 
-create procedure creaFacturaBarra(idUsuario int, idLocal int)
+create procedure creaFacturaBarra(idUsuario int)
 begin
-    select trabajador.codTrabajador,codMesa into @codTrabajador, @idMesa
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-        join mapa
-			on mapa.codLocal = trabajador_local.codLocal
-            join mesa
-				on mesa.codMapa = mapa.codMapa
-    where codUsuario = idUsuario
-		and barra = 1 
-        and mapa.codLocal = idLocal
-    group by trabajador.codTrabajador;
-    
-    start transaction;
-	insert into factura (codTrabajador,codMesa) 
-    values(@codTrabajador,@idMesa);
+	insert into factura (codUsuario) 
+    values(idUsuario);
     
     select max(codFactura) as codFactura from factura;
-    commit;
 end $$
 
 

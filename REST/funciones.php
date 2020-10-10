@@ -198,8 +198,7 @@ function muestraProductosLocal(){
   $arrayResultados= creaArrayProductos();
 
   return array("categorias" => $arrayResultados);
-  
-  return array("categorias" => false);
+
 }
 
 function creaArrayProductos($padre = "null"){

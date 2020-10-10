@@ -41,7 +41,7 @@ export default class AdministracionLocal extends React.Component {
     }
 
     componentDidMount() {
-        let url = global.url + 'muestraProductosLocal/' + sessionStorage.getItem("idLocal")
+        let url = global.url + 'muestraProductosLocal'
 
         fetch(url, {
             method: 'GET',

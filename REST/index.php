@@ -88,7 +88,7 @@ $app->post("/addProductoFactura", function(){
 });
 
 $app->post("/editaProducto", function(){
-  echo json_encode(editaProducto($_POST["email"], $_POST["pass"], $_POST["idLocal"], $_POST["idCategoria"], $_POST["idProducto"], $_POST["precio"], $_POST["disponibilidad"]),JSON_FORCE_OBJECT);
+  echo json_encode(editaProducto($_POST["email"], $_POST["pass"], $_POST["idCategoria"], $_POST["idProducto"], $_POST["precio"], $_POST["disponibilidad"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/actualizaProductoFactura", function(){

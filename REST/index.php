@@ -76,7 +76,7 @@ $app->post("/actualizaFactura", function(){
 });
 
 $app->post("/crearCategoria", function(){
-  echo json_encode(crearCategoria($_POST["email"],$_POST["pass"],$_POST["codLocal"],$_POST["nombre"],$_POST["padre"]),JSON_FORCE_OBJECT);
+  echo json_encode(crearCategoria($_POST["email"],$_POST["pass"],$_POST["nombre"],$_POST["padre"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/crearProducto", function(){

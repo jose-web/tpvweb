@@ -485,7 +485,7 @@ function actualizaFactura($email,$pass,$idFactura,$nuevoNombreCliente,$estadoPag
   return array("actualizaFactura" => false);
 }
 
-function crearCategoria($email,$pass,$codLocal,$nombre,$padre){
+function crearCategoria($email,$pass,$nombre,$padre){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -497,11 +497,10 @@ function crearCategoria($email,$pass,$codLocal,$nombre,$padre){
     mysqli_set_charset($con,"utf8");
   
     $codUsuario = $sesion["id"];
-    $codLocal = mysqli_real_escape_string($con,$codLocal);
     $nombre = mysqli_real_escape_string($con,$nombre);
     $padre = mysqli_real_escape_string($con,$padre);
 
-    $consulta = "call crearCategoria($codUsuario,$codLocal,'$nombre',$padre)";
+    $consulta = "call crearCategoria('$nombre',$padre)";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

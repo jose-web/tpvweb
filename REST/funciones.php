@@ -512,7 +512,7 @@ function crearCategoria($email,$pass,$nombre,$padre){
   return array("crearCategoria" => false);
 }
 
-function crearProducto($email, $pass, $codLocal, $codCategoria, $nombreProducto, $descripcionProducto, $imagen, $precioProducto, $disponibilidadProducto){
+function crearProducto($email, $pass, $codCategoria, $nombreProducto, $descripcionProducto, $imagen, $precioProducto, $disponibilidadProducto){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -524,14 +524,13 @@ function crearProducto($email, $pass, $codLocal, $codCategoria, $nombreProducto,
     mysqli_set_charset($con,"utf8");
   
     $codUsuario = $sesion["id"];
-    $codLocal = mysqli_real_escape_string($con,$codLocal);
     $codCategoria = mysqli_real_escape_string($con,$codCategoria);
     $nombreProducto = mysqli_real_escape_string($con,$nombreProducto);
     $descripcionProducto = mysqli_real_escape_string($con,$descripcionProducto);
     $precioProducto = mysqli_real_escape_string($con,$precioProducto);
     $disponibilidadProducto = mysqli_real_escape_string($con,$disponibilidadProducto);
 
-    $consulta = "call crearProducto($codUsuario, $codLocal, $codCategoria, '$nombreProducto', '$descripcionProducto', $imagen, $precioProducto, $disponibilidadProducto)";
+    $consulta = "call crearProducto($codUsuario, $codCategoria, '$nombreProducto', '$descripcionProducto', $imagen, $precioProducto, $disponibilidadProducto)";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

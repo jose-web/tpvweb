@@ -80,7 +80,7 @@ $app->post("/crearCategoria", function(){
 });
 
 $app->post("/crearProducto", function(){
-  echo json_encode(crearProducto($_POST["email"],$_POST["pass"], $_POST["codLocal"] ,$_POST["codCategoria"], $_POST["nombreProducto"], $_POST["descripcionProducto"], "null", $_POST["precioProducto"], $_POST["disponibilidadProducto"]),JSON_FORCE_OBJECT);
+  echo json_encode(crearProducto($_POST["email"],$_POST["pass"] ,$_POST["codCategoria"], $_POST["nombreProducto"], $_POST["descripcionProducto"], "null", $_POST["precioProducto"], $_POST["disponibilidadProducto"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/addProductoFactura", function(){

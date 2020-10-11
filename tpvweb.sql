@@ -475,7 +475,6 @@ end $$
 
 create procedure crearProducto(
 	idUsuario int, 
-	idLocal int, 
 	idCategoria int, 
 	nombreProducto varchar(50), 
 	descripcionProducto text, 
@@ -484,12 +483,7 @@ create procedure crearProducto(
     disponibilidadProducto boolean
 )
 begin
-	
-	select trabajador.codTrabajador into @trabajador
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-	where codLocal = idLocal and estado = 1 and tipo = 'encargado' and codUsuario = idUsuario;
-    
+
     start transaction;
     
     insert into producto(nombre, descripcion, img)
@@ -501,7 +495,7 @@ begin
 	values(idCategoria, @producto, precioProducto, disponibilidadProducto);
         
 	commit;
-    
+
 end $$
 
 

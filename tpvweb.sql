@@ -479,7 +479,6 @@ end $$
 
 
 create procedure addProductoFactura(
-	idUsuario int, 
 	idFactura int, 
 	idProducto int,
     precioProducto double,
@@ -488,30 +487,8 @@ create procedure addProductoFactura(
 )
 begin
 	
-	select trabajador.codTrabajador into @trabajador
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-        join mapa
-			on mapa.codLocal = trabajador_local.codLocal
-            join mesa
-				on mesa.codMapa = mapa.codMapa
-                join factura
-					on factura.codMesa = mesa.codMesa
-	where mapa.codLocal = 1 and estado = 1 and codUsuario = idUsuario and codFactura = idFactura;
-    
-    select codLinea, count(codLinea) into @codigoLinea, @existe
-    from linea_de_factura
-    where codFactura = idFactura 
-		and codProducto = idProducto
-        and precio = precioProducto 
-        and comentario = comentarioProducto;
-        
-	if @existe > 0 then
-		update linea_de_factura set cantidad = cantidad+cantidadProducto where codLinea = @codigoLinea;
-    else
-		insert into linea_de_factura(codFactura,codProducto,precio, cantidad, comentario)
+    insert into linea_de_factura(codFactura,codProducto,precio, cantidad, comentario)
 		values(idFactura,idProducto,precioProducto,cantidadProducto,comentarioProducto);
-    end if;
     
 end $$
 

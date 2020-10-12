@@ -521,14 +521,13 @@ function addProductoFactura($email, $pass, $idFactura, $idProducto, $precio, $ca
   
     mysqli_set_charset($con,"utf8");
   
-    $codUsuario = $sesion["id"];
     $idFactura = mysqli_real_escape_string($con,$idFactura);
     $idProducto = mysqli_real_escape_string($con,$idProducto);
     $precio = mysqli_real_escape_string($con,$precio);
     $cantidad = mysqli_real_escape_string($con,$cantidad);
     $comentario = mysqli_real_escape_string($con,$comentario);
 
-    $consulta = "call addProductoFactura($codUsuario,$idFactura,$idProducto,$precio,$cantidad,'$comentario')";
+    $consulta = "call addProductoFactura($idFactura,$idProducto,$precio,$cantidad,'$comentario')";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

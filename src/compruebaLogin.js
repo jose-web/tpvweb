@@ -3,7 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import Facturas from "./paginas/facturas"
 import LineaDeFactura from "./paginas/lineaDeFactura"
 import AdministracionLocal from "./paginas/administracion/administraLocal"
-import AdministracionEmpleados from "./paginas/administracion/administraEmpleados"
+// import AdministracionEmpleados from "./paginas/administracion/administraEmpleados"
 import BuscaEmpleado from "./paginas/administracion/buscaEmpleado"
 import Productos from "./paginas/administracion/administraProductos"
 import Perfil from "./paginas/perfil"
@@ -48,7 +48,7 @@ export default class CompruebaLogin extends React.Component {
                 }} />
                 <Route exact path="/lineaDeFactura" from="/facturas" component={LineaDeFactura} />
                 <Route exact path="/administracion" component={AdministracionLocal} />
-                <Route exact path="/administracion/empleados" component={AdministracionEmpleados} />
+                {/* <Route exact path="/administracion/empleados" component={AdministracionEmpleados} /> */}
                 <Route exact path="/administracion/empleados/buscar" component={BuscaEmpleado} />
                 <Route exact path="/administracion/productos" component={Productos} />
                 <Route exact path="/perfil" component={Perfil} />

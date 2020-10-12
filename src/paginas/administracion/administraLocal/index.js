@@ -31,7 +31,7 @@ export default class AdministracionLocal extends React.Component {
                 <Menu estoyEn="administracion" />
                 <section id="seccionLocalAdministracion">
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración</h1>
-                    <article onClick={() => this.irA("/administracion/empleados")}>Empleados</article>
+                    {/* <article onClick={() => this.irA("/administracion/empleados")}>Empleados</article> */}
                     <article onClick={() => this.irA("/administracion/productos")}>Productos</article>
                     <article>Mapa</article>
                 </section>

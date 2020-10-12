@@ -239,27 +239,6 @@ begin
 end $$
 
 
-create procedure muestraEmpleadosLocal(codigoUsuario int, codLocal int)
-begin
-	select usuario.codUsuario, usuario.nombre, usuario.apellido1, usuario.apellido2, usuario.img, empleados.tipo
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-        join local
-			on local.codLocal = trabajador_local.codLocal
-            join trabajador_local as empleados
-				on empleados.codLocal = local.codLocal
-                join trabajador as trabajador2
-					on trabajador2.codTrabajador = empleados.codTrabajador
-                    join usuario
-						on usuario.codUsuario = trabajador2.codUsuario
-	where trabajador.codUsuario = codigoUsuario
-    and trabajador_local.estado = 1
-    and trabajador_local.tipo = "encargado"
-    and local.codLocal = codLocal
-    and empleados.estado = 1;
-end $$
-
-
 create procedure cambiaTipoEmpleado(codigoUsuario int, codLocal int, codUsuario int, tipo varchar(20))
 begin
 	select count(*) into @empresario

@@ -27,10 +27,6 @@ $app->post("/muestraProductosFactura", function(){
   echo json_encode(muestraProductosFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
 });
 
-$app->post("/muestraEmpleadosLocal", function(){
-  echo json_encode(muestraEmpleadosLocal($_POST["email"],$_POST["pass"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
-});
-
 $app->post("/cambiaTipoEmpleado", function(){
   echo json_encode(cambiaTipoEmpleado($_POST["email"],$_POST["pass"],$_POST["codUsuario"],$_POST["tipo"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
 });

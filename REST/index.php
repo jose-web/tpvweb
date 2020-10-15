@@ -27,6 +27,10 @@ $app->post("/muestraProductosFactura", function(){
   echo json_encode(muestraProductosFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/muestraProductosFacturaContraida", function(){
+  echo json_encode(muestraProductosFacturaContraida($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
+});
+
 $app->post("/cambiaTipoEmpleado", function(){
   echo json_encode(cambiaTipoEmpleado($_POST["email"],$_POST["pass"],$_POST["codUsuario"],$_POST["tipo"],$_POST["codLocal"]),JSON_FORCE_OBJECT);
 });

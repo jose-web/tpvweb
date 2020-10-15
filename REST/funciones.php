@@ -99,6 +99,38 @@ function muestraProductosFactura($email,$pass,$codFactura){
   return array("productos" => false);
 }
 
+function muestraProductosFacturaContraida($email,$pass,$codFactura){
+  $sesion = compruebaSesion($email,$pass);
+  if($sesion["respuesta"]){
+    include "conexion.php";
+
+    if(!$con){
+      return array("mensaje_error" => "Error al conectar con la base de datos.");
+    }
+  
+    mysqli_set_charset($con,"utf8");
+  
+    $codUsuario = $sesion["id"];
+    $codFactura = mysqli_real_escape_string($con,$codFactura);
+
+    $consulta = "call muestraProductosFacturaContraida($codUsuario,$codFactura)";
+    $resultado = mysqli_query($con,$consulta);
+    mysqli_close($con);
+  
+    if(!$resultado){
+      return array("mensaje_error" => "Error al realizar la consulta");
+    }
+    
+    $arrayResultados = array();
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $arrayResultados[] = $fila;
+    }
+    return array("productos" => $arrayResultados);
+  }
+  return array("productos" => false);
+}
+
 function buscarEmpleadosLocal($email,$pass,$codLocal,$busqueda){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){

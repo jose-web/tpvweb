@@ -226,6 +226,19 @@ begin
 end $$
 
 
+create procedure muestraProductosFacturaContraida(codigoUsuario int,codigoFactura int)
+begin
+	select linea_de_factura.codLinea, producto.nombre, linea_de_factura.precio, sum(linea_de_factura.cantidad) as cantidad, linea_de_factura.comentario
+    from linea_de_factura join factura
+		on linea_de_factura.codFactura = factura.codFactura
+			join producto
+				on linea_de_factura.codProducto = producto.codProducto
+	where factura.codFactura = codigoFactura
+    group by producto.codProducto, comentario
+    order by max(linea_de_factura.fecha) desc;
+end $$
+
+
 create procedure muestraLocalesEncargado(codigoUsuario int)
 begin
 	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 

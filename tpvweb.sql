@@ -178,6 +178,7 @@ create table linea_de_factura (
 	precio double(6,2) not null,
     cantidad int not null,
     comentario text,
+    fecha datetime default now(),
  
     constraint foreign key (codFactura)
         references factura (codFactura)
@@ -220,7 +221,8 @@ begin
 		on linea_de_factura.codFactura = factura.codFactura
 			join producto
 				on linea_de_factura.codProducto = producto.codProducto
-	where factura.codFactura = codigoFactura;
+	where factura.codFactura = codigoFactura
+    order by linea_de_factura.fecha desc;
 end $$
 
 

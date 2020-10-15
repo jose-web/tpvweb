@@ -37,7 +37,8 @@ export default class LineaDeFactura extends React.Component {
             intervalo: "",
             nombreFactura: "",
             abierto: false,
-            mostrarProductos: false
+            mostrarProductos: false,
+            facturaContraida: true
         };
         this.repetir = this.repetir.bind(this)
         this.atras = this.atras.bind(this)
@@ -51,7 +52,7 @@ export default class LineaDeFactura extends React.Component {
     }
 
     repetir() {
-        let url = global.url + 'muestraProductosFactura'
+        let url = global.url + (this.state.facturaContraida ? 'muestraProductosFacturaContraida' : 'muestraProductosFactura')
 
         let arrayFacturas = []
 

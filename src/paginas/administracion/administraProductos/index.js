@@ -145,7 +145,7 @@ export default class AdministracionLocal extends React.Component {
             </>
 
             arrayProductos.push(<article
-                className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto"}
+                className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto caja"}
                 key={identificador}
                 tabIndex="0"
                 onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.popupEditaProducto(identificador, $array[o].nombre, $array[o].precio, $array[o].disponibilidad)}
@@ -157,7 +157,7 @@ export default class AdministracionLocal extends React.Component {
         }
 
         if (Object.keys($array).length === 0) {
-            arrayProductos.push(<article key="sinProductos">
+            arrayProductos.push(<article className="caja" key="sinProductos">
                 <div>No hay productos</div>
             </article>)
         }
@@ -279,10 +279,12 @@ export default class AdministracionLocal extends React.Component {
             <>
                 <Popup contenido={this.state.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu estoyEn="administracion" />
-                <section id="seccionLocalAdministracion">
+                <section>
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración de productos</h1>
                     <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>
-                    {this.state.arrayProductos}
+                    <div className="contieneCajas">
+                        {this.state.arrayProductos}
+                    </div>
                 </section>
                 <BotonAbajo onClick={() => this.irA("/administracion")} />
                 <BotonAbajo derecha onClick={this.popupNuevoProducto} />

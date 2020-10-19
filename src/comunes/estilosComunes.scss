@@ -2,18 +2,18 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 :root {
     --color1: #262626;
-    --color2: #5E5E5E;
-    --color3: #B5B5B5;
-    --color4: #C4C4C4;
-    --color5: #EEEEEE;
-    --color6: #FFFFFF;
+    --color2: #5e5e5e;
+    --color3: #b5b5b5;
+    --color4: #c4c4c4;
+    --color5: #eeeeee;
+    --color6: #ffffff;
     --color7: #aa3838;
-    --color8: #88BA69;
+    --color8: #88ba69;
 }
 body {
     background-color: var(--color5);
@@ -26,8 +26,25 @@ main {
 
 h1 {
     color: var(--color1);
+    width: 100%;
+    text-align: center;
+    margin:0.5em 0;
 }
 
-a{
-    outline: none 
+a {
+    outline: none;
+}
+
+.contieneCajas {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contieneCajas .caja {
+    padding: 1em;
+    margin:0.5em;
+    background-color: var(--color3);
+    flex: 0 calc(33.33% - 1em);
+    text-align: center;
+    cursor: pointer;
 }

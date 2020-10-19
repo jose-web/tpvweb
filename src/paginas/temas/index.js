@@ -156,21 +156,23 @@ export default class Locales extends React.Component {
                 <Menu estoyEn="temas" />
                 <section id="locales">
                     <h1>Temas</h1>
-                    <article onClick={() => this.cambiarTema("azul")} tabIndex="0">
-                        Azul
+                    <div className="contieneCajas">
+                        <article className="caja" onClick={() => this.cambiarTema("azul")} tabIndex="0">
+                            Azul
                     </article>
-                    <article onClick={() => this.cambiarTema("rojo")} tabIndex="0">
-                        Rojo
+                        <article className="caja" onClick={() => this.cambiarTema("rojo")} tabIndex="0">
+                            Rojo
                     </article>
-                    <article onClick={() => this.cambiarTema("rosa")} tabIndex="0">
-                        Rosa
+                        <article className="caja" onClick={() => this.cambiarTema("rosa")} tabIndex="0">
+                            Rosa
                     </article>
-                    <article onClick={() => this.cambiarTema("verde")} tabIndex="0">
-                        Verde
+                        <article className="caja" onClick={() => this.cambiarTema("verde")} tabIndex="0">
+                            Verde
                     </article>
-                    <article onClick={() => this.cambiarTema("")} tabIndex="0">
-                        Blanco y negro (Por defecto)
+                        <article className="caja" onClick={() => this.cambiarTema("")} tabIndex="0">
+                            Blanco y negro (Por defecto)
                     </article>
+                    </div>
 
                     <form id="personalizacionColores" onSubmit={(evento) => { evento.preventDefault(); this.cambiarTema("personalizado") }}>
                         <h3>COLORES PERSONALIZADOS</h3>

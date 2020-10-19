@@ -29,11 +29,11 @@ export default class AdministracionLocal extends React.Component {
         return (
             <>
                 <Menu estoyEn="administracion" />
-                <section id="seccionLocalAdministracion">
+                <section className="contieneCajas">
                     <h1>{sessionStorage.getItem("nombreLocal")} - Administración</h1>
                     {/* <article onClick={() => this.irA("/administracion/empleados")}>Empleados</article> */}
-                    <article onClick={() => this.irA("/administracion/productos")}>Productos</article>
-                    <article>Mapa</article>
+                    <article className="caja" onClick={() => this.irA("/administracion/productos")}>Productos</article>
+                    <article className="caja">Mapa</article>
                 </section>
                 <BotonAbajo onClick={() => this.irA(atras)} />
             </>

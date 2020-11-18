@@ -49,6 +49,7 @@ export default class LineaDeFactura extends React.Component {
         this.muestraPopUpCambiaNombre = this.muestraPopUpCambiaNombre.bind(this)
         this.pagar = this.pagar.bind(this)
         this.muestraPopUpCambiaPoducto = this.muestraPopUpCambiaPoducto.bind(this)
+        this.muestraPopUpAddProductoFactura = this.muestraPopUpAddProductoFactura.bind(this)
     }
 
     repetir() {
@@ -216,7 +217,7 @@ export default class LineaDeFactura extends React.Component {
                     className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto"}
                     key={identificador}
                     tabIndex="0"
-                    onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.addProductoFactura($array[o])}
+                    onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.muestraPopUpAddProductoFactura($array[o])}
                 >
                     <div>
                         <strong>{$array[o].nombre}</strong>
@@ -242,7 +243,7 @@ export default class LineaDeFactura extends React.Component {
         data.append('idFactura', sessionStorage.getItem("idFactura"))
         data.append('idProducto', $array["codProducto"])
         data.append('precio', $array["precio"])
-        data.append('cantidad', 1)
+        data.append('cantidad', this.state.cantidadProducto)
         data.append('comentario', "")
 
         let url = global.url + 'addProductoFactura'
@@ -340,6 +341,17 @@ export default class LineaDeFactura extends React.Component {
                 <strong>Cambiar el nombre del cliente</strong>
                 <Input label="NOMBRE CLIENTE" cambia={($valor) => this.cambiaEstado($valor, "nombreFactura")} value={sessionStorage.getItem("nombreFactura")} />
                 <Button submit value="CAMBIAR" />
+            </form>
+        })
+        this.cambiaEstadoPopup()
+    }
+
+    muestraPopUpAddProductoFactura($array) {
+        this.setState({
+            popup: <form id="formularioCambiaNombre" onSubmit={() => this.addProductoFactura($array)}>
+                <strong>Cantidad</strong>
+                <Input label="CANTIDAD DEL PRODUCTO" cambia={($valor) => this.cambiaEstado($valor, "cantidadProducto")} value={1} />
+                <Button submit value="AÑADIR" />
             </form>
         })
         this.cambiaEstadoPopup()

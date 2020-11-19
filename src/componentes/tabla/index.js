@@ -10,6 +10,7 @@ export default class Tabla extends React.Component {
             arrayTitulo: [],
             arrayFilas: []
         };
+        this.onContextMenu = this.onContextMenu.bind(this)
     }
 
     componentDidUpdate(propsAntiguas) {
@@ -48,10 +49,15 @@ export default class Tabla extends React.Component {
         }
     }
 
+    onContextMenu(event) {
+        event.preventDefault()
+        this.props.onContextMenu()
+    }
+
     render() {
         return (
             <ScrollContainer className="contieneTabla">
-                <table className="tabla">
+                <table className="tabla" onContextMenu={this.onContextMenu}>
                     <thead>
                         {this.state.arrayTitulo}
                     </thead>

@@ -234,7 +234,8 @@ export default class LineaDeFactura extends React.Component {
         })
     }
 
-    addProductoFactura($array) {
+    addProductoFactura(event, $array) {
+        event.preventDefault()
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let data = new FormData();
@@ -258,6 +259,7 @@ export default class LineaDeFactura extends React.Component {
                 if (res.addProductoFactura)
                     this.repetir()
             })
+        this.cambiaEstadoPopup()
     }
 
     actualizaProducto(evento, $valor) {
@@ -348,13 +350,14 @@ export default class LineaDeFactura extends React.Component {
 
     muestraPopUpAddProductoFactura($array) {
         this.setState({
-            popup: <form id="formularioCambiaNombre" onSubmit={() => this.addProductoFactura($array)}>
+            popup: <form id="formularioCambiaNombre" onSubmit={(event) => this.addProductoFactura(event, $array)}>
                 <strong>Cantidad</strong>
                 <Input label="CANTIDAD DEL PRODUCTO" cambia={($valor) => this.cambiaEstado($valor, "cantidadProducto")} value={1} />
                 <Button submit value="AÑADIR" />
             </form>
         })
         this.cambiaEstadoPopup()
+        this.cambiaEstado(1, "cantidadProducto")
     }
 
     borraProductoFactura($valor) {
@@ -420,7 +423,7 @@ export default class LineaDeFactura extends React.Component {
                     <h1><span id="nombreLocalImpresion">{sessionStorage.getItem("nombreLocal")} - </span>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
                         <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={() => this.muestraPopUpPagar()} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={() => this.muestraPopUpPagar()} /></div>
-                        <Tabla datos={this.state.arrayFacturas} onClick={($valor) => this.muestraPopUpCambiaPoducto($valor)} />
+                        <Tabla datos={this.state.arrayFacturas} onClick={($valor) => this.state.facturaContraida ? "" : this.muestraPopUpCambiaPoducto($valor)} onContextMenu={() => this.cambiaEstado(!this.state.facturaContraida, "facturaContraida")} />
                     </article>
                     <article id="agregarProductos" className={this.state.mostrarProductos ? "" : "oculto"}>
                         <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>

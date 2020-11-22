@@ -50,10 +50,11 @@ export default class LineaDeFactura extends React.Component {
         this.pagar = this.pagar.bind(this)
         this.muestraPopUpCambiaPoducto = this.muestraPopUpCambiaPoducto.bind(this)
         this.muestraPopUpAddProductoFactura = this.muestraPopUpAddProductoFactura.bind(this)
+        this.contraeExtiendeFactura = this.contraeExtiendeFactura.bind(this)
     }
-
+    facturaContraida = true
     repetir() {
-        let url = global.url + (this.state.facturaContraida ? 'muestraProductosFacturaContraida' : 'muestraProductosFactura')
+        let url = global.url + (this.facturaContraida ? 'muestraProductosFacturaContraida' : 'muestraProductosFactura')
 
         let arrayFacturas = []
 
@@ -411,6 +412,11 @@ export default class LineaDeFactura extends React.Component {
         })
         this.cambiaEstadoPopup()
     }
+    contraeExtiendeFactura() {
+        this.cambiaEstado(!this.state.facturaContraida, "facturaContraida")
+        this.facturaContraida = !this.facturaContraida
+        this.repetir()
+    }
 
     render() {
         if (this.state.redireccionar)
@@ -423,7 +429,8 @@ export default class LineaDeFactura extends React.Component {
                     <h1><span id="nombreLocalImpresion">{sessionStorage.getItem("nombreLocal")} - </span>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
                         <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={() => this.muestraPopUpPagar()} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={() => this.muestraPopUpPagar()} /></div>
-                        <Tabla datos={this.state.arrayFacturas} onClick={($valor) => this.state.facturaContraida ? "" : this.muestraPopUpCambiaPoducto($valor)} onContextMenu={() => this.cambiaEstado(!this.state.facturaContraida, "facturaContraida")} />
+                        <button className="boton" id="botonExtender" onClick={this.contraeExtiendeFactura}>{this.state.facturaContraida ? "EXTENDER" : "CONTRAER"}</button>
+                        <Tabla datos={this.state.arrayFacturas} onClick={($valor) => this.state.facturaContraida ? "" : this.muestraPopUpCambiaPoducto($valor)} onContextMenu={this.contraeExtiendeFactura} />
                     </article>
                     <article id="agregarProductos" className={this.state.mostrarProductos ? "" : "oculto"}>
                         <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>

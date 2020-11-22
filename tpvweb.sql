@@ -510,31 +510,12 @@ end $$
 
 create procedure actualizaProductoFactura(idUsuario int, idLineaDeFactura int, nuevoPrecio double, nuevaCantidad int, nuevoComentario text)
 begin
-
-	select count(*) into @acceso
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-        join mapa
-			on mapa.codLocal = trabajador_local.codLocal
-            join mesa
-				on mesa.codMapa = mapa.codMapa
-                join factura
-                on factura.codMesa = mesa.codMesa
-					join linea_de_factura
-						on linea_de_factura.codFactura = factura.codFactura
-    where codUsuario = idUsuario
-    and linea_de_factura.codLinea = idLineaDeFactura
-    and trabajador_local.estado = 1;
-
-	if @acceso = 1 then
-		set @sentencia = concat('update linea_de_factura set codLinea=codLinea ',
-			if(nuevoPrecio !='',concat(', precio = ',nuevoPrecio),''),
-			if(nuevaCantidad !='',concat(', cantidad = ',nuevaCantidad),''),
-            if(nuevoComentario !='',concat(', comentario = \'',nuevoComentario,'\''),''),
-			' where codLinea = ',idLineaDeFactura);
-		prepare ejecutar from @sentencia;
-		execute ejecutar;
-    end if;
+    update linea_de_factura 
+    set codLinea=codLinea, 
+		precio = nuevoPrecio, 
+		cantidad = nuevaCantidad, 
+		comentario = nuevoComentario
+    where codLinea = idLineaDeFactura;
 end $$
 
 

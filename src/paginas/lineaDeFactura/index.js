@@ -271,9 +271,9 @@ export default class LineaDeFactura extends React.Component {
         data.append('email', usuario.email)
         data.append('pass', usuario.pass)
         data.append('idLineaDeFactura', $valor)
-        data.append('nuevoPrecio', this.state.precioProducto)
-        data.append('nuevaCantidad', this.state.cantidadProducto)
-        data.append('nuevoComentario', this.state.comentarioProducto)
+        data.append('nuevoPrecio', evento.target.PRECIO.value)
+        data.append('nuevaCantidad', evento.target.CANTIDAD.value)
+        data.append('nuevoComentario', evento.target.COMENTARIO.value)
 
         let url = global.url + 'actualizaProductoFactura'
 
@@ -402,7 +402,7 @@ export default class LineaDeFactura extends React.Component {
                 <strong>Actualizar producto: {nombre}</strong>
                 <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} value={precio.substr(0, precio.length - 2)} />
                 <Input label="CANTIDAD" cambia={($valor) => this.cambiaEstado($valor, "cantidadProducto")} value={cantidad} />
-                <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "comentarioProducto")} value={comentario === "" ? "Sin comentario" : comentario} />
+                <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "comentarioProducto")} value={comentario === "" ? "" : comentario} required={false} />
                 <Button submit value="ACTUALIZAR" />
                 {sessionStorage.getItem("encargado") > 0 ?
                     <button className="boton" onClick={() => this.borraProductoFactura($valor)}>BORRAR PRODUCTO</button>

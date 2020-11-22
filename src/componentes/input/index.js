@@ -32,7 +32,10 @@ export default class Input extends React.Component {
                         <label htmlFor={this.props.label} className="labelImagen">{this.state.value.split("\\")[this.state.value.split("\\").length - 1]}</label>
                     </>
                     :
-                    <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} defaultValue={this.state.value} required />
+                    this.props.required === false ?
+                        <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} defaultValue={this.state.value} />
+                        :
+                        <input type={this.props.pass ? "password" : this.props.email ? "email" : "text"} id={this.props.label} onChange={this.cambia} defaultValue={this.state.value} required />
                 }
                 <label htmlFor={this.props.label} className={"animaLabel " + unionClave}>{this.props.label}</label>
             </div>

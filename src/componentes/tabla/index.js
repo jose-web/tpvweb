@@ -51,7 +51,8 @@ export default class Tabla extends React.Component {
 
     onContextMenu(event) {
         event.preventDefault()
-        this.props.onContextMenu()
+        if (this.props.onContextMenu)
+            this.props.onContextMenu()
     }
 
     render() {

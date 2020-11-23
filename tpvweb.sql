@@ -228,13 +228,13 @@ end $$
 
 create procedure muestraProductosFacturaContraida(codigoUsuario int,codigoFactura int)
 begin
-	select linea_de_factura.codLinea, producto.nombre, linea_de_factura.precio, sum(linea_de_factura.cantidad) as cantidad, linea_de_factura.comentario
+	select linea_de_factura.fecha, linea_de_factura.codLinea, producto.nombre, linea_de_factura.precio, sum(linea_de_factura.cantidad) as cantidad, linea_de_factura.comentario
     from linea_de_factura join factura
 		on linea_de_factura.codFactura = factura.codFactura
 			join producto
 				on linea_de_factura.codProducto = producto.codProducto
 	where factura.codFactura = codigoFactura
-    group by producto.codProducto, comentario
+    group by linea_de_factura.precio, producto.codProducto, comentario
     order by max(linea_de_factura.fecha) desc;
 end $$
 

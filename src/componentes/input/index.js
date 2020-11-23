@@ -11,10 +11,12 @@ export default class Input extends React.Component {
     }
 
     cambia(event) {
-        this.props.cambia(this.props.file ? event.target.files[0] : event.target.value)
-        this.setState({
-            value: event.target.value
-        })
+        if (this.props.cambia) {
+            this.props.cambia(this.props.file ? event.target.files[0] : event.target.value)
+            this.setState({
+                value: event.target.value
+            })
+        }
     }
 
     componentDidUpdate() {

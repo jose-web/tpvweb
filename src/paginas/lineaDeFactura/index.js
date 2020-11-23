@@ -401,9 +401,9 @@ export default class LineaDeFactura extends React.Component {
         this.setState({
             popup: <form id="formularioCambiaNombre" onSubmit={(evento) => this.actualizaProducto(evento, $valor)}>
                 <strong>Actualizar producto: {nombre}</strong>
-                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} value={precio.substr(0, precio.length - 2)} />
-                <Input label="CANTIDAD" cambia={($valor) => this.cambiaEstado($valor, "cantidadProducto")} value={cantidad} />
-                <Input label="COMENTARIO" cambia={($valor) => this.cambiaEstado($valor, "comentarioProducto")} value={comentario === "" ? "" : comentario} required={false} />
+                <Input label="PRECIO" value={precio.substr(0, precio.length - 2)} />
+                <Input label="CANTIDAD" value={cantidad} />
+                <Input label="COMENTARIO" value={comentario} required={false} />
                 <Button submit value="ACTUALIZAR" />
                 {sessionStorage.getItem("encargado") > 0 ?
                     <button className="boton" onClick={() => this.borraProductoFactura($valor)}>BORRAR PRODUCTO</button>

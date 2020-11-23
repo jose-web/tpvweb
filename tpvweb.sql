@@ -239,21 +239,6 @@ begin
 end $$
 
 
-create procedure muestraLocalesEncargado(codigoUsuario int)
-begin
-	select local.codLocal as id, empresa.nombre as nombreEmpresa, local.nombre as nombreLocal, direccion, telefono 
-    from trabajador join trabajador_local
-		on trabajador.codTrabajador = trabajador_local.codTrabajador
-        join local
-			on local.codLocal = trabajador_local.codLocal
-            join empresa
-				on local.codEmpresa = empresa.codEmpresa
-	where trabajador.codUsuario = codigoUsuario
-    and estado = 1
-    and tipo = "encargado";
-end $$
-
-
 create procedure cambiaTipoEmpleado(codigoUsuario int, codLocal int, codUsuario int, tipo varchar(20))
 begin
 	select count(*) into @empresario

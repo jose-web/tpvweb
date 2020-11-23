@@ -426,7 +426,7 @@ export default class LineaDeFactura extends React.Component {
                 <Popup contenido={this.state.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu />
                 <section id="seccionLineaDeFactura">
-                    <h1><span id="nombreLocalImpresion">{sessionStorage.getItem("nombreLocal")} - </span>Línea de factura</h1>
+                    <h1><span id="nombreLocalImpresion">Bar Santos - </span>Línea de factura</h1>
                     <article id="contieneFactura" className={this.state.mostrarProductos ? "oculto" : ""}>
                         <div id="titulo"><p onClick={this.muestraPopUpCambiaNombre}>{sessionStorage.getItem("nombreFactura")}</p><p onClick={() => this.muestraPopUpPagar()} className="derecha">{this.state.cuentaTotal.toFixed(2) + " €"}</p><IconoPagar onClick={() => this.muestraPopUpPagar()} /></div>
                         <button className="boton" id="botonExtender" onClick={this.contraeExtiendeFactura}>{this.state.facturaContraida ? "EXTENDER" : "CONTRAER"}</button>

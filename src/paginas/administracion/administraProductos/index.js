@@ -280,7 +280,7 @@ export default class AdministracionLocal extends React.Component {
                 <Popup contenido={this.state.popup} estado={this.state.abierto} cambiaEstadoPopup={this.cambiaEstadoPopup} />
                 <Menu estoyEn="administracion" />
                 <section>
-                    <h1>{sessionStorage.getItem("nombreLocal")} - Administración de productos</h1>
+                    <h1>Administración de productos</h1>
                     <ScrollContainer className="contenedorMenuProductos">{this.state.arrayMenuProductos}</ScrollContainer>
                     <div className="contieneCajas">
                         {this.state.arrayProductos}

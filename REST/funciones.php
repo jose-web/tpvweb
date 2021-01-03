@@ -571,7 +571,7 @@ function addProductoFactura($email, $pass, $idFactura, $idProducto, $precio, $ca
   return array("addProductoFactura" => false);
 }
 
-function editaProducto($email, $pass, $idCategoria, $idProducto, $precio, $disponibilidad){
+function editaProducto($email, $pass, $idCategoria, $idProducto, $nombre, $precio, $disponibilidad){
   $sesion = compruebaSesion($email,$pass);
   if($sesion["respuesta"]){
     include "conexion.php";
@@ -585,10 +585,11 @@ function editaProducto($email, $pass, $idCategoria, $idProducto, $precio, $dispo
     $codUsuario = $sesion["id"];
     $idCategoria = mysqli_real_escape_string($con,$idCategoria);
     $idProducto = mysqli_real_escape_string($con,$idProducto);
+    $nombre = mysqli_real_escape_string($con,$nombre);
     $precio = mysqli_real_escape_string($con,$precio);
     $disponibilidad = mysqli_real_escape_string($con,$disponibilidad);
 
-    $consulta = "call editaProducto($idCategoria,$idProducto,$precio,$disponibilidad)";
+    $consulta = "call editaProducto($idCategoria,$idProducto,'$nombre',$precio,$disponibilidad)";
     $resultado = mysqli_query($con,$consulta);
     mysqli_close($con);
   

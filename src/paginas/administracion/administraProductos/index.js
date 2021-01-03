@@ -87,7 +87,7 @@ export default class AdministracionLocal extends React.Component {
                 <strong>Añadir un nuevo producto</strong>
                 <Input label="NOMBRE" cambia={($valor) => this.cambiaEstado($valor, "nombreProducto")} />
                 <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "precioProducto")} />
-                <Input label="DESCRIPCIÓN" cambia={($valor) => this.cambiaEstado($valor, "descripcionProducto")} />
+                <Input label="DESCRIPCIÓN" cambia={($valor) => this.cambiaEstado($valor, "descripcionProducto")} required={false} />
                 <input type="checkbox" id="disponibilidadNuevoProducto" onChange={() => this.cambiaEstado(this.state.disponibilidadProducto === false, "disponibilidadProducto")} />
                 <div><label htmlFor="disponibilidadNuevoProducto" className="labelSwitch" /></div>
                 <Button submit value="AÑADIR" />
@@ -97,20 +97,18 @@ export default class AdministracionLocal extends React.Component {
         this.cambiaEstadoPopup()
     }
 
-    popupEditaProducto($idProducto, $nombre, $precio, $disponibilidad) {
+    popupEditaProducto($idProducto, $nombre, $precio, $descripcion, $disponibilidad) {
         this.setState({
             popup: <form id="formularioCambiaNombre" onSubmit={this.editaProducto}>
                 <strong>Editar el producto "{$nombre}"</strong>
-                <Input label="PRECIO" cambia={($valor) => this.cambiaEstado($valor, "nuevoPrecio")} value={$precio} />
-                <input type="checkbox" id="disponibilidadNuevoProducto" defaultChecked={$disponibilidad === "1"} onChange={(evento) => {
-                    this.cambiaEstado($disponibilidad !== "1", "nuevaDisponibilidad")
-                    $disponibilidad = $disponibilidad !== "1" ? "1" : "0"
-                }} />
+                <Input label="NOMBRE" value={$nombre} />
+                <Input label="PRECIO" value={$precio} />
+                <Input label="DESCRIPCIÓN" value={$descripcion} required={false} />
+                <input type="checkbox" id="disponibilidadNuevoProducto" defaultChecked={$disponibilidad === "1"} />
                 <div><label htmlFor="disponibilidadNuevoProducto" className="labelSwitch" /></div>
                 <Button submit value="EDITAR" />
             </form>,
             idProducto: $idProducto,
-            nuevoPrecio: $precio,
             nuevaDisponibilidad: $disponibilidad === "1"
         })
         this.cambiaEstadoPopup()
@@ -148,7 +146,7 @@ export default class AdministracionLocal extends React.Component {
                 className={($array[o].disponibilidad === "0" ? "opacidadAdministraCategoriaProducto " : "") + "administraCategoriaProducto caja"}
                 key={identificador}
                 tabIndex="0"
-                onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.popupEditaProducto(identificador, $array[o].nombre, $array[o].precio, $array[o].disponibilidad)}
+                onClick={() => esCategoria ? this.muestraCategoria($array[o].codCategoria, $array[o].dentroCategoria) : this.popupEditaProducto(identificador, $array[o].nombre, $array[o].precio, $array[o].descripcion, $array[o].disponibilidad)}
             >
                 <div>
                     {$array[o].disponibilidad === "0" ? <del>{contenido}</del> : contenido}
@@ -178,11 +176,12 @@ export default class AdministracionLocal extends React.Component {
         let data = new FormData()
         data.append('email', usuario.email)
         data.append('pass', usuario.pass)
-        data.append('idLocal', sessionStorage.getItem("idLocal"))
         data.append('idCategoria', this.state.codCategoria)
         data.append('idProducto', this.state.idProducto)
-        data.append('precio', this.state.nuevoPrecio)
-        data.append('disponibilidad', this.state.nuevaDisponibilidad)
+        data.append('nombre', evento.target.NOMBRE.value)
+        data.append('precio', evento.target.PRECIO.value)
+        data.append('descripcion', evento.target.DESCRIPCIÓN.value)
+        data.append('disponibilidad', evento.target.disponibilidadNuevoProducto.checked)
 
         fetch(url, {
             method: 'POST',

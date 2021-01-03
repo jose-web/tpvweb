@@ -481,15 +481,22 @@ end $$
 create procedure editaProducto(
 	idCategoria int, 
     idProducto int,
+    nombre varchar(20),
     precioProducto double,
     disponibilidadProducto boolean
 )
 begin
-
+	start transaction;
+    
 	update categoria_producto 
 	set precio = precioProducto, disponibilidad = disponibilidadProducto
 	where codCategoria = idCategoria and codProducto = idProducto;
     
+    update producto
+    set nombre = nombre
+    where codProducto = idProducto;
+    
+    commit;
 end $$
 
 

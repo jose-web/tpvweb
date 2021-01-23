@@ -4,8 +4,8 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import './comunes/estilosComunes.scss'
 import './comunes/global.js'
 import Login from "./paginas/login"
-import Registro from "./paginas/registro"
-import CompruebaLogin from "./compruebaLogin"
+// import Registro from "./paginas/registro"
+// import CompruebaLogin from "./compruebaLogin"
 import * as serviceWorker from './serviceWorker';
 
 export default class Inicia extends React.Component {
@@ -13,17 +13,7 @@ export default class Inicia extends React.Component {
   render() {
     return <BrowserRouter>
       <Switch>
-        <Route exact path="/login" component={() => {
-          if (localStorage.getItem("usuario") !== null)
-            return <Redirect to="/locales" />
-          return <Login />
-        }} />
-        <Route exact path="/registro" component={() => {
-          if (localStorage.getItem("usuario") !== null)
-            return <Redirect to="/locales" />
-          return <Registro />
-        }} />
-        <Route path="/" component={CompruebaLogin} />
+        <Route exact path="/login" component={Login} />
       </Switch>
     </BrowserRouter>
   }

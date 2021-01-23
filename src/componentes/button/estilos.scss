@@ -1,0 +1,13 @@
+.botonFormulario {
+    width: 100%;
+    padding: 0.7em;
+    border: 0;
+    background-color: var(--color3);
+    color: var(--color4);
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.7;
+    }
+}

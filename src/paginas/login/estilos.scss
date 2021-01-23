@@ -1,0 +1,18 @@
+#login {
+    width: 100%;
+    max-width: 20em;
+    background-color: var(--color2);
+    margin: auto;
+    border-radius: 1em;
+    animation: entradaLogin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+@keyframes entradaLogin {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

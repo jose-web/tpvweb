@@ -1,0 +1,17 @@
+.input {
+    background-color: var(--color4);
+    margin-bottom: 0.5em;
+
+    > label {
+        width: 100%;
+        display: block;
+        font-size: 0.7em;
+        padding: 0.5em;
+    }
+    > input {
+        width: 100%;
+        background-color: transparent;
+        border: 0;
+        padding: 0.5em;
+    }
+}

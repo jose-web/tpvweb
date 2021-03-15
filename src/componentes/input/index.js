@@ -9,7 +9,7 @@ export default class Input extends React.Component {
         let pass = this.props.pass
         return (
             <div className="input">
-                <label for={inputID}>{nombre+":"}</label>
+                <label htmlFor={inputID}>{nombre+":"}</label>
                 <input type={pass?"password":"text"} id={inputID} name={inputID} />
             </div>
         )

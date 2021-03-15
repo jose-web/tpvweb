@@ -4,6 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import './comunes/estilosComunes.scss'
 import './comunes/global.js'
 import Login from "./paginas/login"
+import Facturas from "./paginas/facturas"
 // import Registro from "./paginas/registro"
 // import CompruebaLogin from "./compruebaLogin"
 import * as serviceWorker from './serviceWorker';
@@ -14,6 +15,7 @@ export default class Inicia extends React.Component {
     return <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/facturas" component={Facturas} />
       </Switch>
     </BrowserRouter>
   }

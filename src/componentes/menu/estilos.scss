@@ -1,0 +1,38 @@
+#menuPrincipal {
+    display: flex;
+    border-bottom: 0.1em solid var(--color4);
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    ul {
+        display: flex;
+        flex: 1;
+
+        li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            padding: 0.5em;
+            opacity: 0.5;
+            transition: 0.5s;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .selected {
+            background-color: var(--color4);
+            opacity: 1;
+        }
+
+        #cerrarSesion {
+            margin-left: auto;
+            background-color: var(--color5);
+            background-image: linear-gradient(90deg, var(--color1), var(--color5));
+            padding-left: 2em;
+        }
+    }
+}

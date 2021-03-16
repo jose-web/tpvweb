@@ -12,6 +12,32 @@ create table usuario (
     pass varchar(32) not null
 );
 
+create table factura (
+    codFactura int primary key auto_increment,
+    nombreFactura varchar(20) default "Factura sin nombre"
+);
+
+create table lineaDeFactura (
+    codLineaDeFactura int primary key auto_increment,
+    codFactura int,
+	nombreProducto varchar(20) not null,
+    precio double(6,2) not null,
+    cantidad int not null,
+    fecha datetime default now(),
+    
+	foreign key lineaDeFactura_factura(codFactura) 
+		references factura(codFactura)
+		on delete no action 
+		on update cascade
+);
+
+create table producto (
+    codProducto int primary key auto_increment,
+	nombre varchar(20) not null,
+    precio double(6,2) not null,
+    grupo varchar(20) not null
+);
+
 delimiter $$
 
 create procedure login(nombre varchar(20), pass varchar(32))
@@ -20,4 +46,13 @@ begin
     from usuario 
     where usuario.nombre = nombre
 		and usuario.pass = pass;
+end $$
+
+create procedure mostrarFactura(codFacturaMostrar int)
+begin
+	select nombreProducto, precio, cantidad, fecha
+    from factura join lineaDeFactura
+		on factura.codFactura = lineaDeFactura.codFactura
+	where factura.codFactura = codFacturaMostrar
+	;
 end $$

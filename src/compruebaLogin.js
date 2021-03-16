@@ -4,12 +4,27 @@ import Facturas from "./paginas/facturas"
 
 export default class CompruebaLogin extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
     render() {
         if (localStorage.getItem("usuario") === null) {
             return <Redirect to="/login" />
         } else {
-            let usuario = JSON.parse(localStorage.getItem("usuario"))
-            let url = global.url + 'ObtenerDatosUsuario'
+            let usuario
+
+            try {
+                usuario = JSON.parse(localStorage.getItem("usuario"))
+            } catch (e) {
+                localStorage.removeItem("usuario")
+                this.setState({ redireccionar: true })
+                return 0;
+            }
+
+            let url = global.url + 'compruebaSesion'
 
             let data = new FormData();
             data.append('email', usuario.email);
@@ -22,17 +37,24 @@ export default class CompruebaLogin extends React.Component {
             }).then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then(res => {
-                    if (res.datos) {
-                        sessionStorage.setItem("img", global.url + "img/usuarios/" + res.datos.img)
-                        sessionStorage.setItem("camarero", res.datos.camarero)
-                        sessionStorage.setItem("encargado", res.datos.encargado)
-                        sessionStorage.setItem("cocinero", res.datos.cocinero)
-                        document.body.style = res.datos.tema
+                    if (!res.respuesta) {
+                        this.setState({ redireccionar: true })
                     }
                 });
         }
+
+        if (this.state.redireccionar) {
+            localStorage.removeItem("usuario")
+            return <Redirect to="/login" />
+        }
+
+
         return <BrowserRouter>
             <Switch>
+                <Route exact path="/cerrarSesion" component={() => {
+                    this.setState({ redireccionar: true })
+                    return <Redirect to="/login" />
+                }} />
                 <Route exact path="/facturas" component={Facturas} />
 
                 <Redirect from="*" to="/facturas" />

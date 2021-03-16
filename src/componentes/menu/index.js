@@ -16,11 +16,10 @@ export default class Login extends React.Component {
                 <h1>TPVWEB</h1>
                 <ul>
                     <li className="selected">Principal</li>
-                    <li>Estadísticas</li>
-                    <li id="cerrarSesion">Cerrar sesión</li>
+                    <li><Link to="/estadisticas" >Estadísticas</Link></li>
+                    <li id="cerrarSesion"><Link to="/cerrarSesion" >Cerrar sesión</Link></li>
                 </ul>
             </div>
         )
     }
-
 }

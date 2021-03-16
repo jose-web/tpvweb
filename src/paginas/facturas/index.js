@@ -14,9 +14,7 @@ export default class Facturas extends React.Component {
         return (
             <div id="facturas" >
                 <Menu/>
-                <from>
-
-                </from>
+                
             </div>
         )
     }

@@ -43,4 +43,25 @@ function compruebaSesion($email,$pass){
     return array("respuesta" => $login["login"]);
 }
 
+function mostrarFactura($email,$pass,$codFactura){
+  $login = login($email,$pass);
+  if($login["login"]){
+    $codFacturaCodificar = codificar($codFactura);
+
+    $consulta = "call mostrarFactura($codFacturaCodificar)";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[] = $fila;
+    }
+    return array("factura" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 ?>

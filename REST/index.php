@@ -19,6 +19,10 @@ $app->post("/compruebaSesion", function(){
   echo json_encode(compruebaSesion($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/mostrarFactura", function(){
+  echo json_encode(mostrarFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
+});
+
 $app->notFound(function (){
   echo json_encode(array("error"=>"No deberías estar aquí"),JSON_FORCE_OBJECT);
 });

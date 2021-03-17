@@ -48,11 +48,22 @@ begin
 		and usuario.pass = pass;
 end $$
 
+create procedure mostrarFacturas()
+begin
+	select 
+		factura.codFactura as codFactura, 
+		nombreFactura as nombre, 
+        sum(precio * cantidad) as factura, 
+        min(fecha) as fecha
+    from factura join lineaDeFactura
+		on factura.codFactura = lineaDeFactura.codFactura
+	group by factura.codFactura;
+end $$
+
 create procedure mostrarFactura(codFacturaMostrar int)
 begin
 	select nombreProducto, precio, cantidad, fecha
     from factura join lineaDeFactura
 		on factura.codFactura = lineaDeFactura.codFactura
-	where factura.codFactura = codFacturaMostrar
-	;
+	where factura.codFactura = codFacturaMostrar;
 end $$

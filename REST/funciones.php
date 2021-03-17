@@ -43,6 +43,26 @@ function compruebaSesion($email,$pass){
     return array("respuesta" => $login["login"]);
 }
 
+function mostrarFacturas($email,$pass){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $consulta = "call mostrarFacturas()";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[] = $fila;
+    }
+    return array("facturas" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 function mostrarFactura($email,$pass,$codFactura){
   $login = login($email,$pass);
   if($login["login"]){

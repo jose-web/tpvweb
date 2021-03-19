@@ -1,0 +1,18 @@
+#facturas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .factura {
+        background-color: var(--color2);
+        padding: 1em;
+        text-align: center;
+        margin: 1em;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            box-shadow: 0 0 0.5em var(--color3);
+        }
+    }
+}

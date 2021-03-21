@@ -1,5 +1,6 @@
 import React from 'react'
 import './estilos.scss'
+import { Link } from "react-router-dom"
 import Menu from '../../componentes/menu'
 
 export default class Facturas extends React.Component {
@@ -40,15 +41,15 @@ export default class Facturas extends React.Component {
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.facturas).length; i++) {
 
-                        let id = res.facturas[i].codFctura
+                        let id = res.facturas[i].codFactura
                         let fecha = new Date(res.facturas[i].fecha)
                         let nombre = res.facturas[i].nombre
                         let cuentaTotal = res.facturas[i].factura
 
-                        arrayFacturas.push(<div className="factura" title={fecha.toLocaleString()}>
+                        arrayFacturas.push(<Link to={"/factura/" + id} className="factura" title={fecha.toLocaleString()}>
                             <p>{nombre}</p>
                             <p>{cuentaTotal + " €"}</p>
-                        </div>)
+                        </Link>)
                     }
                 this.setState({
                     arrayFacturas: arrayFacturas.slice()
@@ -59,7 +60,7 @@ export default class Facturas extends React.Component {
     render() {
         return (
             <div id="facturas" >
-                <Menu />
+                <Menu pagina="facturas" />
                 {this.state.arrayFacturas}
             </div>
         )

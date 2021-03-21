@@ -7,6 +7,7 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            select: (pagina) => props.pagina === pagina ? "selected" : ""
         };
     }
 
@@ -15,8 +16,8 @@ export default class Login extends React.Component {
             <div id="menuPrincipal" >
                 <h1>TPVWEB</h1>
                 <ul>
-                    <li className="selected">Principal</li>
-                    <li><Link to="/estadisticas" >Estadísticas</Link></li>
+                    <li className={this.state.select("facturas")}><Link to="/facturas" >Facturas</Link></li>
+                    <li className={this.state.select("estadisticas")} ><Link to="/estadisticas" >Estadísticas</Link></li>
                     <li id="cerrarSesion"><Link to="/cerrarSesion" >Cerrar sesión</Link></li>
                 </ul>
             </div>

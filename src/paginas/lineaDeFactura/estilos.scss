@@ -1,0 +1,31 @@
+#lineaDeFactura {
+    #factura {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .producto {
+            display: flex;
+            text-decoration: none;
+
+            &:nth-child(2n) {
+                background-color: var(--color2);
+            }
+
+            &:hover {
+                background-color: var(--color3);
+                p {
+                    color: var(--color1);
+                }
+            }
+
+            p {
+                flex: 0 25%;
+            }
+        }
+        .titulo {
+            font-weight: bold;
+            padding: 0.5em 0;
+        }
+    }
+}

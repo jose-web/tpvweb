@@ -35,7 +35,6 @@ export default class Facturas extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                console.log(res.facturas)
                 let arrayFacturas = []
 
                 if (typeof res !== "undefined")
@@ -46,7 +45,7 @@ export default class Facturas extends React.Component {
                         let nombre = res.facturas[i].nombre
                         let cuentaTotal = res.facturas[i].factura
 
-                        arrayFacturas.push(<Link to={"/factura/" + id} className="factura" title={fecha.toLocaleString()}>
+                        arrayFacturas.push(<Link to={"/factura/" + id} key={id} className="factura" title={fecha.toLocaleString()}>
                             <p>{nombre}</p>
                             <p>{cuentaTotal + " €"}</p>
                         </Link>)

@@ -67,3 +67,9 @@ begin
 		on factura.codFactura = lineaDeFactura.codFactura
 	where factura.codFactura = codFacturaMostrar;
 end $$
+
+create procedure mostrarProductos()
+begin
+	select *
+    from producto;
+end $$

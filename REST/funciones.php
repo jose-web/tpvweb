@@ -84,4 +84,24 @@ function mostrarFactura($email,$pass,$codFactura){
   }
 }
 
+function mostrarProductos($email,$pass){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $consulta = "call mostrarProductos()";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[$fila["grupo"]][] = $fila;
+    }
+    return array("productos" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 ?>

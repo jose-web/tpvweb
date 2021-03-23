@@ -34,7 +34,7 @@ export default class LineaDeFactura extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                let arrayLineaDeFactura = [<div className="producto titulo"><p>NOMBRE</p><p title="PRECIO UNITARIO">PRECIO UNITARIO</p><p>CANTIDAD</p><p>PRECIO</p></div>]
+                let arrayLineaDeFactura = [<div className="producto titulo" key="-1"><p>NOMBRE</p><p title="PRECIO UNITARIO">PRECIO UNITARIO</p><p>CANTIDAD</p><p>PRECIO</p></div>]
 
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.factura).length; i++) {
@@ -55,6 +55,41 @@ export default class LineaDeFactura extends React.Component {
                     arrayLineaDeFactura: arrayLineaDeFactura.slice()
                 })
             });
+        // **********************************************
+
+        url = global.url + 'mostrarProductos';
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                let arrayProductos = []
+                if (typeof res !== "undefined")
+                    for (const grupo in res.productos) {
+                        arrayProductos.push(<><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label for={"opcion" + grupo}>{grupo}</label></>)
+                        let opcionesproductos = []
+                        for (const producto in res.productos[grupo]) {
+                            let nombre = res.productos[grupo][producto].nombre
+                            let precio = res.productos[grupo][producto].precio
+
+                            opcionesproductos.push(<div className="producto">
+                                <p>{nombre}</p>
+                                <p>{precio + " €"}</p>
+                            </div>)
+                        }
+                        arrayProductos.push(<div className="contenedorProductos">
+                            {opcionesproductos}
+                        </div>)
+
+                    }
+
+                this.setState({
+                    productos: arrayProductos.slice()
+                })
+            });
     }
 
     render() {
@@ -63,8 +98,8 @@ export default class LineaDeFactura extends React.Component {
         return (
             <div id="lineaDeFactura" >
                 <Menu />
-                <div id="factura"> {this.state.arrayLineaDeFactura}</div>
-
+                <div id="factura">{this.state.arrayLineaDeFactura}</div>
+                <div id="productos">{this.state.productos}</div>
             </div>
         )
     }

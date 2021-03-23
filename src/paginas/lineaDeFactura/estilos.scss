@@ -1,8 +1,12 @@
 #lineaDeFactura {
+    display: flex;
+    flex-wrap: wrap;
+
     #factura {
         display: flex;
         flex-direction: column;
         text-align: center;
+        flex: 1;
 
         .producto {
             display: flex;
@@ -26,6 +30,55 @@
         .titulo {
             font-weight: bold;
             padding: 0.5em 0;
+        }
+    }
+
+    #productos {
+        flex: 1;
+        background-color: var(--color2);
+        display: flex;
+        flex-wrap: wrap;
+
+        input {
+            display: none;
+
+            & + label + .contenedorProductos {
+                display: none;
+            }
+
+            &:checked + label {
+                background-color: var(--color4);
+                & + .contenedorProductos {
+                    display: flex;
+                    order: 1;
+                }
+            }
+        }
+        label {
+            padding: 1em;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .contenedorProductos {
+            flex: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+            .producto {
+                padding: 1em;
+                margin: 1em;
+                flex: 0 calc(100% / 3 - 2em);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                box-shadow: 0 0 0.5em var(--color1) inset;
+
+                &:hover {
+                    background-color: var(--color4);
+                }
+            }
         }
     }
 }

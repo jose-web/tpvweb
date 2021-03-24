@@ -30,6 +30,9 @@
         .titulo {
             font-weight: bold;
             padding: 0.5em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -48,16 +51,22 @@
 
             &:checked + label {
                 background-color: var(--color4);
+
                 & + .contenedorProductos {
                     display: flex;
                     order: 1;
+                    background-color: var(--color4);
                 }
             }
         }
         label {
             padding: 1em;
             cursor: pointer;
-            transition: 0.5s;
+            transition: 0.3s;
+
+            &:hover {
+                background-color: var(--color1);
+            }
         }
 
         .contenedorProductos {
@@ -74,9 +83,11 @@
                 flex-direction: column;
                 justify-content: center;
                 box-shadow: 0 0 0.5em var(--color1) inset;
+                cursor: pointer;
+                transition: 0.5s;
 
                 &:hover {
-                    background-color: var(--color4);
+                    background-color: var(--color2);
                 }
             }
         }

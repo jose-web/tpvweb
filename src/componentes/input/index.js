@@ -6,12 +6,13 @@ export default class Input extends React.Component {
         let nombre = this.props.nombre
         let inputID = "input" + nombre
         let value = this.props.value
+        let focus = this.props.focus
 
         let pass = this.props.pass
         return (
             <div className="input">
                 <label htmlFor={inputID}>{nombre+":"}</label>
-                <input type={pass?"password":"text"} id={inputID} name={inputID} defaultValue={value} />
+                <input type={pass?"password":"text"} id={inputID} name={inputID} defaultValue={value} autoFocus={focus} />
             </div>
         )
     }

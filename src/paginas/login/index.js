@@ -66,7 +66,7 @@ export default class Login extends React.Component {
             <div id="login" >
                 <h1>TPVWEB</h1>
                 <form onSubmit={this.compruebaLogin}>
-                    <Input nombre="NOMBRE" />
+                    <Input nombre="NOMBRE" focus={true}/>
                     <Input nombre="CONTRASEÑA" pass />
                     <Button nombre="ENTRAR" />
                 </form>

@@ -53,7 +53,13 @@ export default class LineaDeFactura extends React.Component {
                             let nombre = res.productos[grupo][producto].nombre
                             let precio = res.productos[grupo][producto].precio
 
-                            opcionesproductos.push(<div className="producto" onClick={() => this.mostrarPopup(nombre, precio, 1)}>
+                            opcionesproductos.push(<div
+                                className="producto" onClick={() => this.mostrarPopup(nombre, precio, 1)}
+                                onContextMenu={(event) => {
+                                    event.preventDefault();
+                                    this.insertarProductoEnFactura(this.state.codFactura, nombre, precio, 1)
+                                }}
+                            >
                                 <p>{nombre}</p>
                                 <p>{precio + " €"}</p>
                             </div>)
@@ -88,7 +94,7 @@ export default class LineaDeFactura extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
                 let arrayLineaDeFactura = [<div className="producto titulo" key="-1"><p>NOMBRE</p><p title="PRECIO UNITARIO">PRECIO UNITARIO</p><p>CANTIDAD</p><p>PRECIO</p></div>]
-
+                let total = 0
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.factura).length; i++) {
 
@@ -96,14 +102,30 @@ export default class LineaDeFactura extends React.Component {
                         let fecha = new Date(res.factura[i].fecha)
                         let precio = res.factura[i].precio
                         let cantidad = res.factura[i].cantidad
+                        let pxc = Number(precio * cantidad).toFixed(2)
 
-                        arrayLineaDeFactura.push(<div key={i} className="producto" title={fecha.toLocaleString()} onClick={() => this.mostrarPopup(nombreProducto,precio,cantidad)}>
+                        total += Number(precio * cantidad)
+
+                        arrayLineaDeFactura.push(<div
+                            key={i}
+                            className="producto"
+                            title={fecha.toLocaleString()}
+                            onClick={() => this.mostrarPopup(nombreProducto, precio, cantidad)}
+                            onContextMenu={(event) => {
+                                event.preventDefault();
+                                this.insertarProductoEnFactura(this.state.codFactura, nombreProducto, precio, 1)
+                            }}
+                        >
                             <p>{nombreProducto}</p>
                             <p>{precio + " €"}</p>
                             <p>{cantidad}</p>
-                            <p>{precio * cantidad + " €"}</p>
+                            <p>{pxc + " €"}</p>
                         </div>)
                     }
+                arrayLineaDeFactura.push(<div key={-2} className="producto pie">
+                    <p>TOTAL</p>
+                    <p>{total.toFixed(2) + " €"}</p>
+                </div>)
                 this.setState({
                     arrayLineaDeFactura: arrayLineaDeFactura.slice()
                 })
@@ -136,12 +158,12 @@ export default class LineaDeFactura extends React.Component {
             });
     }
 
-    mostrarPopup(nombre,precio,cantidad) {
+    mostrarPopup(nombre, precio, cantidad) {
         let contenido = <form onSubmit={this.formulario}>
             <h2>AÑADIR PRODUCTO</h2>
-            <Input nombre="NOMBRE" value={nombre}/>
-            <Input nombre="PRECIO" value={precio}/>
-            <Input nombre="CANTIDAD" value={cantidad}/>
+            <Input nombre="NOMBRE" value={nombre} />
+            <Input nombre="PRECIO" value={precio} />
+            <Input nombre="CANTIDAD" value={cantidad} focus={true} />
             <Button nombre="AÑADIR" />
         </form>
         this.setState({

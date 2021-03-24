@@ -1,5 +1,7 @@
 <?php
 
+//////////////////////////// OTROS ////////////////////////////
+
 function consulta($consulta){
   include "conexion.php";
   if(!$con){
@@ -22,6 +24,8 @@ function codificar($valor){
   return mysqli_real_escape_string($con,$valor);
 }
 
+//////////////////////////// LOGIN ////////////////////////////
+
 function login($email,$pass){
 
   $emailCodificado = codificar($email);
@@ -42,6 +46,8 @@ function compruebaSesion($email,$pass){
 
     return array("respuesta" => $login["login"]);
 }
+
+//////////////////////////// FACTURAS ////////////////////////////
 
 function mostrarFacturas($email,$pass){
   $login = login($email,$pass);
@@ -84,6 +90,8 @@ function mostrarFactura($email,$pass,$codFactura){
   }
 }
 
+//////////////////////////// PRODUCTOS ////////////////////////////
+
 function mostrarProductos($email,$pass){
   $login = login($email,$pass);
   if($login["login"]){
@@ -98,6 +106,25 @@ function mostrarProductos($email,$pass){
       $array[$fila["grupo"]][] = $fila;
     }
     return array("productos" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
+function nuevoProducto($email,$pass,$nombre,$precio,$grupo){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $nombreCodificar = codificar($nombre);
+    $precioCodificar = codificar($precio);
+    $grupoCodificar = codificar($grupo);
+
+    $consulta = "call nuevoProducto('$nombreCodificar',$precioCodificar,'$grupoCodificar')";
+
+    $resultado = consulta($consulta);
+
+    return array("respuesta" => true);
 
   }else{
     return $login;

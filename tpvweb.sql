@@ -73,3 +73,9 @@ begin
 	select *
     from producto;
 end $$
+
+create procedure nuevoProducto(nombre varchar(20), precio double(6,2), grupo varchar(20))
+begin
+	insert into producto(nombre, precio, grupo) 
+    values(nombre,precio,grupo);
+end $$

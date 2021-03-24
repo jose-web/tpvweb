@@ -41,6 +41,7 @@
         background-color: var(--color2);
         display: flex;
         flex-wrap: wrap;
+        height: min-content;
 
         input {
             display: none;

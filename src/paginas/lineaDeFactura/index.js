@@ -1,6 +1,6 @@
 import React from 'react'
 import './estilos.scss'
-import { Link, Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import Menu from '../../componentes/menu'
 
 export default class LineaDeFactura extends React.Component {
@@ -10,15 +10,62 @@ export default class LineaDeFactura extends React.Component {
         this.state = {
             codFactura: props.match.params.codFactura
         };
+        this.mostrarFactura = this.mostrarFactura.bind(this)
+        this.insertarProductoEnFactura = this.insertarProductoEnFactura.bind(this)
     }
 
     componentDidMount() {
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
-
         if (!Number(this.state.codFactura)) {
             this.setState({ redireccionar: true })
             return 0;
         }
+
+        this.mostrarFactura()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'mostrarProductos';
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('codFactura', this.state.codFactura);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                let arrayProductos = []
+                if (typeof res !== "undefined")
+                    for (const grupo in res.productos) {
+                        arrayProductos.push(<><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label for={"opcion" + grupo}>{grupo}</label></>)
+                        let opcionesproductos = []
+                        for (const producto in res.productos[grupo]) {
+                            let nombre = res.productos[grupo][producto].nombre
+                            let precio = res.productos[grupo][producto].precio
+
+                            opcionesproductos.push(<div className="producto" onClick={() => this.insertarProductoEnFactura(this.state.codFactura, nombre, precio, 1)}>
+                                <p>{nombre}</p>
+                                <p>{precio + " €"}</p>
+                            </div>)
+                        }
+                        arrayProductos.push(<div className="contenedorProductos">
+                            {opcionesproductos}
+                        </div>)
+
+                    }
+
+                this.setState({
+                    productos: arrayProductos.slice()
+                })
+            });
+    }
+
+    mostrarFactura() {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let url = global.url + 'mostrarFactura';
 
@@ -44,20 +91,31 @@ export default class LineaDeFactura extends React.Component {
                         let precio = res.factura[i].precio
                         let cantidad = res.factura[i].cantidad
 
-                        arrayLineaDeFactura.push(<Link to={"/"} key={i} className="producto" title={fecha.toLocaleString()}>
+                        arrayLineaDeFactura.push(<div key={i} className="producto" title={fecha.toLocaleString()} onClick={() => this.insertarProductoEnFactura(this.state.codFactura, nombreProducto, precio, 1)}>
                             <p>{nombreProducto}</p>
                             <p>{precio + " €"}</p>
                             <p>{cantidad}</p>
                             <p>{precio * cantidad + " €"}</p>
-                        </Link>)
+                        </div>)
                     }
                 this.setState({
                     arrayLineaDeFactura: arrayLineaDeFactura.slice()
                 })
             });
-        // **********************************************
+    }
 
-        url = global.url + 'mostrarProductos';
+    insertarProductoEnFactura(codFactura, nombre, precio, cantidad) {
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'insertarProductoEnFactura';
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('codFactura', codFactura);
+        data.append('nombre', nombre);
+        data.append('precio', precio);
+        data.append('cantidad', cantidad);
 
         fetch(url, {
             method: 'POST',
@@ -66,29 +124,9 @@ export default class LineaDeFactura extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                let arrayProductos = []
-                if (typeof res !== "undefined")
-                    for (const grupo in res.productos) {
-                        arrayProductos.push(<><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label for={"opcion" + grupo}>{grupo}</label></>)
-                        let opcionesproductos = []
-                        for (const producto in res.productos[grupo]) {
-                            let nombre = res.productos[grupo][producto].nombre
-                            let precio = res.productos[grupo][producto].precio
-
-                            opcionesproductos.push(<div className="producto">
-                                <p>{nombre}</p>
-                                <p>{precio + " €"}</p>
-                            </div>)
-                        }
-                        arrayProductos.push(<div className="contenedorProductos">
-                            {opcionesproductos}
-                        </div>)
-
-                    }
-
-                this.setState({
-                    productos: arrayProductos.slice()
-                })
+                if (typeof res !== "undefined") {
+                    this.mostrarFactura()
+                }
             });
     }
 

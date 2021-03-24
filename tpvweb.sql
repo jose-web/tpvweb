@@ -79,3 +79,9 @@ begin
 	insert into producto(nombre, precio, grupo) 
     values(nombre,precio,grupo);
 end $$
+
+create procedure insertarProductoEnFactura(codFactura int, nombre varchar(20), precio double(6,2), cantidad int)
+begin
+	insert into lineaDeFactura(codFactura,nombreProducto,precio,cantidad) 
+    values(codFactura,nombre,precio,cantidad);
+end $$

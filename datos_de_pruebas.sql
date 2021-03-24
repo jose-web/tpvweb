@@ -9,7 +9,8 @@ call nuevoProducto('cocacola light',1.10,'bebidas');
 call nuevoProducto('fanta de naranja',1.10,'bebidas');
 call nuevoProducto('huevos rellenos',1.10,'tapas');
 
-insert into lineaDeFactura(codFactura,nombreProducto,precio,cantidad) values(1,"cocacola",1.10,2),(1,"fanta",1.20,1);
+call insertarProductoEnFactura(1,"cocacola",1.10,2);
+call insertarProductoEnFactura(1,"fanta",1.20,1);
 
 call mostrarFacturas();
 

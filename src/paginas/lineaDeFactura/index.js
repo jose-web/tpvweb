@@ -2,6 +2,9 @@ import React from 'react'
 import './estilos.scss'
 import { Redirect } from "react-router-dom"
 import Menu from '../../componentes/menu'
+import Popup from '../../componentes/popup'
+import Input from '../../componentes/input'
+import Button from '../../componentes/button'
 
 export default class LineaDeFactura extends React.Component {
 
@@ -12,6 +15,9 @@ export default class LineaDeFactura extends React.Component {
         };
         this.mostrarFactura = this.mostrarFactura.bind(this)
         this.insertarProductoEnFactura = this.insertarProductoEnFactura.bind(this)
+        this.mostrarPopup = this.mostrarPopup.bind(this)
+        this.cerrarPopup = this.cerrarPopup.bind(this)
+        this.formulario = this.formulario.bind(this)
     }
 
     componentDidMount() {
@@ -47,7 +53,7 @@ export default class LineaDeFactura extends React.Component {
                             let nombre = res.productos[grupo][producto].nombre
                             let precio = res.productos[grupo][producto].precio
 
-                            opcionesproductos.push(<div className="producto" onClick={() => this.insertarProductoEnFactura(this.state.codFactura, nombre, precio, 1)}>
+                            opcionesproductos.push(<div className="producto" onClick={() => this.mostrarPopup(nombre, precio, 1)}>
                                 <p>{nombre}</p>
                                 <p>{precio + " €"}</p>
                             </div>)
@@ -91,7 +97,7 @@ export default class LineaDeFactura extends React.Component {
                         let precio = res.factura[i].precio
                         let cantidad = res.factura[i].cantidad
 
-                        arrayLineaDeFactura.push(<div key={i} className="producto" title={fecha.toLocaleString()} onClick={() => this.insertarProductoEnFactura(this.state.codFactura, nombreProducto, precio, 1)}>
+                        arrayLineaDeFactura.push(<div key={i} className="producto" title={fecha.toLocaleString()} onClick={() => this.mostrarPopup(nombreProducto,precio,cantidad)}>
                             <p>{nombreProducto}</p>
                             <p>{precio + " €"}</p>
                             <p>{cantidad}</p>
@@ -130,6 +136,36 @@ export default class LineaDeFactura extends React.Component {
             });
     }
 
+    mostrarPopup(nombre,precio,cantidad) {
+        let contenido = <form onSubmit={this.formulario}>
+            <h2>AÑADIR PRODUCTO</h2>
+            <Input nombre="NOMBRE" value={nombre}/>
+            <Input nombre="PRECIO" value={precio}/>
+            <Input nombre="CANTIDAD" value={cantidad}/>
+            <Button nombre="AÑADIR" />
+        </form>
+        this.setState({
+            popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
+        })
+    }
+
+    cerrarPopup() {
+        this.setState({
+            popup: ""
+        })
+    }
+
+    formulario(event) {
+        event.preventDefault()
+
+        let nombre = event.target.inputNOMBRE.value
+        let precio = event.target.inputPRECIO.value
+        let cantidad = event.target.inputCANTIDAD.value
+
+        this.insertarProductoEnFactura(this.state.codFactura, nombre, precio, cantidad)
+        this.cerrarPopup()
+    }
+
     render() {
         if (this.state.redireccionar)
             return <Redirect to="/facturas" />
@@ -138,6 +174,7 @@ export default class LineaDeFactura extends React.Component {
                 <Menu />
                 <div id="factura">{this.state.arrayLineaDeFactura}</div>
                 <div id="productos">{this.state.productos}</div>
+                {this.state.popup}
             </div>
         )
     }

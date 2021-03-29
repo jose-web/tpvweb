@@ -53,11 +53,12 @@ begin
 	select 
 		factura.codFactura as codFactura, 
 		nombreFactura as nombre, 
-        sum(precio * cantidad) as factura, 
-        min(fecha) as fecha
-    from factura join lineaDeFactura
+        IFNULL(sum(precio * cantidad),0.00) as factura, 
+        IFNULL(min(fecha),now()) as fecha
+    from factura left join lineaDeFactura
 		on factura.codFactura = lineaDeFactura.codFactura
-	group by factura.codFactura;
+	group by factura.codFactura
+    order by min(fecha) asc;
 end $$
 
 create procedure mostrarFactura(codFacturaMostrar int)
@@ -65,7 +66,8 @@ begin
 	select nombreProducto, precio, cantidad, fecha
     from factura join lineaDeFactura
 		on factura.codFactura = lineaDeFactura.codFactura
-	where factura.codFactura = codFacturaMostrar;
+	where factura.codFactura = codFacturaMostrar
+    order by fecha desc;
 end $$
 
 create procedure mostrarProductos()

@@ -14,7 +14,6 @@
             display: flex;
             text-decoration: none;
             cursor: pointer;
-            padding: 0.2em 0;
 
             &:nth-child(2n) {
                 background-color: var(--color2);
@@ -29,11 +28,14 @@
 
             p {
                 flex: 0 25%;
+                padding: 0.2em 0.5em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
         .titulo {
             font-weight: bold;
-            padding: 0.5em 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -42,7 +44,7 @@
             background-color: var(--color1);
             box-shadow: 0 0 0.5em var(--color3);
         }
-        .pie{
+        .pie {
             position: sticky;
             bottom: 0;
             padding: 0.5em 0;

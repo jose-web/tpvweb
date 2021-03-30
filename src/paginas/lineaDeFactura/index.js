@@ -47,13 +47,14 @@ export default class LineaDeFactura extends React.Component {
                 let arrayProductos = []
                 if (typeof res !== "undefined")
                     for (const grupo in res.productos) {
-                        arrayProductos.push(<><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label for={"opcion" + grupo}>{grupo}</label></>)
+                        arrayProductos.push(<React.Fragment key={"opcion" + grupo}><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label htmlFor={"opcion" + grupo}>{grupo}</label></React.Fragment>)
                         let opcionesproductos = []
                         for (const producto in res.productos[grupo]) {
                             let nombre = res.productos[grupo][producto].nombre
                             let precio = res.productos[grupo][producto].precio
 
                             opcionesproductos.push(<div
+                                key={producto}
                                 className="producto" onClick={() => this.mostrarPopup(nombre, precio, 1)}
                                 onContextMenu={(event) => {
                                     event.preventDefault();
@@ -64,7 +65,7 @@ export default class LineaDeFactura extends React.Component {
                                 <p>{precio + " €"}</p>
                             </div>)
                         }
-                        arrayProductos.push(<div className="contenedorProductos">
+                        arrayProductos.push(<div key={grupo + "pie"} className="contenedorProductos">
                             {opcionesproductos}
                         </div>)
 
@@ -122,7 +123,7 @@ export default class LineaDeFactura extends React.Component {
                             <p>{pxc + " €"}</p>
                         </div>)
                     }
-                arrayLineaDeFactura.push(<div key={-2} className="producto pie">
+                arrayLineaDeFactura.push(<div key="-2" className="producto pie">
                     <p>TOTAL</p>
                     <p>{total.toFixed(2) + " €"}</p>
                 </div>)
@@ -152,7 +153,9 @@ export default class LineaDeFactura extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                if (typeof res !== "undefined") {
+                if (Number(codFactura) < 0) {
+                    this.setState({ codFactura })
+                } else if (typeof res !== "undefined") {
                     this.mostrarFactura()
                 }
             });

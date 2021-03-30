@@ -144,7 +144,13 @@ function insertarProductoEnFactura($email,$pass,$codFactura,$nombre,$precio,$can
 
     $resultado = consulta($consulta);
 
-    return array("respuesta" => true);
+    $respuesta = true;
+    
+    if($fila = mysqli_fetch_assoc($resultado)){
+      $respuesta = $fila["codFactura"];
+    }
+    
+    return array("respuesta" => $respuesta);
 
   }else{
     return $login;

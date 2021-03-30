@@ -58,7 +58,7 @@ begin
     from factura left join lineaDeFactura
 		on factura.codFactura = lineaDeFactura.codFactura
 	group by factura.codFactura
-    order by min(fecha) asc;
+    order by min(fecha) desc;
 end $$
 
 create procedure mostrarFactura(codFacturaMostrar int)
@@ -82,8 +82,25 @@ begin
     values(nombre,precio,grupo);
 end $$
 
-create procedure insertarProductoEnFactura(codFactura int, nombre varchar(20), precio double(6,2), cantidad int)
+create procedure insertarProductoEnFactura(buscaCodFactura int, nombre varchar(20), precio double(6,2), cantidad int)
 begin
-	insert into lineaDeFactura(codFactura,nombreProducto,precio,cantidad) 
-    values(codFactura,nombre,precio,cantidad);
+	start transaction;
+
+	select ISNULL(codFactura), codFactura into @existe, @codigoFactura
+    from factura 
+    where codFactura = buscaCodFactura;
+    
+    if @existe is null then
+		insert into factura(nombreFactura) values('Factura sin nombre');
+
+        select max(codFactura) into @codigoFactura 
+		from factura;
+	end if;
+
+    insert into lineaDeFactura(codFactura,nombreProducto,precio,cantidad) 
+    values(@codigoFactura,nombre,precio,cantidad);
+
+	select @codigoFactura as codFactura;
+
+    commit;
 end $$

@@ -1,7 +1,10 @@
 #menuPrincipal {
     display: flex;
     border-bottom: 0.1em solid var(--color4);
-    width:100%;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: var(--color1);
 
     h1 {
         font-size: 1.5em;

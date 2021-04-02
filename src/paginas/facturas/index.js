@@ -60,8 +60,8 @@ export default class Facturas extends React.Component {
         return (
             <div id="facturas" >
                 <Menu pagina="facturas" />
-                {this.state.arrayFacturas}
-                <Link to={"/factura/-1"} key={-1} id="nuevaFactura" title="Nueva factura">+</Link>
+                <div id="listadoDeFacturas">{this.state.arrayFacturas}</div>
+                <Link to="/factura/nueva" key="/nueva" id="nuevaFactura" title="Nueva factura">+</Link>
             </div>
         )
     }

@@ -11,7 +11,7 @@ export default class LineaDeFactura extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            codFactura: props.match.params.codFactura
+            codFactura: props.match.params.codFactura === undefined ? -1 : props.match.params.codFactura
         };
         this.mostrarFactura = this.mostrarFactura.bind(this)
         this.insertarProductoEnFactura = this.insertarProductoEnFactura.bind(this)
@@ -21,11 +21,6 @@ export default class LineaDeFactura extends React.Component {
     }
 
     componentDidMount() {
-        if (!Number(this.state.codFactura)) {
-            this.setState({ redireccionar: true })
-            return 0;
-        }
-
         this.mostrarFactura()
 
         let usuario = JSON.parse(localStorage.getItem("usuario"))
@@ -154,10 +149,9 @@ export default class LineaDeFactura extends React.Component {
             .catch(error => console.error('Error:', error))
             .then(res => {
                 if (Number(codFactura) < 0) {
-                    this.setState({ codFactura })
-                } else if (typeof res !== "undefined") {
-                    this.mostrarFactura()
+                    this.setState({ codFactura: res.respuesta })
                 }
+                this.mostrarFactura()
             });
     }
 

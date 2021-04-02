@@ -57,7 +57,8 @@ export default class CompruebaLogin extends React.Component {
                     return <Redirect to="/login" />
                 }} />
                 <Route exact path="/facturas" component={Facturas} />
-                <Route exact path="/factura/:codFactura" component={LineaDeFactura} />
+                <Route exact path="/factura/nueva" component={LineaDeFactura} />
+                <Route exact path="/factura/:codFactura(\d+)" component={LineaDeFactura} /> {/* codFactura solo números */}
 
                 <Redirect from="*" to="/facturas" />
             </Switch>

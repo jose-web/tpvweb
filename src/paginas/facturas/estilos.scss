@@ -2,17 +2,25 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    height: 100%;
+    flex-direction: column;
 
-    .factura {
-        background-color: var(--color2);
-        padding: 1em;
-        text-align: center;
-        margin: 1em;
-        text-decoration: none;
-        transition: 0.3s;
+    #listadoDeFacturas {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
 
-        &:hover {
-            box-shadow: 0 0 0.5em var(--color3);
+        .factura {
+            background-color: var(--color2);
+            padding: 1em;
+            text-align: center;
+            margin: 1em;
+            text-decoration: none;
+            transition: 0.3s;
+
+            &:hover {
+                box-shadow: 0 0 0.5em var(--color3);
+            }
         }
     }
 
@@ -28,6 +36,7 @@
         border-top: 0.1em solid var(--color4);
         opacity: 0.6;
         transition: 0.5s;
+        margin-top: auto;
 
         &:hover {
             opacity: 1;

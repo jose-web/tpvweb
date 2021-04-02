@@ -2,6 +2,12 @@
     display: flex;
     flex-wrap: wrap;
 
+    h2 {
+        width: 100%;
+        text-align: center;
+        padding: 0.5em;
+    }
+
     #factura {
         display: flex;
         flex-direction: column;
@@ -50,6 +56,7 @@
             padding: 0.5em 0;
             background-color: var(--color1);
             box-shadow: 0 0 0.5em var(--color3);
+            margin-top: auto;
         }
     }
 

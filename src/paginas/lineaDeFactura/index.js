@@ -123,7 +123,8 @@ export default class LineaDeFactura extends React.Component {
                     <p>{total.toFixed(2) + " €"}</p>
                 </div>)
                 this.setState({
-                    arrayLineaDeFactura: arrayLineaDeFactura.slice()
+                    arrayLineaDeFactura: arrayLineaDeFactura.slice(),
+                    nombreFactura: res.nombreFactura
                 })
             });
     }
@@ -191,6 +192,7 @@ export default class LineaDeFactura extends React.Component {
         return (
             <div id="lineaDeFactura" >
                 <Menu />
+                <h2>{this.state.nombreFactura}</h2>
                 <div id="factura">{this.state.arrayLineaDeFactura}</div>
                 <div id="productos">{this.state.productos}</div>
                 {this.state.popup}

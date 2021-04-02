@@ -74,6 +74,14 @@ function mostrarFactura($email,$pass,$codFactura){
   if($login["login"]){
     $codFacturaCodificar = codificar($codFactura);
 
+    $consulta = "select nombreFactura from factura where codFactura = $codFacturaCodificar";
+
+    $resultado = consulta($consulta);
+
+    if($fila = mysqli_fetch_assoc($resultado)){
+      $nombreFactura = $fila["nombreFactura"];
+    }
+
     $consulta = "call mostrarFactura($codFacturaCodificar)";
 
     $resultado = consulta($consulta);
@@ -83,7 +91,7 @@ function mostrarFactura($email,$pass,$codFactura){
     while($fila = mysqli_fetch_assoc($resultado)){
       $array[] = $fila;
     }
-    return array("factura" => $array);
+    return array("nombreFactura" => $nombreFactura, "factura" => $array);
 
   }else{
     return $login;

@@ -98,6 +98,23 @@ function mostrarFactura($email,$pass,$codFactura){
   }
 }
 
+function editarNombreFactura($email,$pass,$codFactura,$nombre){
+  $login = login($email,$pass);
+  if($login["login"]){
+    $codFacturaCodificar = codificar($codFactura);
+    $nombreCodificar = codificar($nombre);
+
+    $consulta = "call editarNombreFactura($codFacturaCodificar,'$nombreCodificar')";
+
+    $resultado = consulta($consulta);
+
+    return array("facturas" => true);
+
+  }else{
+    return $login;
+  }
+}
+
 //////////////////////////// PRODUCTOS ////////////////////////////
 
 function mostrarProductos($email,$pass){

@@ -13,3 +13,5 @@ call insertarProductoEnFactura(1,"fanta",1.20,1);
 call mostrarFacturas();
 
 call mostrarFactura(1);
+
+call editarNombreFactura(1, 'paco')

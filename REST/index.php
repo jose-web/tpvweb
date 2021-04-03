@@ -31,6 +31,10 @@ $app->post("/mostrarFactura", function(){
   echo json_encode(mostrarFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/editarNombreFactura", function(){
+  echo json_encode(editarNombreFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"],$_POST["nombre"]),JSON_FORCE_OBJECT);
+});
+
 //////////////////////////// PRODUCTOS ////////////////////////////
 
 $app->post("/mostrarProductos", function(){

@@ -104,3 +104,10 @@ begin
 
     commit;
 end $$
+
+create procedure editarNombreFactura(factura int, nombre varchar(20))
+begin
+	update factura 
+	set nombreFactura=nombre
+	where codFactura = factura;
+end $$

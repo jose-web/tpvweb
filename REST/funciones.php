@@ -78,6 +78,8 @@ function mostrarFactura($email,$pass,$codFactura){
 
     $resultado = consulta($consulta);
 
+    $nombreFactura = "Factura sin nombre";
+
     if($fila = mysqli_fetch_assoc($resultado)){
       $nombreFactura = $fila["nombreFactura"];
     }

@@ -171,11 +171,15 @@ export default class LineaDeFactura extends React.Component {
     }
 
     mostrarPopupEditaNombreFactura(nombre) {
-        let contenido = <form onSubmit={this.editarNombreFactura}>
-            <p className="titulo">EDITAR FACTURA</p>
-            <Input nombre="NOMBRE" value={nombre} focus={true} />
-            <Button nombre="AÑADIR" />
-        </form>
+        let contenido = <p className="titulo">PARA EDITAR EL NOMBRE DE LA FACTURA <br /> AÑADE UN PRODUCTO PRIMERO</p>
+
+        if (Number(this.state.codFactura) > 0)
+            contenido = <form onSubmit={this.editarNombreFactura}>
+                <p className="titulo">EDITAR FACTURA</p>
+                <Input nombre="NOMBRE" value={nombre} focus={true} />
+                <Button nombre="AÑADIR" />
+            </form>
+
         this.setState({
             popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
         })

@@ -119,13 +119,10 @@ export default class LineaDeFactura extends React.Component {
                             <p>{pxc + " €"}</p>
                         </div>)
                     }
-                arrayLineaDeFactura.push(<div key="-2" className="producto pie">
-                    <p>TOTAL</p>
-                    <p>{total.toFixed(2) + " €"}</p>
-                </div>)
                 this.setState({
                     arrayLineaDeFactura: arrayLineaDeFactura.slice(),
-                    nombreFactura: res.nombreFactura
+                    nombreFactura: res.nombreFactura,
+                    total: total.toFixed(2) + " €"
                 })
             });
     }
@@ -237,8 +234,11 @@ export default class LineaDeFactura extends React.Component {
             <div id="lineaDeFactura" >
                 <Menu />
                 <h2 onClick={() => this.mostrarPopupEditaNombreFactura(this.state.nombreFactura)}>{this.state.nombreFactura}</h2>
-                <div id="factura">{this.state.arrayLineaDeFactura}</div>
-                <div id="productos">{this.state.productos}</div>
+                <div id="facturaProductos">
+                    <div id="factura">{this.state.arrayLineaDeFactura}</div>
+                    <div id="productos">{this.state.productos}</div>
+                </div>
+                <div id="total">TOTAL: {this.state.total}</div>
                 {this.state.popup}
             </div>
         )

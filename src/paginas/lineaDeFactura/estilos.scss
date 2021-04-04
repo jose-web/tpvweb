@@ -69,7 +69,7 @@
             background-color: var(--color2);
             display: flex;
             flex-wrap: wrap;
-            height: min-content;
+            min-height: 0;
 
             input {
                 display: none;
@@ -102,6 +102,8 @@
                 flex: 100%;
                 display: flex;
                 flex-wrap: wrap;
+                overflow-y: auto;
+                height: calc(100% - 3em);
 
                 .producto {
                     padding: 1em;
@@ -114,6 +116,7 @@
                     box-shadow: 0 0 0.5em var(--color1) inset;
                     cursor: pointer;
                     transition: 0.5s;
+                    margin-bottom: auto;
 
                     &:hover {
                         background-color: var(--color2);
@@ -128,5 +131,6 @@
         text-align: center;
         padding: 1em;
         z-index: 1;
+        background-color: var(--color1);
     }
 }

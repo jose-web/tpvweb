@@ -61,8 +61,10 @@ export default class LineaDeFactura extends React.Component {
                                 <p>{precio + " €"}</p>
                             </div>)
                         }
-                        arrayProductos.push(<div key={grupo + "pie"} className="contenedorProductos">
-                            {opcionesproductos}
+                        arrayProductos.push(<div key={grupo + "pie"} className="opcionElegida">
+                            <div className="contenedorProductos">
+                                {opcionesproductos}
+                            </div>
                         </div>)
 
                     }

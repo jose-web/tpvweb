@@ -74,15 +74,15 @@
             input {
                 display: none;
 
-                & + label + .contenedorProductos {
+                & + label + .opcionElegida {
                     display: none;
                 }
 
                 &:checked + label {
                     background-color: var(--color4);
 
-                    & + .contenedorProductos {
-                        display: flex;
+                    & + .opcionElegida {
+                        display: block;
                         order: 1;
                         background-color: var(--color4);
                     }
@@ -97,29 +97,32 @@
                     background-color: var(--color1);
                 }
             }
-
-            .contenedorProductos {
-                flex: 100%;
-                display: flex;
-                flex-wrap: wrap;
-                overflow-y: auto;
+            .opcionElegida {
                 height: calc(100% - 3em);
+                flex: 100%;
+                overflow-y: auto;
 
-                .producto {
-                    padding: 1em;
-                    margin: 1em;
-                    flex: 0 calc(100% / 3 - 2em);
-                    text-align: center;
+                .contenedorProductos {
+                    flex-wrap: wrap;
                     display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    box-shadow: 0 0 0.5em var(--color1) inset;
-                    cursor: pointer;
-                    transition: 0.5s;
-                    margin-bottom: auto;
+                    margin-bottom: 1.5em;
 
-                    &:hover {
-                        background-color: var(--color2);
+                    .producto {
+                        padding: 1em;
+                        margin: 1em;
+                        flex: 0 calc(100% / 3 - 2em);
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        box-shadow: 0 0 0.5em var(--color1) inset;
+                        cursor: pointer;
+                        transition: 0.5s;
+                        margin-bottom: auto;
+
+                        &:hover {
+                            background-color: var(--color2);
+                        }
                     }
                 }
             }

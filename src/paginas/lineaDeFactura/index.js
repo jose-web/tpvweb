@@ -19,6 +19,10 @@ export default class LineaDeFactura extends React.Component {
         this.cerrarPopup = this.cerrarPopup.bind(this)
         this.formulario = this.formulario.bind(this)
         this.editarNombreFactura = this.editarNombreFactura.bind(this)
+        this.mostrarPopupEditaNombreFactura = this.mostrarPopupEditaNombreFactura.bind(this)
+        this.mostrarPopupPagar = this.mostrarPopupPagar.bind(this)
+        this.pagar = this.pagar.bind(this)
+
     }
 
     componentDidMount() {
@@ -169,13 +173,13 @@ export default class LineaDeFactura extends React.Component {
         })
     }
 
-    mostrarPopupEditaNombreFactura(nombre) {
+    mostrarPopupEditaNombreFactura() {
         let contenido = <p className="titulo">PARA EDITAR EL NOMBRE DE LA FACTURA <br /> AÑADE UN PRODUCTO PRIMERO</p>
 
         if (Number(this.state.codFactura) > 0)
             contenido = <form onSubmit={this.editarNombreFactura}>
                 <p className="titulo">EDITAR FACTURA</p>
-                <Input nombre="NOMBRE" value={nombre} focus={true} />
+                <Input nombre="NOMBRE" value={this.state.nombreFactura} focus={true} />
                 <Button nombre="AÑADIR" />
             </form>
 
@@ -229,18 +233,42 @@ export default class LineaDeFactura extends React.Component {
             });
     }
 
+    mostrarPopupPagar() {
+        let contenido = <p className="titulo">PARA PAGAR LA FACTURA <br /> AÑADE UN PRODUCTO PRIMERO</p>
+
+        if (Number(this.state.codFactura) > 0)
+            contenido = <form onSubmit={this.pagar}>
+                <p className="titulo">A PAGAR: {this.state.total}</p>
+                <Input nombre="DINERO" focus={true} />
+                <Button nombre="PAGAR" />
+            </form>
+
+        this.setState({
+            popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
+        })
+    }
+
+    pagar(event) {
+        event.preventDefault()
+
+        let dinero = event.target.inputDINERO.value
+
+        this.insertarProductoEnFactura(this.state.codFactura, "PAGO", "-" + dinero, 1)
+        this.cerrarPopup()
+    }
+
     render() {
         if (this.state.redireccionar)
             return <Redirect to="/facturas" />
         return (
             <div id="lineaDeFactura" >
                 <Menu />
-                <h2 onClick={() => this.mostrarPopupEditaNombreFactura(this.state.nombreFactura)}>{this.state.nombreFactura}</h2>
+                <h2 onClick={this.mostrarPopupEditaNombreFactura}>{this.state.nombreFactura}</h2>
                 <div id="facturaProductos">
                     <div id="factura">{this.state.arrayLineaDeFactura}</div>
                     <div id="productos">{this.state.productos}</div>
                 </div>
-                <div id="total">TOTAL: {this.state.total}</div>
+                <div id="total" onClick={this.mostrarPopupPagar}>TOTAL: {this.state.total}</div>
                 {this.state.popup}
             </div>
         )

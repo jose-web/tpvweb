@@ -4,7 +4,8 @@
     flex-direction: column;
 
     h2 {
-        width: 100%;
+        width: max-content;
+        align-self: center;
         text-align: center;
         padding: 0.5em;
         cursor: pointer;
@@ -82,7 +83,7 @@
                     background-color: var(--color4);
 
                     & + .opcionElegida {
-                        display: block;
+                        display: flex;
                         order: 1;
                         background-color: var(--color4);
                     }
@@ -106,11 +107,13 @@
                     flex-wrap: wrap;
                     display: flex;
                     margin-bottom: 1.5em;
+                    justify-content: space-evenly;
+                    margin-bottom: auto;
 
                     .producto {
                         padding: 1em;
                         margin: 1em;
-                        flex: 0 calc(100% / 3 - 2em);
+                        flex: 0 calc(100% / 4 - 2em);
                         text-align: center;
                         display: flex;
                         flex-direction: column;
@@ -118,7 +121,6 @@
                         box-shadow: 0 0 0.5em var(--color1) inset;
                         cursor: pointer;
                         transition: 0.5s;
-                        margin-bottom: auto;
 
                         &:hover {
                             background-color: var(--color2);
@@ -135,5 +137,11 @@
         padding: 1em;
         z-index: 1;
         background-color: var(--color1);
+        cursor: pointer;
+        transition: 0.5s;
+
+        &:hover {
+            background-color: var(--color2);
+        }
     }
 }

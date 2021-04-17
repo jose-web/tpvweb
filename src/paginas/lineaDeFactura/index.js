@@ -166,7 +166,7 @@ export default class LineaDeFactura extends React.Component {
             <Input nombre="NOMBRE" value={nombre} />
             <Input nombre="PRECIO" value={precio} />
             <Input nombre="CANTIDAD" value={cantidad} focus={true} />
-            <Button nombre="AÑADIR" />
+            <Button nombre="AÑADIR" submit />
         </form>
         this.setState({
             popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
@@ -180,7 +180,7 @@ export default class LineaDeFactura extends React.Component {
             contenido = <form onSubmit={this.editarNombreFactura}>
                 <p className="titulo">EDITAR FACTURA</p>
                 <Input nombre="NOMBRE" value={this.state.nombreFactura} focus={true} />
-                <Button nombre="AÑADIR" />
+                <Button nombre="AÑADIR" submit />
             </form>
 
         this.setState({
@@ -238,9 +238,10 @@ export default class LineaDeFactura extends React.Component {
 
         if (Number(this.state.codFactura) > 0)
             contenido = <form onSubmit={this.pagar}>
+                <Button nombre="CERRAR FACTURA" />
                 <p className="titulo">A PAGAR: {this.state.total}</p>
                 <Input nombre="DINERO" focus={true} />
-                <Button nombre="PAGAR" />
+                <Button nombre="PAGAR" submit />                
             </form>
 
         this.setState({

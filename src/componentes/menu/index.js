@@ -14,7 +14,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div id="menuPrincipal" >
-                <h1>TPVWEB</h1>
+                <Link to="/facturas" className="titulo" >TPVWEB</Link>
                 <ul>
                     <li className={this.state.select("facturas")}><Link to="/facturas" >Facturas</Link></li>
                     <li className={this.state.select("estadisticas")} ><Link to="/estadisticas" >Estadísticas</Link></li>

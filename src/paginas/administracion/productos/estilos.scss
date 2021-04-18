@@ -38,6 +38,7 @@
             overflow-y: auto;
 
             .contenedorProductos {
+                flex: 100%;
                 flex-wrap: wrap;
                 display: flex;
                 margin-bottom: 1.5em;

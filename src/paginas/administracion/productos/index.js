@@ -16,6 +16,7 @@ export default class AdministraProductos extends React.Component {
         };
 
         this.cerrarPopup = this.cerrarPopup.bind(this)
+        this.mostrarPopupNuevoProducto = this.mostrarPopupNuevoProducto.bind(this)
 
     }
 
@@ -44,7 +45,8 @@ export default class AdministraProductos extends React.Component {
                 if (typeof res !== "undefined")
                     for (const grupo in res.productos) {
                         arrayProductos.push(<React.Fragment key={"opcion" + grupo}><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label htmlFor={"opcion" + grupo}>{grupo}</label></React.Fragment>)
-                        let opcionesproductos = []
+                        let opcionesproductos = [<div key="-1" className="producto" onClick={() => this.mostrarPopupNuevoProducto(grupo)}>+</div>
+                        ]
                         for (const producto in res.productos[grupo]) {
                             let nombre = res.productos[grupo][producto].nombre
                             let precio = res.productos[grupo][producto].precio
@@ -52,7 +54,8 @@ export default class AdministraProductos extends React.Component {
 
                             opcionesproductos.push(<div
                                 key={producto}
-                                className="producto" onClick={() => this.mostrarPopupEditarProducto(codProducto, nombre, precio, grupo)}
+                                className="producto"
+                                onClick={() => this.mostrarPopupEditarProducto(codProducto, nombre, precio, grupo)}
                             >
                                 <p>{nombre}</p>
                                 <p>{precio + " €"}</p>
@@ -76,6 +79,49 @@ export default class AdministraProductos extends React.Component {
         this.setState({
             popup: ""
         })
+    }
+
+    mostrarPopupNuevoProducto(grupo) {
+        let contenido = <form onSubmit={(event) => this.nuevoProducto(event)}>
+            <p className="titulo">AÑADIR PRODUCTO</p>
+            <Input nombre="NOMBRE" focus />
+            <Input nombre="PRECIO" />
+            <Input nombre="GRUPO" value={grupo} />
+            <Button nombre="AÑADIR" submit />
+        </form>
+        this.setState({
+            popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
+        })
+    }
+
+    nuevoProducto(event) {
+        event.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'nuevoProducto';
+
+        let nombre = event.target.inputNOMBRE.value
+        let precio = event.target.inputPRECIO.value
+        let grupo = event.target.inputGRUPO.value
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('nombre', nombre);
+        data.append('precio', precio);
+        data.append('grupo', grupo);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.mostrarProductos()
+                this.cerrarPopup()
+            });
     }
 
     mostrarPopupEditarProducto(codProducto, nombre, precio, grupo) {

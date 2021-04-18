@@ -53,6 +53,10 @@ $app->post("/insertarProductoEnFactura", function(){
   echo json_encode(insertarProductoEnFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"],$_POST["nombre"],$_POST["precio"],$_POST["cantidad"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/editarProducto", function(){
+  echo json_encode(editarProducto($_POST["email"],$_POST["pass"],$_POST["codProducto"],$_POST["nombre"],$_POST["precio"],$_POST["grupo"]),JSON_FORCE_OBJECT);
+});
+
 //////////////////////////// ERROR ////////////////////////////
 
 $app->notFound(function (){

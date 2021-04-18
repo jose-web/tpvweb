@@ -200,5 +200,25 @@ function insertarProductoEnFactura($email,$pass,$codFactura,$nombre,$precio,$can
   }
 }
 
+function editarProducto($email,$pass,$codProducto,$nombre,$precio,$grupo){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $codProductoCodificar = codificar($codProducto);
+    $nombreCodificar = codificar($nombre);
+    $precioCodificar = codificar($precio);
+    $grupoCodificar = codificar($grupo);
+
+    $consulta = "call editarProducto($codProductoCodificar,'$nombreCodificar',$precioCodificar,'$grupoCodificar')";
+
+    $resultado = consulta($consulta);
+    
+    return array("respuesta" => true);
+
+  }else{
+    return $login;
+  }
+}
+
 
 ?>

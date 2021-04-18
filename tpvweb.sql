@@ -120,3 +120,13 @@ begin
     set displonible = false 
     where codFactura = codFacturaMostrar;
 end $$
+
+create procedure editarProducto(producto int, nombre varchar(20), precio double(6,2), grupo varchar(20))
+begin
+    update producto 
+    set 
+		nombre = nombre , 
+		precio = precio,
+        grupo = grupo
+    where codProducto = producto;
+end $$

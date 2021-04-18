@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import Facturas from "./paginas/facturas"
 import LineaDeFactura from "./paginas/lineaDeFactura"
+import AdministraProductos from "./paginas/administracion/productos"
 
 export default class CompruebaLogin extends React.Component {
 
@@ -59,6 +60,7 @@ export default class CompruebaLogin extends React.Component {
                 <Route exact path="/facturas" component={Facturas} />
                 <Route exact path="/factura/nueva" component={LineaDeFactura} />
                 <Route exact path="/factura/:codFactura(\d+)" component={LineaDeFactura} /> {/* codFactura solo números */}
+                <Route exact path="/administracion/productos" component={AdministraProductos} />
 
                 <Redirect from="*" to="/facturas" />
             </Switch>

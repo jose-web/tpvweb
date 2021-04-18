@@ -20,6 +20,10 @@ export default class AdministraProductos extends React.Component {
     }
 
     componentDidMount() {
+        this.mostrarProductos()
+    }
+
+    mostrarProductos() {
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let url = global.url + 'mostrarProductos';
@@ -44,10 +48,11 @@ export default class AdministraProductos extends React.Component {
                         for (const producto in res.productos[grupo]) {
                             let nombre = res.productos[grupo][producto].nombre
                             let precio = res.productos[grupo][producto].precio
+                            let codProducto = res.productos[grupo][producto].codProducto
 
                             opcionesproductos.push(<div
                                 key={producto}
-                                className="producto" onClick={() => this.mostrarPopupEditarProducto(nombre, precio)}
+                                className="producto" onClick={() => this.mostrarPopupEditarProducto(codProducto, nombre, precio, grupo)}
                             >
                                 <p>{nombre}</p>
                                 <p>{precio + " €"}</p>
@@ -67,11 +72,18 @@ export default class AdministraProductos extends React.Component {
             });
     }
 
-    mostrarPopupEditarProducto(nombre, precio) {
-        let contenido = <form onSubmit={this.formulario}>
+    cerrarPopup() {
+        this.setState({
+            popup: ""
+        })
+    }
+
+    mostrarPopupEditarProducto(codProducto, nombre, precio, grupo) {
+        let contenido = <form onSubmit={(event) => this.editarProducto(event, codProducto)}>
             <p className="titulo">EDITAR PRODUCTO</p>
             <Input nombre="NOMBRE" value={nombre} />
-            <Input nombre="PRECIO" value={precio} focus/>
+            <Input nombre="PRECIO" value={precio} focus />
+            <Input nombre="GRUPO" value={grupo} />
             <Button nombre="EDITAR" submit />
         </form>
         this.setState({
@@ -79,10 +91,35 @@ export default class AdministraProductos extends React.Component {
         })
     }
 
-    cerrarPopup() {
-        this.setState({
-            popup: ""
-        })
+    editarProducto(event, codProducto) {
+        event.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'editarProducto';
+
+        let nombre = event.target.inputNOMBRE.value
+        let precio = event.target.inputPRECIO.value
+        let grupo = event.target.inputGRUPO.value
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('codProducto', codProducto);
+        data.append('nombre', nombre);
+        data.append('precio', precio);
+        data.append('grupo', grupo);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.mostrarProductos()
+                this.cerrarPopup()
+            });
     }
 
     render() {

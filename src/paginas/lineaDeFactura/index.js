@@ -22,6 +22,7 @@ export default class LineaDeFactura extends React.Component {
         this.mostrarPopupEditaNombreFactura = this.mostrarPopupEditaNombreFactura.bind(this)
         this.mostrarPopupPagar = this.mostrarPopupPagar.bind(this)
         this.pagar = this.pagar.bind(this)
+        this.ocultarFactura = this.ocultarFactura.bind(this)
 
     }
 
@@ -233,15 +234,40 @@ export default class LineaDeFactura extends React.Component {
             });
     }
 
+    ocultarFactura(event) {
+        event.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'ocultarFactura';
+
+        let codFactura = this.state.codFactura
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('codFactura', codFactura);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.setState({ redireccionar: true })
+            });
+    }
+
     mostrarPopupPagar() {
         let contenido = <p className="titulo">PARA PAGAR LA FACTURA <br /> AÑADE UN PRODUCTO PRIMERO</p>
 
         if (Number(this.state.codFactura) > 0)
             contenido = <form onSubmit={this.pagar}>
-                <Button nombre="CERRAR FACTURA" />
+                <Button nombre="CERRAR FACTURA" onClick={this.ocultarFactura} />
                 <p className="titulo">A PAGAR: {this.state.total}</p>
                 <Input nombre="DINERO" focus={true} />
-                <Button nombre="PAGAR" submit />                
+                <Button nombre="PAGAR" submit />
             </form>
 
         this.setState({

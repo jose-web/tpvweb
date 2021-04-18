@@ -14,7 +14,8 @@ create table usuario (
 
 create table factura (
     codFactura int primary key auto_increment,
-    nombreFactura varchar(20) default "Factura sin nombre"
+    nombreFactura varchar(20) default "Factura sin nombre",
+    displonible bool default true
 );
 
 create table lineaDeFactura (
@@ -57,6 +58,7 @@ begin
         IFNULL(min(fecha),now()) as fecha
     from factura left join lineaDeFactura
 		on factura.codFactura = lineaDeFactura.codFactura
+	where displonible = true
 	group by factura.codFactura
     order by min(fecha) desc;
 end $$
@@ -108,6 +110,13 @@ end $$
 create procedure editarNombreFactura(factura int, nombre varchar(20))
 begin
 	update factura 
-	set nombreFactura=nombre
+	set nombreFactura = nombre
 	where codFactura = factura;
+end $$
+
+create procedure ocultarFactura(codFacturaMostrar int)
+begin
+    update factura 
+    set displonible = false 
+    where codFactura = codFacturaMostrar;
 end $$

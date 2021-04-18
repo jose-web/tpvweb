@@ -117,6 +117,22 @@ function editarNombreFactura($email,$pass,$codFactura,$nombre){
   }
 }
 
+function ocultarFactura($email,$pass,$codFactura){
+  $login = login($email,$pass);
+  if($login["login"]){
+    $codFacturaCodificar = codificar($codFactura);
+
+    $consulta = "call ocultarFactura($codFacturaCodificar)";
+
+    $resultado = consulta($consulta);
+
+    return array("factura" => true);
+
+  }else{
+    return $login;
+  }
+}
+
 //////////////////////////// PRODUCTOS ////////////////////////////
 
 function mostrarProductos($email,$pass){

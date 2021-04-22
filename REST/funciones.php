@@ -69,6 +69,26 @@ function mostrarFacturas($email,$pass){
   }
 }
 
+function mostrarTodasFacturas($email,$pass){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $consulta = "call mostrarTodasFacturas()";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[] = $fila;
+    }
+    return array("facturas" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 function mostrarFactura($email,$pass,$codFactura){
   $login = login($email,$pass);
   if($login["login"]){

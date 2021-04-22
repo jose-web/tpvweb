@@ -18,10 +18,10 @@ export default class Login extends React.Component {
                 <ul>
                     <li className={this.state.select("facturas")}><Link to="/facturas" >Facturas</Link></li>
                     <li className={this.state.select("estadisticas")} ><Link to="/estadisticas" >Estadísticas</Link></li>
-                    <li className={"submenu "+this.state.select("administraProductos")}>Administración
+                    <li className={"submenu " + (this.state.select("administraProductos") || this.state.select("administraFacturas"))}>Administración
                         <ul>
                             <li><Link to="/administracion/productos" key="productos" className={this.state.select("administraProductos")} >Productos</Link></li>
-                            <li><Link to="/administracion/facturas" key="facturas" >Facturas</Link></li>
+                            <li><Link to="/administracion/facturas" key="facturas" className={this.state.select("administraFacturas")}>Facturas</Link></li>
                             <li><Link to="/administracion/usuarios" key="usuarios" >Usuarios</Link></li>
                         </ul>
                     </li>

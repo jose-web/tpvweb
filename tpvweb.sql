@@ -51,14 +51,28 @@ end $$
 
 create procedure mostrarFacturas()
 begin
-	select 
-		factura.codFactura as codFactura, 
-		nombreFactura as nombre, 
-        IFNULL(sum(precio * cantidad),0.00) as factura, 
-        IFNULL(min(fecha),now()) as fecha
+	select
+		factura.codFactura as codFactura,
+		nombreFactura as nombre,
+        sum(precio * cantidad) as factura,
+        min(fecha),now() as fecha
     from factura left join lineaDeFactura
 		on factura.codFactura = lineaDeFactura.codFactura
 	where displonible = true
+	group by factura.codFactura
+    order by min(fecha) desc;
+end $$
+
+create procedure mostrarTodasFacturas()
+begin
+	select
+		factura.codFactura as codFactura,
+		nombreFactura as nombre,
+        sum(precio * cantidad) as factura,
+        min(fecha),now() as fecha,
+        displonible
+    from factura left join lineaDeFactura
+		on factura.codFactura = lineaDeFactura.codFactura
 	group by factura.codFactura
     order by min(fecha) desc;
 end $$

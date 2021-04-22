@@ -27,6 +27,10 @@ $app->post("/mostrarFacturas", function(){
   echo json_encode(mostrarFacturas($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/mostrarTodasFacturas", function(){
+  echo json_encode(mostrarTodasFacturas($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
+});
+
 $app->post("/mostrarFactura", function(){
   echo json_encode(mostrarFactura($_POST["email"],$_POST["pass"],$_POST["codFactura"]),JSON_FORCE_OBJECT);
 });

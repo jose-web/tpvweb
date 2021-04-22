@@ -21,6 +21,12 @@ $app->post("/compruebaSesion", function(){
   echo json_encode(compruebaSesion($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+//////////////////////////// USUARIOS ////////////////////////////
+
+$app->post("/mostrarUsuarios", function(){
+  echo json_encode(mostrarUsuarios($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
+});
+
 //////////////////////////// FACTURAS ////////////////////////////
 
 $app->post("/mostrarFacturas", function(){

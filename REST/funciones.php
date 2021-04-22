@@ -47,6 +47,28 @@ function compruebaSesion($email,$pass){
     return array("respuesta" => $login["login"]);
 }
 
+//////////////////////////// USUARIOS ////////////////////////////
+
+function mostrarUsuarios($email,$pass){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $consulta = "call mostrarUsuarios()";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[] = $fila;
+    }
+    return array("usuarios" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 //////////////////////////// FACTURAS ////////////////////////////
 
 function mostrarFacturas($email,$pass){

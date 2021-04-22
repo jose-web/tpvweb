@@ -1,0 +1,32 @@
+#todosUsuarios {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .usuario {
+        background-color: var(--color2);
+        margin-top: 0.5em;
+        padding: 0.5em;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--color4);
+        }
+    }
+
+    #nuevoUsuario {
+        position: sticky;
+        bottom: 0;
+        background-color: var(--color1);
+        text-align: center;
+        padding: 0.5em;
+        font-size: 1.5em;
+        text-decoration: none;
+        border-top: 0.1em solid var(--color4);
+        opacity: 0.6;
+        transition: 0.5s;
+        margin-top: auto;
+        cursor: pointer;
+    }
+}

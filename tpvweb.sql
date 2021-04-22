@@ -49,6 +49,12 @@ begin
 		and usuario.pass = pass;
 end $$
 
+create procedure mostrarUsuarios()
+begin
+	select codUsuario, nombre
+    from usuario;
+end $$
+
 create procedure mostrarFacturas()
 begin
 	select

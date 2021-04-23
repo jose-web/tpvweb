@@ -1,6 +1,6 @@
 use tpvweb;
 
-insert into usuario(nombre,pass) values('jose',md5('jose'));
+call nuevoUsuario('jose',md5('jose'));
 
 call nuevoProducto('cocacola',1.10,'bebidas');
 call nuevoProducto('cocacola light',1.10,'bebidas');

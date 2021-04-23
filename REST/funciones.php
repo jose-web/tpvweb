@@ -69,6 +69,24 @@ function mostrarUsuarios($email,$pass){
   }
 }
 
+function nuevoUsuario($email,$pass,$nuevoEmail,$nuevaPass){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $nuevoEmailCodificar = codificar($nuevoEmail);
+    $nuevaPassCodificar = codificar($nuevaPass);
+
+    $consulta = "call nuevoUsuario('$nuevoEmailCodificar','$nuevaPassCodificar')";
+
+    $resultado = consulta($consulta);
+
+    return array("respuesta" => true);
+
+  }else{
+    return $login;
+  }
+}
+
 function editarUsuario($email,$pass,$codUsuario,$nombre){
   $login = login($email,$pass);
   if($login["login"]){

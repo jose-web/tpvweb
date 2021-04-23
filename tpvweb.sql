@@ -55,6 +55,12 @@ begin
     from usuario;
 end $$
 
+create procedure nuevoUsuario(nuevoNombre varchar(20),nuevaPass varchar(50))
+begin
+	insert into usuario(nombre,pass) 
+    values(nuevoNombre,nuevaPass);
+end $$
+
 create procedure editarUsuario(codigoUsuario int, nuevoNombre varchar(20))
 begin
 	update usuario

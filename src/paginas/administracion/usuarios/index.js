@@ -4,6 +4,7 @@ import Menu from '../../../componentes/menu'
 import Popup from '../../../componentes/popup'
 import Input from '../../../componentes/input'
 import Button from '../../../componentes/button'
+import md5 from 'md5'
 
 export default class AdministraUsuarios extends React.Component {
 
@@ -12,6 +13,7 @@ export default class AdministraUsuarios extends React.Component {
         this.state = {
         };
         this.mostrarPopupEditarUsuario = this.mostrarPopupEditarUsuario.bind(this)
+        this.mostrarPopupNuevoUsuario = this.mostrarPopupNuevoUsuario.bind(this)
         this.cerrarPopup = this.cerrarPopup.bind(this)
     }
 
@@ -101,6 +103,51 @@ export default class AdministraUsuarios extends React.Component {
             });
     }
 
+    mostrarPopupNuevoUsuario() {
+        let contenido = <form onSubmit={(event) => this.nuevoUsuario(event)}>
+            <p className="titulo">NUEVO USUARIO</p>
+            <Input nombre="NOMBRE" focus={true} />
+            <Input nombre="CONTRASEÑA" pass />
+            <Input nombre="REPITA LA CONTRASEÑA" pass />
+            <Button nombre="AÑADIR" submit />
+        </form>
+
+        this.setState({
+            popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
+        })
+    }
+
+    nuevoUsuario(event) {
+        event.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'nuevoUsuario';
+
+        let nombre = event.target.inputNOMBRE.value
+        let pass = event.target.inputCONTRASEÑA.value
+        let pass2 = event.target["inputREPITA LA CONTRASEÑA"].value
+
+        if (pass !== pass2) return false
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('nuevoEmail', nombre);
+        data.append('nuevaPass', md5(pass));
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.mostrarUsuarios()
+                this.cerrarPopup()
+            })
+    }
+
     cerrarPopup() {
         this.setState({
             popup: ""
@@ -112,7 +159,7 @@ export default class AdministraUsuarios extends React.Component {
             <div id="todosUsuarios">
                 <Menu pagina="administraUsuarios" />
                 {this.state.arrayUsuarios}
-                <div id="nuevoUsuario">+</div>
+                <div id="nuevoUsuario" onClick={this.mostrarPopupNuevoUsuario}>+</div>
                 {this.state.popup}
             </div>
         )

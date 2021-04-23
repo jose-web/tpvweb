@@ -1,6 +1,9 @@
 import React from 'react'
 import './estilos.scss'
 import Menu from '../../../componentes/menu'
+import Popup from '../../../componentes/popup'
+import Input from '../../../componentes/input'
+import Button from '../../../componentes/button'
 
 export default class AdministraUsuarios extends React.Component {
 
@@ -8,9 +11,15 @@ export default class AdministraUsuarios extends React.Component {
         super(props);
         this.state = {
         };
+        this.mostrarPopupEditarUsuario = this.mostrarPopupEditarUsuario.bind(this)
+        this.cerrarPopup = this.cerrarPopup.bind(this)
     }
 
     componentDidMount() {
+        this.mostrarUsuarios()
+    }
+
+    mostrarUsuarios() {
         let usuario
 
         try {
@@ -43,9 +52,8 @@ export default class AdministraUsuarios extends React.Component {
                         let nombre = res.usuarios[i].nombre
 
 
-                        arrayUsuarios.push(<div key={id} className="usuario">
+                        arrayUsuarios.push(<div key={id} className="usuario" onClick={() => this.mostrarPopupEditarUsuario(id, nombre)}>
                             <p>{nombre}</p>
-
                         </div>)
                     }
                 this.setState({
@@ -54,12 +62,58 @@ export default class AdministraUsuarios extends React.Component {
             });
     }
 
+    mostrarPopupEditarUsuario(codUsuario, nombre) {
+        let contenido = <form onSubmit={(event) => this.editarUsuario(event, codUsuario)}>
+            <p className="titulo">EDITAR USUARIO</p>
+            <Input nombre="NOMBRE" value={nombre} focus={true} />
+            <Button nombre="EDITAR" submit />
+        </form>
+
+        this.setState({
+            popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
+        })
+    }
+
+    editarUsuario(event, codUsuario) {
+        event.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'editarUsuario';
+
+        let nombre = event.target.inputNOMBRE.value
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('codUsuario', codUsuario);
+        data.append('nombre', nombre);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.mostrarUsuarios()
+                this.cerrarPopup()
+            });
+    }
+
+    cerrarPopup() {
+        this.setState({
+            popup: ""
+        })
+    }
+
     render() {
         return (
             <div id="todosUsuarios">
                 <Menu pagina="administraUsuarios" />
                 {this.state.arrayUsuarios}
                 <div id="nuevoUsuario">+</div>
+                {this.state.popup}
             </div>
         )
     }

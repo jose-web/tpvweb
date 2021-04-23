@@ -27,6 +27,10 @@ $app->post("/mostrarUsuarios", function(){
   echo json_encode(mostrarUsuarios($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/editarUsuario", function(){
+  echo json_encode(editarUsuario($_POST["email"],$_POST["pass"],$_POST["codUsuario"],$_POST["nombre"]),JSON_FORCE_OBJECT);
+});
+
 //////////////////////////// FACTURAS ////////////////////////////
 
 $app->post("/mostrarFacturas", function(){

@@ -69,6 +69,24 @@ function mostrarUsuarios($email,$pass){
   }
 }
 
+function editarUsuario($email,$pass,$codUsuario,$nombre){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $codUsuarioCodificar = codificar($codUsuario);
+    $nombreCodificar = codificar($nombre);
+
+    $consulta = "call editarUsuario($codUsuarioCodificar,'$nombreCodificar')";
+
+    $resultado = consulta($consulta);
+
+    return array("respuesta" => true);
+
+  }else{
+    return $login;
+  }
+}
+
 //////////////////////////// FACTURAS ////////////////////////////
 
 function mostrarFacturas($email,$pass){

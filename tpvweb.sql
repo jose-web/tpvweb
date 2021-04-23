@@ -55,6 +55,13 @@ begin
     from usuario;
 end $$
 
+create procedure editarUsuario(codigoUsuario int, nuevoNombre varchar(20))
+begin
+	update usuario
+		set nombre = nuevoNombre
+	where codUsuario = codigoUsuario;
+end $$
+
 create procedure mostrarFacturas()
 begin
 	select

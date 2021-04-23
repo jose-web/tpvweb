@@ -66,6 +66,7 @@ export default class AdministraUsuarios extends React.Component {
 
     mostrarPopupEditarUsuario(codUsuario, nombre) {
         let contenido = <form onSubmit={(event) => this.editarUsuario(event, codUsuario)}>
+            <Button nombre="ELIMINAR" onClick={(event) => this.eliminarUsuario(event, codUsuario)}/>
             <p className="titulo">EDITAR USUARIO</p>
             <Input nombre="NOMBRE" value={nombre} focus={true} />
             <Button nombre="EDITAR" submit />
@@ -74,6 +75,30 @@ export default class AdministraUsuarios extends React.Component {
         this.setState({
             popup: <Popup contenido={contenido} cerrar={this.cerrarPopup} />
         })
+    }
+
+    eliminarUsuario(event, codUsuario) {
+        event.preventDefault()
+
+        let usuario = JSON.parse(localStorage.getItem("usuario"))
+
+        let url = global.url + 'eliminarUsuario';
+
+        let data = new FormData();
+        data.append('email', usuario.email);
+        data.append('pass', usuario.pass);
+        data.append('codUsuario', codUsuario);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(res => {
+                this.mostrarUsuarios()
+                this.cerrarPopup()
+            });
     }
 
     editarUsuario(event, codUsuario) {

@@ -105,6 +105,23 @@ function editarUsuario($email,$pass,$codUsuario,$nombre){
   }
 }
 
+function eliminarUsuario($email,$pass,$codUsuario){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $codUsuarioCodificar = codificar($codUsuario);
+
+    $consulta = "call eliminarUsuario($codUsuarioCodificar)";
+
+    $resultado = consulta($consulta);
+
+    return array("respuesta" => true);
+
+  }else{
+    return $login;
+  }
+}
+
 //////////////////////////// FACTURAS ////////////////////////////
 
 function mostrarFacturas($email,$pass){

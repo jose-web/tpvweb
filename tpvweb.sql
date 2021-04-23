@@ -68,6 +68,12 @@ begin
 	where codUsuario = codigoUsuario;
 end $$
 
+create procedure eliminarUsuario(codigoUsuario int)
+begin
+	delete from usuario
+	where codUsuario = codigoUsuario;
+end $$
+
 create procedure mostrarFacturas()
 begin
 	select

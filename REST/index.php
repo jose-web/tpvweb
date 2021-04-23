@@ -35,6 +35,10 @@ $app->post("/editarUsuario", function(){
   echo json_encode(editarUsuario($_POST["email"],$_POST["pass"],$_POST["codUsuario"],$_POST["nombre"]),JSON_FORCE_OBJECT);
 });
 
+$app->post("/eliminarUsuario", function(){
+  echo json_encode(eliminarUsuario($_POST["email"],$_POST["pass"],$_POST["codUsuario"]),JSON_FORCE_OBJECT);
+});
+
 //////////////////////////// FACTURAS ////////////////////////////
 
 $app->post("/mostrarFacturas", function(){

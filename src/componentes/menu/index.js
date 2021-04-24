@@ -15,6 +15,8 @@ export default class Login extends React.Component {
         return (
             <div id="menuPrincipal" >
                 <Link to="/facturas" className="titulo" >TPVWEB</Link>
+                <input type="checkbox" id="checkboxMenu" />
+                <label id="miniMenu" htmlFor="checkboxMenu"><span></span><span></span><span></span></label>
                 <ul>
                     <li className={this.state.select("facturas")}><Link to="/facturas" >Facturas</Link></li>
                     <li className={this.state.select("estadisticas")} ><Link to="/estadisticas" >Estadísticas</Link></li>
@@ -27,6 +29,7 @@ export default class Login extends React.Component {
                     </li>
                     <li id="cerrarSesion"><Link to="/cerrarSesion" >Cerrar sesión</Link></li>
                 </ul>
+                <label id="fondoMiniMenu" htmlFor="checkboxMenu" />
             </div>
         )
     }

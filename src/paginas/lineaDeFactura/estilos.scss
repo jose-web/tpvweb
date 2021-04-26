@@ -19,13 +19,16 @@
     #facturaProductos {
         display: flex;
         flex: 2 100%;
+        width: 100vw;
+        overflow-y: hidden;
+        overflow-x: auto;
         min-height: 0;
 
         #factura {
             display: flex;
             flex-direction: column;
             text-align: center;
-            flex: 0 50%;
+            min-width: 100vw;
             overflow-y: auto;
             min-height: 0;
 
@@ -66,7 +69,7 @@
         }
 
         #productos {
-            flex: 0 50%;
+            min-width: 100vw;
             background-color: var(--color2);
             display: flex;
             flex-wrap: wrap;
@@ -142,6 +145,17 @@
 
         &:hover {
             background-color: var(--color2);
+        }
+    }
+}
+
+@media (min-width: 50em) {
+    #lineaDeFactura {
+        #factura {
+            min-width: 50% !important;
+        }
+        #productos {
+            min-width: 50% !important;
         }
     }
 }

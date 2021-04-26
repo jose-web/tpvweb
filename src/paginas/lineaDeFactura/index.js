@@ -5,6 +5,7 @@ import Menu from '../../componentes/menu'
 import Popup from '../../componentes/popup'
 import Input from '../../componentes/input'
 import Button from '../../componentes/button'
+import Productos from '../../componentes/productos'
 
 export default class LineaDeFactura extends React.Component {
 
@@ -28,56 +29,6 @@ export default class LineaDeFactura extends React.Component {
 
     componentDidMount() {
         this.mostrarFactura()
-
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
-
-        let url = global.url + 'mostrarProductos';
-
-        let data = new FormData();
-        data.append('email', usuario.email);
-        data.append('pass', usuario.pass);
-        data.append('codFactura', this.state.codFactura);
-
-        fetch(url, {
-            method: 'POST',
-            body: data,
-
-        }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(res => {
-                let arrayProductos = []
-                if (typeof res !== "undefined")
-                    for (const grupo in res.productos) {
-                        arrayProductos.push(<React.Fragment key={"opcion" + grupo}><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label htmlFor={"opcion" + grupo}>{grupo}</label></React.Fragment>)
-                        let opcionesproductos = []
-                        for (const producto in res.productos[grupo]) {
-                            let nombre = res.productos[grupo][producto].nombre
-                            let precio = res.productos[grupo][producto].precio
-
-                            opcionesproductos.push(<div
-                                key={producto}
-                                className="producto" onClick={() => this.mostrarPopupInsertarProducto(nombre, precio, 1)}
-                                onContextMenu={(event) => {
-                                    event.preventDefault();
-                                    this.insertarProductoEnFactura(this.state.codFactura, nombre, precio, 1)
-                                }}
-                            >
-                                <p>{nombre}</p>
-                                <p>{precio + " €"}</p>
-                            </div>)
-                        }
-                        arrayProductos.push(<div key={grupo + "pie"} className="opcionElegida">
-                            <div className="contenedorProductos">
-                                {opcionesproductos}
-                            </div>
-                        </div>)
-
-                    }
-
-                this.setState({
-                    productos: arrayProductos.slice()
-                })
-            });
     }
 
     mostrarFactura() {
@@ -117,7 +68,7 @@ export default class LineaDeFactura extends React.Component {
                             onClick={() => this.mostrarPopupInsertarProducto(nombreProducto, precio, cantidad)}
                             onContextMenu={(event) => {
                                 event.preventDefault();
-                                this.insertarProductoEnFactura(this.state.codFactura, nombreProducto, precio, 1)
+                                this.insertarProductoEnFactura(nombreProducto, precio, 1)
                             }}
                         >
                             <p>{nombreProducto}</p>
@@ -134,7 +85,7 @@ export default class LineaDeFactura extends React.Component {
             });
     }
 
-    insertarProductoEnFactura(codFactura, nombre, precio, cantidad) {
+    insertarProductoEnFactura(nombre, precio, cantidad) {
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
         let url = global.url + 'insertarProductoEnFactura';
@@ -142,7 +93,7 @@ export default class LineaDeFactura extends React.Component {
         let data = new FormData();
         data.append('email', usuario.email);
         data.append('pass', usuario.pass);
-        data.append('codFactura', codFactura);
+        data.append('codFactura', this.state.codFactura);
         data.append('nombre', nombre);
         data.append('precio', precio);
         data.append('cantidad', cantidad);
@@ -154,7 +105,7 @@ export default class LineaDeFactura extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                if (Number(codFactura) < 0) {
+                if (Number(this.state.codFactura) < 0) {
                     this.setState({ codFactura: res.respuesta })
                 }
                 this.mostrarFactura()
@@ -202,7 +153,7 @@ export default class LineaDeFactura extends React.Component {
         let precio = event.target.inputPRECIO.value
         let cantidad = event.target.inputCANTIDAD.value
 
-        this.insertarProductoEnFactura(this.state.codFactura, nombre, precio, cantidad)
+        this.insertarProductoEnFactura(nombre, precio, cantidad)
         this.cerrarPopup()
     }
 
@@ -280,7 +231,7 @@ export default class LineaDeFactura extends React.Component {
 
         let dinero = event.target.inputDINERO.value
 
-        this.insertarProductoEnFactura(this.state.codFactura, "PAGO", "-" + dinero, 1)
+        this.insertarProductoEnFactura("PAGO", "-" + dinero, 1)
         this.cerrarPopup()
     }
 
@@ -293,7 +244,10 @@ export default class LineaDeFactura extends React.Component {
                 <h2 onClick={this.mostrarPopupEditaNombreFactura}>{this.state.nombreFactura}</h2>
                 <div id="facturaProductos">
                     <div id="factura">{this.state.arrayLineaDeFactura}</div>
-                    <div id="productos">{this.state.productos}</div>
+                    <Productos 
+                    izquierdo={this.mostrarPopupInsertarProducto}
+                    derecho={this.insertarProductoEnFactura}
+                    />
                 </div>
                 <div id="total" onClick={this.mostrarPopupPagar}>TOTAL: {this.state.total}</div>
                 {this.state.popup}

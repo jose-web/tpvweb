@@ -1,11 +1,11 @@
 import React from 'react'
-import './estilos.scss'
 
 import { Redirect } from "react-router-dom"
 import Menu from '../../../componentes/menu'
 import Popup from '../../../componentes/popup'
 import Input from "../../../componentes/input"
 import Button from "../../../componentes/button"
+import Productos from "../../../componentes/productos"
 
 export default class AdministraProductos extends React.Component {
 
@@ -17,6 +17,7 @@ export default class AdministraProductos extends React.Component {
 
         this.cerrarPopup = this.cerrarPopup.bind(this)
         this.mostrarPopupNuevoProducto = this.mostrarPopupNuevoProducto.bind(this)
+        this.mostrarPopupEditarProducto = this.mostrarPopupEditarProducto.bind(this)
 
     }
 
@@ -25,54 +26,16 @@ export default class AdministraProductos extends React.Component {
     }
 
     mostrarProductos() {
-        let usuario = JSON.parse(localStorage.getItem("usuario"))
+        this.setState({
+            productos: ""
+        })
 
-        let url = global.url + 'mostrarProductos';
-
-        let data = new FormData();
-        data.append('email', usuario.email);
-        data.append('pass', usuario.pass);
-        data.append('codFactura', this.state.codFactura);
-
-        fetch(url, {
-            method: 'POST',
-            body: data,
-
-        }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(res => {
-                let arrayProductos = []
-                if (typeof res !== "undefined")
-                    for (const grupo in res.productos) {
-                        arrayProductos.push(<React.Fragment key={"opcion" + grupo}><input type="radio" name="productos" id={"opcion" + grupo} defaultChecked={arrayProductos.length === 0} /> <label htmlFor={"opcion" + grupo}>{grupo}</label></React.Fragment>)
-                        let opcionesproductos = [<div key="-1" className="producto" onClick={() => this.mostrarPopupNuevoProducto(grupo)}>+</div>
-                        ]
-                        for (const producto in res.productos[grupo]) {
-                            let nombre = res.productos[grupo][producto].nombre
-                            let precio = res.productos[grupo][producto].precio
-                            let codProducto = res.productos[grupo][producto].codProducto
-
-                            opcionesproductos.push(<div
-                                key={producto}
-                                className="producto"
-                                onClick={() => this.mostrarPopupEditarProducto(codProducto, nombre, precio, grupo)}
-                            >
-                                <p>{nombre}</p>
-                                <p>{precio + " €"}</p>
-                            </div>)
-                        }
-                        arrayProductos.push(<div key={grupo + "pie"} className="opcionElegida">
-                            <div className="contenedorProductos">
-                                {opcionesproductos}
-                            </div>
-                        </div>)
-
-                    }
-
-                this.setState({
-                    productos: arrayProductos.slice()
-                })
-            });
+        this.setState({
+            productos: <Productos
+                izquierdo={this.mostrarPopupEditarProducto}
+                nuevo={this.mostrarPopupNuevoProducto}
+            />
+        })
     }
 
     cerrarPopup() {
@@ -124,7 +87,7 @@ export default class AdministraProductos extends React.Component {
             });
     }
 
-    mostrarPopupEditarProducto(codProducto, nombre, precio, grupo) {
+    mostrarPopupEditarProducto(nombre, precio, cantidad, codProducto, grupo) {
         let contenido = <form onSubmit={(event) => this.editarProducto(event, codProducto)}>
             <p className="titulo">EDITAR PRODUCTO</p>
             <Input nombre="NOMBRE" value={nombre} />
@@ -175,7 +138,7 @@ export default class AdministraProductos extends React.Component {
         return (
             <div id="administraProductos" >
                 <Menu pagina="administraProductos" />
-                <div id="productos">{this.state.productos}</div>
+                {this.state.productos}
                 {this.state.popup}
             </div>
         )

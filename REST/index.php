@@ -68,7 +68,7 @@ $app->post("/mostrarProductos", function(){
 });
 
 $app->post("/nuevoProducto", function(){
-  echo json_encode(nuevoProducto($_POST["email"],$_POST["pass"],$_POST["nombre"],$_POST["precio"],$_POST["grupo"]),JSON_FORCE_OBJECT);
+  echo json_encode(nuevoProducto($_POST["email"],$_POST["pass"],$_POST["nombre"],$_POST["precio"],isset($_FILES["img"])?$_FILES["img"]:"",$_POST["grupo"]),JSON_FORCE_OBJECT);
 });
 
 $app->post("/insertarProductoEnFactura", function(){
@@ -76,7 +76,7 @@ $app->post("/insertarProductoEnFactura", function(){
 });
 
 $app->post("/editarProducto", function(){
-  echo json_encode(editarProducto($_POST["email"],$_POST["pass"],$_POST["codProducto"],$_POST["nombre"],$_POST["precio"],$_POST["grupo"]),JSON_FORCE_OBJECT);
+  echo json_encode(editarProducto($_POST["email"],$_POST["pass"],$_POST["codProducto"],$_POST["nombre"],$_POST["precio"],isset($_FILES["img"])?$_FILES["img"]:"",$_POST["grupo"]),JSON_FORCE_OBJECT);
 });
 
 //////////////////////////// ERROR ////////////////////////////

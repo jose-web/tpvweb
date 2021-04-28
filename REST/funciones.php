@@ -24,6 +24,26 @@ function codificar($valor){
   return mysqli_real_escape_string($con,$valor);
 }
 
+function imagen($tipo, $codigo, $nuevaImagen, $nombreAntiguaFoto=""){
+  if($nuevaImagen!= "" && $nuevaImagen["error"] == 0 && strrpos($nuevaImagen["type"],"image").""=="0"){
+
+    if($nombreAntiguaFoto != ""){
+      $antiguaFoto = "img/$tipo/".$nombreAntiguaFoto;
+      if($nombreAntiguaFoto != "sin_imagen.jpg" && file_exists($antiguaFoto))
+        unlink($antiguaFoto);
+    }
+
+    $arrayNombre = explode(".",$nuevaImagen['name']);
+    
+    $nuevoNombreImagen = $codigo.".".$arrayNombre[count($arrayNombre)-1];
+    if($nuevoNombreImagen == $nombreAntiguaFoto) $nuevoNombreImagen="nueva".$nuevoNombreImagen;
+    $origen = $nuevaImagen['tmp_name'];
+    move_uploaded_file( $origen, "img/$tipo/$nuevoNombreImagen" );
+
+    return codificar($nuevoNombreImagen);
+  }
+}
+
 //////////////////////////// LOGIN ////////////////////////////
 
 function login($email,$pass){
@@ -250,7 +270,7 @@ function mostrarProductos($email,$pass){
   }
 }
 
-function nuevoProducto($email,$pass,$nombre,$precio,$grupo){
+function nuevoProducto($email,$pass,$nombre,$precio,$img,$grupo){
   $login = login($email,$pass);
   if($login["login"]){
 
@@ -261,6 +281,17 @@ function nuevoProducto($email,$pass,$nombre,$precio,$grupo){
     $consulta = "call nuevoProducto('$nombreCodificar',$precioCodificar,'$grupoCodificar')";
 
     $resultado = consulta($consulta);
+
+    if($img != ""){
+      if($fila = mysqli_fetch_assoc($resultado)){
+        $codProducto = $fila["codProducto"];
+        $nuevaImagen = imagen("productos", $codProducto ,$img);
+      }
+
+      $consulta = "call editarProducto($codProducto,'$nombreCodificar',$precioCodificar,'$nuevaImagen','$grupoCodificar')";
+
+      $resultado = consulta($consulta);
+    }
 
     return array("respuesta" => true);
 
@@ -295,7 +326,7 @@ function insertarProductoEnFactura($email,$pass,$codFactura,$nombre,$precio,$can
   }
 }
 
-function editarProducto($email,$pass,$codProducto,$nombre,$precio,$grupo){
+function editarProducto($email,$pass,$codProducto,$nombre,$precio,$img,$grupo){
   $login = login($email,$pass);
   if($login["login"]){
 
@@ -304,7 +335,19 @@ function editarProducto($email,$pass,$codProducto,$nombre,$precio,$grupo){
     $precioCodificar = codificar($precio);
     $grupoCodificar = codificar($grupo);
 
-    $consulta = "call editarProducto($codProductoCodificar,'$nombreCodificar',$precioCodificar,'$grupoCodificar')";
+    
+
+    $consulta = "call mostrarImagenProducto($codProductoCodificar)";
+
+    $resultado = consulta($consulta);
+
+    if($fila = mysqli_fetch_assoc($resultado))
+      if($img == "")
+        $nuevaImagen = $fila["img"];
+      else 
+        $nuevaImagen = imagen("productos", $codProducto ,$img, $fila["img"]);
+
+    $consulta = "call editarProducto($codProductoCodificar,'$nombreCodificar',$precioCodificar,'$nuevaImagen','$grupoCodificar')";
 
     $resultado = consulta($consulta);
     

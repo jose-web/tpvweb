@@ -120,8 +120,15 @@ end $$
 
 create procedure nuevoProducto(nombre varchar(20), precio double(6,2), grupo varchar(20))
 begin
+	start transaction;
+    
 	insert into producto(nombre, precio, grupo) 
     values(nombre,precio,grupo);
+    
+    select max(codProducto) codProducto
+    from producto;
+    
+	commit;
 end $$
 
 create procedure insertarProductoEnFactura(buscaCodFactura int, nombre varchar(20), precio double(6,2), cantidad int)
@@ -161,12 +168,20 @@ begin
     where codFactura = codFacturaMostrar;
 end $$
 
-create procedure editarProducto(producto int, nombre varchar(20), precio double(6,2), grupo varchar(20))
+create procedure editarProducto(producto int, nombre varchar(20), precio double(6,2), img varchar(20), grupo varchar(20))
 begin
     update producto 
     set 
 		nombre = nombre , 
 		precio = precio,
-        grupo = grupo
+        grupo = grupo,
+        img = img
+    where codProducto = producto;
+end $$
+
+create procedure mostrarImagenProducto(producto int)
+begin
+    select img
+    from producto
     where codProducto = producto;
 end $$

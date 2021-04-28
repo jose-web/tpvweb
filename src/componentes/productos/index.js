@@ -57,6 +57,8 @@ export default class Productos extends React.Component {
                         </div>)
 
                     }
+                if (arrayProductos.length === 0)
+                    arrayProductos = this.props.nuevo ? [<div key="-1" id="sinProductos" onClick={() => this.props.nuevo("bebidas")}>+</div>] : [<div key="-1" id="sinProductos">No hay productos disponibles</div>]
 
                 this.setState({
                     productos: arrayProductos.slice()

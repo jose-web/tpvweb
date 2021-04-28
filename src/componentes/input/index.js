@@ -9,10 +9,20 @@ export default class Input extends React.Component {
         let focus = this.props.focus
 
         let pass = this.props.pass
+        let file = this.props.file
+
+        let tipo = () => {
+            if (pass)
+                return "password"
+            if (file)
+                return "file"
+            return "text"
+        }
+
         return (
             <div className="input">
-                <label htmlFor={inputID}>{nombre+":"}</label>
-                <input type={pass?"password":"text"} id={inputID} name={inputID} defaultValue={value} autoFocus={focus} />
+                <label htmlFor={inputID}>{nombre + ":"}</label>
+                <input type={tipo()} id={inputID} name={inputID} defaultValue={value} autoFocus={focus} />
             </div>
         )
     }

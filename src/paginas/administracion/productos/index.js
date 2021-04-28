@@ -45,8 +45,9 @@ export default class AdministraProductos extends React.Component {
     }
 
     mostrarPopupNuevoProducto(grupo) {
-        let contenido = <form onSubmit={(event) => this.nuevoProducto(event)}>
+        let contenido = <form onSubmit={(event) => this.nuevoProducto(event)} encType="multipart/form-data">
             <p className="titulo">AÑADIR PRODUCTO</p>
+            <Input nombre="IMAGEN" file/>
             <Input nombre="NOMBRE" focus />
             <Input nombre="PRECIO" />
             <Input nombre="GRUPO" value={grupo} />
@@ -66,13 +67,16 @@ export default class AdministraProductos extends React.Component {
 
         let nombre = event.target.inputNOMBRE.value
         let precio = event.target.inputPRECIO.value
+        let img = event.target.inputIMAGEN.files[0]
         let grupo = event.target.inputGRUPO.value
+        
 
         let data = new FormData();
         data.append('email', usuario.email);
         data.append('pass', usuario.pass);
         data.append('nombre', nombre);
         data.append('precio', precio);
+        data.append('img', img);
         data.append('grupo', grupo);
 
         fetch(url, {
@@ -90,6 +94,7 @@ export default class AdministraProductos extends React.Component {
     mostrarPopupEditarProducto(nombre, precio, cantidad, codProducto, grupo) {
         let contenido = <form onSubmit={(event) => this.editarProducto(event, codProducto)}>
             <p className="titulo">EDITAR PRODUCTO</p>
+            <Input nombre="IMAGEN" file/>
             <Input nombre="NOMBRE" value={nombre} />
             <Input nombre="PRECIO" value={precio} focus />
             <Input nombre="GRUPO" value={grupo} />
@@ -109,6 +114,7 @@ export default class AdministraProductos extends React.Component {
 
         let nombre = event.target.inputNOMBRE.value
         let precio = event.target.inputPRECIO.value
+        let img = event.target.inputIMAGEN.files[0]
         let grupo = event.target.inputGRUPO.value
 
         let data = new FormData();
@@ -117,6 +123,7 @@ export default class AdministraProductos extends React.Component {
         data.append('codProducto', codProducto);
         data.append('nombre', nombre);
         data.append('precio', precio);
+        data.append('img', img);
         data.append('grupo', grupo);
 
         fetch(url, {

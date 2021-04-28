@@ -36,6 +36,7 @@ create table producto (
     codProducto int primary key auto_increment,
 	nombre varchar(20) not null,
     precio double(6,2) not null,
+    img varchar(20) not null default 'sin_imagen.jpg',
     grupo varchar(20) not null
 );
 

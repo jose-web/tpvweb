@@ -32,9 +32,10 @@ export default class Productos extends React.Component {
                         let opcionesproductos = this.props.nuevo ? [<div key="-1" className="producto" onClick={() => this.props.nuevo(grupo)}>+</div>] : []
 
                         for (const producto in res.productos[grupo]) {
+                            let codProducto = res.productos[grupo][producto].codProducto
                             let nombre = res.productos[grupo][producto].nombre
                             let precio = res.productos[grupo][producto].precio
-                            let codProducto = res.productos[grupo][producto].codProducto
+                            let imagen = global.url + "img/productos/" + res.productos[grupo][producto].img
 
                             opcionesproductos.push(<div
                                 key={producto}
@@ -44,6 +45,7 @@ export default class Productos extends React.Component {
                                     this.props.derecho(nombre, precio, 1)
                                 }}
                             >
+                                <img src={imagen} alt={nombre} loading="lazy" />
                                 <p>{nombre}</p>
                                 <p>{precio + " €"}</p>
                             </div>)

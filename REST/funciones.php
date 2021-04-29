@@ -215,6 +215,37 @@ function mostrarFactura($email,$pass,$codFactura){
   }
 }
 
+function mostrarFacturaSimplificada($email,$pass,$codFactura){
+  $login = login($email,$pass);
+  if($login["login"]){
+    $codFacturaCodificar = codificar($codFactura);
+
+    $consulta = "select nombreFactura from factura where codFactura = $codFacturaCodificar";
+
+    $resultado = consulta($consulta);
+
+    $nombreFactura = "Factura sin nombre";
+
+    if($fila = mysqli_fetch_assoc($resultado)){
+      $nombreFactura = $fila["nombreFactura"];
+    }
+
+    $consulta = "call mostrarFacturaSimplificada($codFacturaCodificar)";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[] = $fila;
+    }
+    return array("nombreFactura" => $nombreFactura, "factura" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 function editarNombreFactura($email,$pass,$codFactura,$nombre){
   $login = login($email,$pass);
   if($login["login"]){

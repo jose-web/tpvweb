@@ -112,6 +112,16 @@ begin
     order by fecha desc;
 end $$
 
+create procedure mostrarFacturaSimplificada(codFacturaMostrar int)
+begin
+	select nombreProducto, precio, sum(cantidad) as cantidad, max(fecha) as fecha
+    from factura join lineaDeFactura
+		on factura.codFactura = lineaDeFactura.codFactura
+	where factura.codFactura = codFacturaMostrar
+    group by nombreProducto, precio
+    order by precio desc;
+end $$
+
 create procedure mostrarProductos()
 begin
 	select *

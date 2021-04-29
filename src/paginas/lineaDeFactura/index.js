@@ -12,7 +12,8 @@ export default class LineaDeFactura extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            codFactura: props.match.params.codFactura === undefined ? -1 : props.match.params.codFactura
+            codFactura: props.match.params.codFactura === undefined ? -1 : props.match.params.codFactura,
+            simplificada: true
         };
         this.mostrarFactura = this.mostrarFactura.bind(this)
         this.insertarProductoEnFactura = this.insertarProductoEnFactura.bind(this)
@@ -34,7 +35,7 @@ export default class LineaDeFactura extends React.Component {
     mostrarFactura() {
         let usuario = JSON.parse(localStorage.getItem("usuario"))
 
-        let url = global.url + 'mostrarFactura';
+        let url = global.url + 'mostrarFactura' + (this.state.simplificada ? "Simplificada" : "");
 
         let data = new FormData();
         data.append('email', usuario.email);
@@ -48,7 +49,7 @@ export default class LineaDeFactura extends React.Component {
         }).then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(res => {
-                let arrayLineaDeFactura = [<div className="producto titulo" key="-1"><p>NOMBRE</p><p title="PRECIO UNITARIO">PRECIO UNITARIO</p><p>CANTIDAD</p><p>PRECIO</p></div>]
+                let arrayLineaDeFactura = [<div className="producto titulo" key="-1" onClick={() => this.facturaSimplificada()}><p>NOMBRE</p><p title="PRECIO UNITARIO">PRECIO UNITARIO</p><p>CANTIDAD</p><p>PRECIO</p></div>]
                 let total = 0
                 if (typeof res !== "undefined")
                     for (let i = 0; i < Object.keys(res.factura).length; i++) {
@@ -83,6 +84,12 @@ export default class LineaDeFactura extends React.Component {
                     total: total.toFixed(2) + " €"
                 })
             });
+    }
+
+    facturaSimplificada() {
+        this.setState(
+            { simplificada: !this.state.simplificada },
+            () => this.mostrarFactura())
     }
 
     insertarProductoEnFactura(nombre, precio, cantidad) {
@@ -244,9 +251,9 @@ export default class LineaDeFactura extends React.Component {
                 <h2 onClick={this.mostrarPopupEditaNombreFactura}>{this.state.nombreFactura}</h2>
                 <div id="facturaProductos">
                     <div id="factura">{this.state.arrayLineaDeFactura}</div>
-                    <Productos 
-                    izquierdo={this.mostrarPopupInsertarProducto}
-                    derecho={this.insertarProductoEnFactura}
+                    <Productos
+                        izquierdo={this.mostrarPopupInsertarProducto}
+                        derecho={this.insertarProductoEnFactura}
                     />
                 </div>
                 <div id="total" onClick={this.mostrarPopupPagar}>TOTAL: {this.state.total}</div>

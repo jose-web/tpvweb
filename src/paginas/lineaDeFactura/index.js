@@ -238,7 +238,7 @@ export default class LineaDeFactura extends React.Component {
 
         let dinero = event.target.inputDINERO.value
 
-        this.insertarProductoEnFactura("PAGO", "-" + dinero, 1)
+        this.insertarProductoEnFactura(" PAGADO", "-" + dinero, 1)
         this.cerrarPopup()
     }
 

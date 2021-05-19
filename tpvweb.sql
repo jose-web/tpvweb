@@ -119,7 +119,8 @@ begin
 		on factura.codFactura = lineaDeFactura.codFactura
 	where factura.codFactura = codFacturaMostrar
     group by nombreProducto, precio
-    order by precio desc;
+		having sum(cantidad) > 0
+    order by nombreProducto asc;
 end $$
 
 create procedure mostrarProductos()

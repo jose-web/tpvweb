@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # personalizado
+package-lock.json
 /REST/img/productos/*

@@ -1,1 +1,1 @@
-global.url = "http://localhost/tpvweb/REST/"
+global.url = window.location.protocol + "//" + window.location.hostname + "/REST/"

@@ -144,6 +144,26 @@ function eliminarUsuario($email,$pass,$codUsuario){
 
 //////////////////////////// FACTURAS ////////////////////////////
 
+function mostrarMesas($email,$pass){
+  $login = login($email,$pass);
+  if($login["login"]){
+
+    $consulta = "call mostrarMesas()";
+
+    $resultado = consulta($consulta);
+
+    $array = [];
+
+    while($fila = mysqli_fetch_assoc($resultado)){
+      $array[] = $fila;
+    }
+    return array("mesas" => $array);
+
+  }else{
+    return $login;
+  }
+}
+
 function mostrarFacturas($email,$pass){
   $login = login($email,$pass);
   if($login["login"]){

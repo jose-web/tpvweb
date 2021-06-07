@@ -16,4 +16,11 @@ call mostrarFacturas();
 
 call mostrarFactura(1);
 
-call editarNombreFactura(1, 'paco')
+call editarNombreFactura(1, 'paco');
+
+call nuevaMesa('Mesa 1', 15, 15, 75, 10, 1);
+call nuevaMesa('Mesa 2', 15, 15, 60, 10, null);
+call nuevaMesa('Mesa 3', 15, 15, 45, 10, null);
+call nuevaMesa('Mesa 4', 15, 15, 75, 75, null);
+call nuevaMesa('Mesa 5', 15, 15, 60, 75, null);
+call nuevaMesa('Mesa 6', 15, 15, 45, 75, null);

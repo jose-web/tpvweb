@@ -41,6 +41,10 @@ $app->post("/eliminarUsuario", function(){
 
 //////////////////////////// FACTURAS ////////////////////////////
 
+$app->post("/mostrarMesas", function(){
+  echo json_encode(mostrarMesas($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
+});
+
 $app->post("/mostrarFacturas", function(){
   echo json_encode(mostrarFacturas($_POST["email"],$_POST["pass"]),JSON_FORCE_OBJECT);
 });

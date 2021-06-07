@@ -2,6 +2,7 @@ import React from 'react'
 import './estilos.scss'
 import { Link } from "react-router-dom"
 import Menu from '../../componentes/menu'
+import Mesas from '../../componentes/mesas'
 
 export default class Facturas extends React.Component {
 
@@ -60,6 +61,7 @@ export default class Facturas extends React.Component {
         return (
             <div id="facturas" >
                 <Menu pagina="facturas" />
+                <Mesas/>
                 <div id="listadoDeFacturas">{this.state.arrayFacturas}</div>
                 <Link to="/factura/nueva" key="/nueva" id="nuevaFactura" title="Nueva factura">+</Link>
             </div>

@@ -32,6 +32,21 @@ create table lineaDeFactura (
 		on update cascade
 );
 
+create table mesa (
+    codMesa int primary key auto_increment,
+    nombreMesa varchar(20) default "Mesa -1",
+    alto int not null,
+    ancho int not null,
+    posArriba int not null,
+    posIzquierda int not null,
+    codFactura int null,
+    
+    foreign key mesa_factura(codFactura) 
+		references factura(codFactura)
+		on delete no action 
+		on update cascade
+);
+
 create table producto (
     codProducto int primary key auto_increment,
 	nombre varchar(20) not null,
@@ -195,4 +210,16 @@ begin
     select img
     from producto
     where codProducto = producto;
+end $$
+
+create procedure nuevaMesa(nombreMesa varchar(20), alto int, ancho int, posArriba int, posIzquierda int, codFactura int)
+begin
+	insert into mesa(nombreMesa,alto,ancho,posArriba,posIzquierda,codFactura) 
+    values(nombreMesa,alto,ancho,posArriba,posIzquierda,codFactura);
+end $$
+
+create procedure mostrarMesas()
+begin
+	select *
+    from mesa;
 end $$

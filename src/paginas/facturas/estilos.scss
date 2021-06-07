@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: 100%;
+    min-height: 100vh;
     flex-direction: column;
 
     #listadoDeFacturas {
@@ -40,6 +40,17 @@
 
         &:hover {
             opacity: 1;
+        }
+    }
+}
+
+@media (min-width: 50em) {
+    #facturas {
+        flex-direction: row;
+
+        #listadoDeFacturas {
+            flex: 1;
+            margin-bottom: auto;
         }
     }
 }

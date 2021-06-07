@@ -1,0 +1,35 @@
+#mesas {
+    height: 100vw;
+    width: 100%;
+    background-color: var(--color4);
+    position: relative;
+    align-self: center;
+    overflow: hidden;
+
+    .mesa {
+        position: absolute;
+        background-color: var(--color3);
+        text-decoration: none;
+        overflow: hidden;
+        transition: 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0.1em solid var(--color4);
+
+        &:hover {
+            box-shadow: 0 0 0.5em var(--color3);
+        }
+
+        p {
+            color: var(--color4);
+        }
+    }
+}
+
+@media (min-width: 70vh) {
+    #mesas {
+        height: 70vh;
+        width: 70vh;
+    }
+}

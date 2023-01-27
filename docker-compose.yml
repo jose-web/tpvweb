@@ -1,0 +1,39 @@
+# docker-compose up --build
+
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: backend-mysql
+    environment:
+      MYSQL_DATABASE: tpvweb
+      MYSQL_USER: jose
+      MYSQL_PASSWORD: josefa
+      MYSQL_ROOT_PASSWORD: my_password
+    volumes:
+      - ./REST/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    restart: always
+
+  backend:
+    container_name: backend-php
+    build: "./REST"
+    ports:
+      - 80:80
+    links:
+      - mysql
+    restart: always
+
+  web:
+    container_name: frontend-react
+    build: "."
+    ports:
+      - 3000:3000
+    links:
+      - backend
+    restart: always
+
+volumes:
+  db-data:

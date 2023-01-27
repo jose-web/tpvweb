@@ -1,5 +1,5 @@
 <?php
-    $servidor = "localhost";
+    $servidor = "backend-mysql";
     $usuario = "jose";
     $contrasena = "josefa";
     $bd = "tpvweb";
